@@ -110,6 +110,8 @@ footer{font-size:12px;text-align:center;color:#718791;padding:20px}
 <div class="imports">
 <button class="filecard" id="studioCard" type="button"><strong>۱. ویدیوی استودیو</strong><small id="studioName">لایهٔ زیرین — عکس یا ویدیو</small></button>
 <button class="filecard" id="mainCard" type="button"><strong>۲. ویدیوی گوینده</strong><small id="mainName">انتخاب از گالری یا لپ‌تاپ</small></button>
+<input id="studioLocalFile" type="file" accept="video/*,image/*,.mp4,.mov,.webm,.m4v,.mkv,.jpg,.jpeg,.png,.webp" hidden aria-label="انتخاب فایل استودیو">
+<input id="mainLocalFile" type="file" accept="video/*,.mp4,.mov,.webm,.m4v,.mkv" hidden aria-label="انتخاب ویدیوی گوینده">
 <label class="filecard" id="introCard"><strong>۳. ویدیوی آغاز</strong><small id="introName">ویدیو یا عکس از گالری</small><input id="introFile" type="file" accept="image/*,video/*"></label>
 <label class="filecard" id="outroCard"><strong>۴. ویدیوی پایان</strong><small id="outroName">ویدیو یا عکس از گالری</small><input id="outroFile" type="file" accept="image/*,video/*"></label>
 <label class="filecard" id="logoCard"><strong>۵. لوگو</strong><small id="logoName">PNG یا تصویر لوگو</small><input id="logoFile" type="file" accept="image/*"></label>
@@ -1505,8 +1507,73 @@ async function loadDesktopAsset(role) {
  }
 }
 
-$('studioCard').onclick = () => void loadDesktopAsset('studio');
-$('mainCard').onclick = () => void loadDesktopAsset('main');
+// GitHub Pages is a static host; the EXE-only /api/choose endpoint is unavailable there.
+// Preserve the desktop workflow when running under the bundled localhost server.
+const desktopFilePickerAvailable = ['localhost','127.0.0.1','::1','[::1]'].includes(location.hostname);
+async function loadBrowserAsset(role, file) {
+ if (!file || importBusy || S.exporting || portrait.starting || whiteCleanup.busy) return;
+ const studio = role === 'studio';
+ const video = studio ? bgVideo : main;
+ const previousSource = video.getAttribute('src');
+ const previousTime = video.currentTime;
+ const previousAsset = studio ? S.studio : S.main;
+ const previousStill = S.studioStill;
+ importLock(true);
+ try {
+  if (!studio && !((file.type || '').startsWith('video/') || /\\.(mp4|mov|webm|m4v|mkv|avi)$/i.test(file.name))) throw Error('برای گوینده یک فایل ویدیویی انتخاب کنید.');
+  stopPreview(); compositionView();
+  $('previewMessage').textContent = 'در حال خواندن «' + file.name + '» از دستگاه شما…';
+  if (studio && ((file.type || '').startsWith('image/') || /\\.(jpg|jpeg|png|webp|gif)$/i.test(file.name))) {
+   const picture = await loadImage(file);
+   video.pause(); video.removeAttribute('src'); video.load();
+   S.studio = {type:'image',media:picture};
+   S.studioStill = null;
+  } else {
+   video.pause();
+   await loadVideo(video,file);
+   if (studio) {
+    video.muted = true;video.loop = true;
+    S.studio = {type:'video',media:video};
+    S.studioStill = null;cacheStudioFrame();
+   } else {
+    S.main = {type:'video',name:file.name,media:video};
+    ai.mask = null;ai.maskPixels = null;ai.lastTime = -1;
+    resetPortraitTracking();
+   }
+  }
+  desktopAssets[role]=0;
+  if(!studio) speechCancel?.();
+  resetCleanup(role);disableDesk();refreshCard(role,file);
+  movieTile(role,studio && S.studio.type==='image' ? null : video);
+  if(!studio){showCues([]);$('speechMessage').textContent='';}
+  $('chairMsg').textContent='';$('empty').style.display='none';
+  S.pos=plan().i;
+  if(studio){if($('compose').value==='full')$('compose').value='overlay';}
+  else {applySeat();S.boxVisible=true;$('autoRemoveStatus').textContent='برای جداکردن گوینده از پس‌زمینه، «حذف هوشمند» را بزنید.';}
+  updateInfo();syncTimeline();render();
+  const message=studio?'ویدیوی استودیو از دستگاه شما بارگذاری شد.':'ویدیوی گوینده از دستگاه شما بارگذاری شد.';
+  $('previewMessage').textContent=message;status(message);
+ } catch(error) {
+  if(previousSource){video.src=previousSource;video.load();try{video.currentTime=previousTime;}catch{}}
+  else {video.pause();video.removeAttribute('src');video.load();}
+  if(studio){S.studio=previousAsset;S.studioStill=previousStill;}
+  else S.main=previousAsset;
+  render();status('بازکردن فایل ممکن نشد: '+(error.message||'فرمت ویدیو را بررسی کنید.'),true);
+ } finally {importLock(false);}
+}
+for(const role of ['studio','main']) {
+ const input=$(role+'LocalFile');
+ $(role+'Card').onclick=()=>{
+  if(importBusy||S.exporting||portrait.starting||whiteCleanup.busy)return;
+  if(desktopFilePickerAvailable)void loadDesktopAsset(role);
+  else input.click();
+ };
+ input.addEventListener('change',()=>{
+  const file=input.files&&input.files[0];
+  input.value='';
+  if(file)void loadBrowserAsset(role,file);
+ });
+}
 const heartbeat = setInterval(() => void desktopRequest('heartbeat', 'POST').catch(() => {}), 20000);
 $('quitDesktop').onclick = async () => {
  if (S.exporting || importBusy || portrait.starting || faceReference.loading) { status('ابتدا پردازش فعلی را تمام یا لغو کنید.', true); return; }

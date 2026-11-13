@@ -1,0 +1,2778 @@
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>استودیوی ابراهیمی — نسخهٔ ۷.۱ | حذف خودکار سفیدی</title>
+<style>
+#smartWhitePanel{border:1px solid #4e9c91;background:#effbf7;border-radius:10px;padding:11px;margin:10px 0}
+#smartWhitePanel summary{font-weight:bold;color:#15594d;cursor:pointer}
+#smartWhite,#smartWhiteQuick{background:#147d69;color:white;border:1px solid #126b5c;line-height:1.8}
+#smartWhitePanel .field{margin-top:9px}#smartWhitePanel .info{color:#285d53;line-height:1.9}
+#smartWhitePanel button{width:100%;margin-top:5px}#whiteOff{background:white;color:#7a3930;border:1px solid #b4837d}
+#smartWhitePanel button:disabled{opacity:.55}#whiteMessage:empty{display:none}
+
+#referenceChoose{width:100%;background:#203e43;border:1px solid #4a777e;color:#e6f8f4;text-align:center;line-height:1.55;padding:11px 8px}
+#referenceChoose:disabled{opacity:.65;cursor:wait}
+#referenceSelected[hidden],#referenceStatus[hidden],#referenceFile[hidden]{display:none}
+#referenceSelected{display:flex;align-items:center;gap:7px;padding:6px;background:#192c31;border:1px solid #305057;border-radius:9px}
+#referenceThumb{width:37px;height:37px;border-radius:6px;object-fit:cover}
+#referenceName{flex:1;min-width:0;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;font-size:12px}
+#referenceRemove{padding:3px 8px;min-height:32px;color:#f7d2d2;background:#493537;border:1px solid #764d50;border-radius:6px;white-space:nowrap}
+#referenceStatus{margin:0;color:#c7e8e2;line-height:1.8}
+
+#smartPortrait.primary{background:#33cbb4;border-color:#33cbb4;color:#092c2c;line-height:1.6}
+#smartPortrait[aria-pressed="true"]{background:#183f3a;color:#aff8e8;border-color:#3ba694}
+#smartPortrait:disabled{cursor:wait;opacity:.72}
+#portraitStatus{margin:0;color:#c7e8e2;line-height:1.85}
+
+#studioCard,#mainCard{width:100%;text-align:right;font:inherit}
+#conversionTools[hidden]{display:none}
+#conversionTools{display:flex;justify-content:flex-start;padding:4px 0 8px}
+#engineDialog{max-width:min(430px,calc(100vw - 24px));border:1px solid #45525e;border-radius:14px;background:#20242b;color:#f5f7f9;padding:22px;line-height:1.9}
+#engineDialog h2{font-size:18px;margin:0 0 8px}
+#engineDialog p{margin:0 0 15px}
+#engineDialog form{display:flex;flex-wrap:wrap;gap:8px}
+#engineDialog button[value=download]{background:#29c7b5;color:#073430;border-color:#29c7b5}
+#engineDialog::backdrop{background:#000a}
+.closed-note{max-width:480px;margin:25vh auto 0;padding:22px;text-align:center;background:#20242b;border-radius:12px}
+
+:root{font-family:Tahoma,"Segoe UI",Arial,sans-serif;color:#183146;background:#edf4f5;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}main{max-width:1480px;margin:auto;padding:18px}header{background:#fff;border:1px solid #d7e6e7;border-radius:17px;padding:18px 24px;display:flex;gap:15px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}header h1{font-size:25px;margin:0 0 6px;color:#17645d}header p{margin:0;color:#5b7079;font-size:14px}header .tag{padding:8px 13px;background:#e2f5ef;border-radius:30px;color:#126957;font-weight:700;font-size:13px}
+.imports{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px}.filecard{background:#fff;border:2px dashed #a9c7c9;border-radius:13px;min-height:99px;padding:13px;display:flex;flex-direction:column;gap:9px;cursor:pointer}.filecard strong{font-size:16px}.filecard small{font-size:12px;color:#6a838b;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.filecard input{display:none}.filecard.active{border-color:#21866e;background:#f4fffb}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:start}.previewbox,.aside{background:white;border:1px solid #d6e5e6;border-radius:15px;padding:14px}.stage{position:relative;background:#101d28;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:260px}.stage canvas{display:block;width:auto;height:auto;max-width:100%;max-height:min(66vh,640px);object-fit:contain;touch-action:none}#empty{position:absolute;text-align:center;color:#d1e7e8;pointer-events:none;padding:20px}#empty h2{font-size:22px}#empty p{font-size:15px}.transport{display:flex;align-items:center;gap:10px;margin:13px 0 0}.transport input{flex:1;accent-color:#16846b;min-width:20px}.transport button{width:46px;flex-shrink:0}.transport output{font-size:13px;white-space:nowrap;color:#47666e;direction:ltr}.editor{margin-top:13px;border:1px solid #c4dedf;border-radius:13px;background:#fbfefd;padding:13px}.titleline{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:4px 0 12px}.titleline strong{font-size:17px;color:#156d65}.titleline small{color:#536f78;font-size:12px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}label.field{font-size:13px;font-weight:600;color:#28566a;display:flex;flex-direction:column;gap:6px}.field input,.field select,.field textarea{border:1px solid #b9d2d5;border-radius:8px;background:#fff;color:#163b49;padding:10px;font:inherit;min-width:0}.field textarea{min-height:72px;resize:vertical;font-size:15px}.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid #6ac7af}.field.full{grid-column:1/-1}.statline{background:#e8f7f3;border-radius:9px;padding:10px 12px;font-size:14px;margin:12px 0;color:#205a58;line-height:1.8}.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.actions button{font-size:14px}button{font:inherit;border:1px solid #b4cdd2;border-radius:9px;background:#eff8f7;color:#17465b;font-weight:700;padding:9px 13px;cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}button.primary{background:#17765f;border-color:#17765f;color:#fff;width:100%;font-size:17px;padding:14px}button.save{background:#164e87;border-color:#164e87;color:#fff;width:100%;font-size:18px;padding:15px;margin-top:8px}button.cancel{background:#fff4f1;border-color:#e7b7aa;color:#953c26}.aside{display:flex;flex-direction:column;gap:9px}.aside h3{margin:8px 0 2px;font-size:17px}.aside details{border:1px solid #d7e5e7;border-radius:10px;padding:10px}.aside summary{font-weight:700;color:#2b596b;cursor:pointer}.aside .field{margin-top:13px}.aside .field input[type=range]{accent-color:#16846b}#status{font-size:13px;color:#28566a;line-height:1.9;min-height:38px;margin:1px 0}#status.error{color:#a23c2b}.barwrap{height:16px;background:#dce8ea;border-radius:20px;overflow:hidden;margin-top:5px}.bar{height:100%;background:#178969;width:0%;transition:width .1s}.progressdetail{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#27626a}#result{display:none;border-top:1px solid #cfe2e3;margin-top:10px;padding-top:12px}a.download{display:block;text-align:center;padding:13px;background:#148267;color:#fff;text-decoration:none;border-radius:9px;font-weight:700}.info{font-size:12px;line-height:1.8;color:#607b82}.warning{border-right:3px solid #ce9760;background:#fffbf3;padding:10px;border-radius:5px}.hint{font-size:13px;color:#607780}.checkline{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:#28566a;cursor:pointer}.checkline input{accent-color:#167960;width:18px;height:18px}#player,#studioVideo,#introVideo,#outroVideo{position:fixed;left:-9999px;top:-9999px;width:2px;height:2px;opacity:.001;pointer-events:none}
+/* Viewer zoom changes the preview only; canvas output resolution remains unchanged. */
+.stage{position:relative;display:block;overflow:auto;min-height:280px;height:min(65vh,630px);padding:12px;scrollbar-gutter:stable}
+#stageSize{position:relative;margin:auto;min-width:2px;min-height:2px}
+#stageInner{position:absolute;top:0;left:0;transform-origin:top left;touch-action:none}
+#stageInner canvas{display:block;position:relative;z-index:1;width:100%;height:100%;max-width:none;max-height:none;object-fit:fill}
+/* Keep the actual source video inside the visible player, underneath the
+   opaque canvas. Some browsers suspend painting an offscreen 2px video even
+   though its audio continues to play. */
+#stageInner #player{position:absolute;left:0;top:0;width:100%;height:100%;opacity:.02;z-index:0;pointer-events:none;object-fit:contain}
+#speakerBox{touch-action:none;position:absolute;border:2px solid #7cf0cf;border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,.0);display:none;pointer-events:auto;cursor:move;z-index:5}
+#speakerBox.active{display:block}
+#speakerBox .handle{touch-action:none;position:absolute;width:18px;height:18px;left:-9px;top:-9px;background:#fff;border:2px solid #148267;border-radius:50%;cursor:nwse-resize;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+#speakerBox .handle.br{left:auto;top:auto;right:-9px;bottom:-9px}
+#speakerBox .handle.tr{left:-9px;top:auto;bottom:-9px;cursor:nesw-resize;opacity:.0;pointer-events:none}
+#speakerBox .handle.tl{left:auto;right:-9px;top:-9px;cursor:nesw-resize;opacity:.0;pointer-events:none}
+.mousehint{margin-top:8px;padding:8px 10px;border-radius:8px;background:#eef8f6;color:#235b61;font-size:12px;line-height:1.9}
+.green-panel{margin:12px 0;padding:12px;border:1px solid #88cdbb;border-radius:10px;background:#f1fbf7}.green-panel .actions{align-items:center}.green-panel .field{margin-top:10px}.green-panel output{font-size:12px;color:#176952}.green-panel button.pick-active{background:#17765f;color:white;outline:3px solid #89dfad}.aspect-bar{display:flex;align-items:flex-end;gap:9px;flex-wrap:wrap;margin:0 0 12px;padding:10px 12px;border:1px solid #cde1e4;border-radius:10px;background:#f5fbfa}
+.aspect-bar .field{min-width:118px;flex:1;font-size:13px}
+.aspect-bar .field input,.aspect-bar .field select{padding:8px}
+.aspect-bar .custom-size{display:contents}
+.aspect-bar .custom-size[hidden]{display:none}
+.aspect-bar #frameDimensions{font-size:12px;font-weight:700;color:#286a66;white-space:nowrap;padding:8px}
+.viewer-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;margin:8px 0;padding:7px;border-radius:9px;background:#f2f9fa}
+.viewer-controls button{min-width:44px;padding:7px 10px}
+.viewer-controls output{min-width:58px;text-align:center;font-weight:700;color:#176952}
+.viewer-controls span{font-size:12px;color:#58727b}
+.bottom-video-cards{margin-top:18px}.bottom-video-cards .editor{margin-top:0;background:#fff;padding:16px}.bottom-video-cards .fields{grid-template-columns:repeat(2,minmax(0,1fr))}@media(max-width:550px){.bottom-video-cards .fields{grid-template-columns:1fr}}
+footer{font-size:12px;text-align:center;color:#718791;padding:20px}
+@media(max-width:900px){.workspace{grid-template-columns:1fr}.aside{grid-row:2}.imports{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){main{padding:8px}header{padding:13px}.imports{gap:7px}.filecard{padding:9px;min-height:78px}.filecard strong{font-size:13px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.editor{padding:9px}.transport output{font-size:11px}}
+
+/* Save dialog is isolated: no layout changes to the existing player or bottom cards. */
+#saveDialog{position:fixed;inset:0;z-index:200;background:rgba(7,24,35,.72);display:none;align-items:center;justify-content:center;padding:16px;overscroll-behavior:contain}
+#saveDialog.visible{display:flex}
+#savePanel{background:#fff;border-radius:17px;box-shadow:0 20px 65px rgba(0,0,0,.3);width:min(560px,100%);max-height:92vh;overflow:auto;padding:19px 21px;color:#204052;text-align:right}
+#savePanel h2{margin:0 0 5px;color:#16665f;font-size:22px}
+#savePanel .dlgsub{margin:0 0 13px;color:#657f86;font-size:13px;line-height:1.7}
+#savePanel .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+#savePanel .field{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700;color:#2a5662}
+#savePanel .field input,#savePanel .field select{border:1px solid #b8d2d6;border-radius:9px;padding:10px 9px;font:inherit;color:#1b3e4d;min-width:0;width:100%;background:#fff}
+#savePanel .full{grid-column:1/-1}
+#savePanel .folderline{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:12px 0}
+#savePanel .folderline button{white-space:nowrap;background:#e6f5f0}
+#savePanel #folderLabel{color:#446874;flex:1;font-size:13px;overflow-wrap:anywhere}
+#savePanel .estimate{border-radius:8px;padding:9px;background:#eef9f6;line-height:1.9;font-size:13px;color:#285c60;margin:8px 0}
+#savePanel .modalbuttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}
+#savePanel .modalbuttons button{flex:1;min-width:105px}
+#startSave{background:#176d59;border-color:#176d59;color:#fff}
+#dialogCancelWork{display:none}
+#dialogProgressWrap{display:none;margin-top:12px}
+#dialogProgressWrap .track{height:14px;border-radius:12px;background:#e1edef;overflow:hidden}
+#dialogProgress{background:#18866e;width:0%;height:100%;transition:width .08s}
+#dialogProgressText{font-size:14px;color:#245d63;font-weight:700;margin:7px 0;line-height:1.7}
+#dialogMessage{font-size:13px;margin:8px 0;line-height:1.8;white-space:pre-wrap;color:#3f6471}
+@media(max-width:500px){#savePanel{padding:12px}#savePanel .fields{grid-template-columns:1fr}#savePanel .full{grid-column:auto}}
+
+/* Three-panel editing workspace */
+:root{color-scheme:dark;background:#101114;color:#eceef2}body{background:#101114}main{max-width:none;padding:10px;display:grid;grid-template-columns:210px minmax(0,1fr) 310px;gap:10px;direction:ltr}main>*{direction:rtl}header{grid-column:1/-1;margin:0;background:#1b1d22;border-color:#30333c;border-radius:9px;padding:12px 18px}header h1{font-size:20px;color:#f3f5fa}header p{color:#a1a9b9}header .tag{background:#164b48;color:#74eee0}.imports{grid-column:1;grid-row:2;display:flex;flex-direction:column;background:#1b1d22;padding:12px;margin:0;border-radius:9px}.filecard{background:#24272e;border-color:#424855;min-height:86px}.filecard.active{background:#173f3d;border-color:#42cdbd}.filecard small{color:#afb7c7}.workspace{display:contents}.previewbox{grid-column:2;grid-row:2;min-width:0}.aside{grid-column:3;grid-row:2;max-height:68vh;overflow:auto}.previewbox,.aside,.editor,.aspect-bar,.viewer-controls{background:#1b1d22;border-color:#333742;border-radius:9px}.stage{height:43vh;min-height:220px;background:#090a0d;border-radius:5px}#empty{inset:0;display:flex;flex-direction:column;justify-content:center;background:#14171d}label.field,.checkline,.aside summary,.titleline strong,.transport output,.info,.hint,.mousehint,#status,.progressdetail,.statline,.viewer-controls output{color:#c2cbda}.field input,.field select,button{background:#292e38;color:#ecf1f9;border-color:#434a58}button.primary,button.save{font-size:14px;padding:11px}button.save{background:#22b8a7;color:#052a26}.green-panel,.mousehint,.statline,.warning{background:#232a32;border-color:#45525e}.aside .info[style]{background:#242b34!important}.bottom-video-cards{grid-column:1/-1;margin:0}.bottom-video-cards .editor{background:#1b1d22}footer{grid-column:1/-1;padding:4px}.timeline{grid-column:1/-1;background:#1b1d22;border:1px solid #363c48;border-radius:9px;padding:12px}.timeline h3{margin:0 0 10px;font-size:14px}.trackrow{display:grid;grid-template-columns:115px minmax(0,1fr);align-items:center;margin:7px 0;font-size:12px;direction:rtl}.tracklane{height:34px;background:#111318;position:relative;direction:ltr;overflow:hidden;border-radius:5px;cursor:pointer}.clip{height:100%;position:absolute;background:#30578f;border:1px solid #6b9de3;border-radius:4px;text-align:center;padding:7px;overflow:hidden;white-space:nowrap;color:white;font-size:12px}.clip.studio{background:#216b61;border-color:#43c7b4}.playhead{position:absolute;width:2px;height:100%;background:#fff;top:0;pointer-events:none;z-index:3}.timelinehint{font-size:12px;color:#9faabc}.seattools{display:flex;gap:8px;margin:8px 0}.seattools button{flex:1;font-size:12px}#savePanel{color-scheme:light}.bottom-video-cards details>summary{cursor:pointer;padding:10px;color:#b6c2d5}
+@media(max-width:1050px){main{grid-template-columns:160px minmax(0,1fr) 250px}.aside{padding:8px}.imports{padding:8px}}@media(max-width:760px){main{display:flex;flex-direction:column}.imports{display:grid;grid-template-columns:repeat(2,1fr);order:2}.previewbox{order:1}.aside{order:4;max-height:400px}.timeline{order:3}.bottom-video-cards{order:5}footer{order:6}.stage{height:36vh}header{order:0}.filecard{min-height:65px}}
+
+#stageInner #studioVideo{position:absolute;inset:0;width:100%;height:100%;opacity:.02;z-index:0;pointer-events:none;object-fit:contain}
+#nativePreview{display:none;width:100%;height:100%;min-height:220px;object-fit:contain;background:#000}
+#previewMessage{color:#ffc482;font-size:13px;line-height:1.8;padding:6px;min-height:28px}
+#logoBox{display:none;position:absolute;border:2px solid #73e7d2;z-index:6;cursor:move;touch-action:none}#logoBox.active{display:block}#logoBox .handle{position:absolute;right:-8px;bottom:-8px;width:16px;height:16px;border-radius:50%;background:#fff;cursor:nwse-resize}
+.movieTile{display:block;width:100%;height:64px;object-fit:contain;background:#161819;margin-top:5px;pointer-events:none}#cueEditor{max-height:220px;overflow:auto}#cueEditor label{display:flex;align-items:center;gap:.4em}#cueEditor input{min-width:0;flex:1}#stage{direction:ltr}#viewerZoomLabel{align-self:center}#cleanupCursor{position:absolute;z-index:10;border:1px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #171717;transform:translate(-50%,-50%);pointer-events:none;box-sizing:border-box}#cleanupCursor[hidden]{display:none}#stageInner.cleaning,#stageInner.cleaning *{cursor:crosshair!important}#cleanupTools label{display:block;margin:8px 0}</style>
+</head>
+<body>
+<main>
+<header><div><h1>استودیوی ابراهیمی | نسخهٔ ۷</h1><p>۱. استودیو را وارد کنید   ←   ۲. گوینده را اضافه کنید   ←   ۳. جای صندلی را تنظیم کنید</p></div><button id="quitDesktop" type="button">بستن برنامه</button></header>
+<div class="imports">
+<button class="filecard" id="studioCard" type="button"><strong>۱. ویدیوی استودیو</strong><small id="studioName">لایهٔ زیرین — عکس یا ویدیو</small></button>
+<button class="filecard" id="mainCard" type="button"><strong>۲. ویدیوی گوینده</strong><small id="mainName">انتخاب از گالری یا لپ‌تاپ</small></button>
+<label class="filecard" id="introCard"><strong>۳. ویدیوی آغاز</strong><small id="introName">ویدیو یا عکس از گالری</small><input id="introFile" type="file" accept="image/*,video/*"></label>
+<label class="filecard" id="outroCard"><strong>۴. ویدیوی پایان</strong><small id="outroName">ویدیو یا عکس از گالری</small><input id="outroFile" type="file" accept="image/*,video/*"></label>
+<label class="filecard" id="logoCard"><strong>۵. لوگو</strong><small id="logoName">PNG یا تصویر لوگو</small><input id="logoFile" type="file" accept="image/*"></label>
+</div>
+<div class="workspace">
+<section class="previewbox">
+<div class="aspect-bar" aria-label="تنظیم ابعاد پلیر">
+<label class="field">شکل پلیر <select id="ratio"><option value="16:9">افقی ۱۶:۹ — یوتیوب</option><option value="9:16">عمودی ۹:۱۶ — ریلز</option><option value="1:1">مربع ۱:۱</option><option value="custom">اندازه دلخواه</option></select></label>
+<div class="custom-size" id="customSize" hidden><label class="field">عرض (پیکسل)<input id="customWidth" type="number" min="100" max="3840" step="2" value="800"></label><label class="field">ارتفاع (پیکسل)<input id="customHeight" type="number" min="100" max="3840" step="2" value="540"></label></div>
+<span id="frameDimensions">۱۹۲۰ × ۱۰۸۰</span>
+</div>
+<div class="seattools" aria-label="زوم پیش‌نمایش"><button id="zoomIn">＋ زوم</button><output id="viewerZoomLabel">۱۰۰٪</output><button id="zoomOut">− زوم</button><button id="zoomReset">اندازهٔ اصلی</button></div><div class="stage" id="stage"><video id="nativePreview" controls playsinline preload="auto"></video><div id="stageSize"><div id="stageInner"><canvas id="screen" width="960" height="540"></canvas><div id="cleanupCursor" aria-hidden="true" hidden></div><div id="speakerBox"><div class="handle br" title="تغییر اندازه گوینده"></div></div><div id="logoBox"><div class="handle br" title="تغییر اندازه لوگو"></div></div><div id="empty"><h2>ابتدا استودیو را انتخاب کنید</h2><p>سپس ویدیوی گوینده روی استودیو قرار می‌گیرد.</p></div></div></div></div>
+
+<div class="seattools"><button id="smartWhiteQuick" type="button" aria-pressed="false">✨ حذف خودکار سفیدی اطراف — بدون موس</button></div>
+<div class="seattools"><button id="showComposite" type="button">نمایش استودیو + گوینده</button><button id="studioOnly" type="button">بررسی لایهٔ استودیو</button><button id="naturalFace" type="button">حذف فیلتر چهره</button></div><div id="previewMessage" role="status">استودیو یا ویدیوی گوینده را انتخاب کنید.</div><div id="conversionTools" hidden><button id="cancelConversion" type="button">لغو تبدیل</button></div><div class="seattools"><button id="nativeToggle" type="button">پخش مستقیم فایل</button><button id="nativeStudio" type="button">نمایش مستقیم استودیو</button></div><div class="seattools"><button type="button" id="deskPlace">جابه‌جایی هوشمند پشت میز</button><button type="button" id="speechQuick">زیرنویس فارسی از صدای گوینده</button><button id="chairAI">تشخیص هوشمند صندلی</button><span id="chairMsg" role="status"></span><button id="pickSeat">⌖ انتخاب جای صندلی در تصویر</button><button id="resetSeat">تنظیم اولیهٔ گوینده</button></div><div id="deskMsg" role="status"></div><div id="deskAdjust" hidden><label>ارتفاع سطح میز <input id="deskDepth" type="range" min="10" max="97" value="70"><output id="depthLabel"></output></label><button id="deskOff">برداشتن حالت پشت میز</button></div><div class="transport"><button id="playBtn" type="button">▶</button><input id="seek" aria-label="نوار زمان" type="range" min="0" max="1000" value="0"><output id="clock">00:00 / 00:00</output></div>
+
+</section>
+<aside class="aside">
+<button id="exportBtn" class="save" disabled>تنظیمات ذخیره ویدیو</button>
+<details id="smartWhitePanel" open><summary>حذف هوشمند سفیدی • بدون اینترنت</summary>
+<label class="field">لایهٔ مورد نظر<select id="whiteLayer"><option value="main">ویدیوی گوینده</option><option value="studio">تصویر یا ویدیوی استودیو</option></select></label>
+<button id="smartWhite" type="button" aria-pressed="false">✨ حذف هوشمند سفیدی — یک کلیک</button>
+<label class="field">شدت حذف سفیدی <output id="whiteStrengthValue">55٪</output><input id="whiteStrength" type="range" min="20" max="90" value="55" step="5"></label>
+<button id="whiteOff" type="button" disabled>برگشت حذف خودکار سفیدی</button>
+<p class="info">سفیدی و خاکستری روشنِ متصل به لبه‌ها خودکار تشخیص داده می‌شود. اگر لباس سفید هم حذف شد، شدت را کم کنید یا نتیجه را برگردانید.</p>
+<p id="whiteMessage" class="info" role="status" aria-live="polite"></p></details>
+<details open><summary>زیرنویس گوینده</summary><button id="transcribe">ساخت زیرنویس از صدای ویدیو</button><label><input type="checkbox" id="showCues" checked> نمایش زیرنویس در پلیر و خروجی</label><button type="button" id="stopSpeech" hidden>توقف ساخت زیرنویس</button><p id="speechMessage" role="status"></p><div id="cueEditor"></div></details><label class="field"><span><input id="autoNatural" type="checkbox" checked> فیلتر طبیعی خودکار با مدل آنلاین</span></label><button type="button" id="smartPortrait" class="primary" aria-pressed="false" aria-describedby="portraitStatus">بهبود هوشمند چهره</button>
+<details open><summary>فیلتر زیبایی چهره، مو و ریش</summary><small>بهبود هوشمند چهره را روشن کنید و شدت هر فیلتر را تنظیم کنید.</small><label class="field">نرمی پوست صورت<input id="smoothFace" type="range" min="0" max="100" value="0"><output id="smoothFaceValue">۰٪</output></label><label class="field">وضوح موی سر<input id="styleHair" type="range" min="0" max="100" value="0"><output id="styleHairValue">۰٪</output></label><label class="field">وضوح ریش<input id="styleBeard" type="range" min="0" max="100" value="0"><output id="styleBeardValue">۰٪</output></label></details><p class="info" id="portraitStatus" role="status" hidden></p>
+<button type="button" id="referenceChoose" aria-describedby="referenceStatus">افزودن عکس مرجع چهره</button>
+<input type="file" id="referenceFile" accept="image/jpeg,image/png,image/webp,image/avif,image/bmp,image/heic,image/heif" hidden>
+<div id="referenceSelected" hidden><img id="referenceThumb" alt="عکس مرجع انتخاب شده"><span id="referenceName" dir="auto"></span><button id="referenceRemove" type="button" aria-label="حذف عکس مرجع چهره">حذف عکس</button></div>
+<p class="info" id="referenceStatus" role="status" hidden></p>
+<button type="button" id="autoRemoveQuick" class="primary" style="background:linear-gradient(110deg,#126f78,#178552);border:0">🤖 حذف هوشمند پس‌زمینه — یک کلیک</button>
+<button type="button" id="showOriginalVideo" style="background:#fff8e9;border:1px solid #d4af66;color:#5c481c">👁 نمایش فوری ویدیوی اصلی</button>
+<button id="cancelBtn" class="cancel" style="display:none">لغو ذخیره</button>
+<p id="status" role="status">ابتدا استودیو و سپس ویدیوی گوینده را انتخاب کنید.</p>
+<div class="barwrap"><div class="bar" id="progressBar"></div></div><div class="progressdetail"><span id="percent">۰٪</span><span id="processedTime">پردازش: 00:00 / 00:00</span></div>
+<div id="result"><a class="download" id="downloadResult">دانلود ویدیوی آماده</a><div class="info" id="resultInfo"></div></div>
+<details open><summary>نور و وضوح تصویر</summary>
+<label class="field">روشنایی چهره <output id="faceBrightnessText">120٪</output><input id="faceBrightness" type="range" min="90" max="170" step="5" value="100"></label>
+<label class="field">کنتراست چهره <output id="faceContrastText">105٪</output><input id="faceContrast" type="range" min="90" max="140" step="5" value="100"></label>
+<label class="field">روشنایی کلی صحنه <output id="sceneBrightnessText">105٪</output><input id="sceneBrightness" type="range" min="90" max="150" step="5" value="100"></label>
+</details>
+<details open><summary>حذف پس‌زمینهٔ گوینده</summary>
+<label class="field">حذف پشت‌سر گوینده<select id="compose"><option value="ai">هوشمند — دیوار و تصویر پشت‌سر (AI)</option><option value="green">فقط کروماکی سبزِ تمام تصویر</option><option value="blue">فقط کروماکی آبیِ تمام تصویر</option><option value="overlay" selected>بدون حذف پشت‌سر</option><option value="full">ویدیو تمام صفحه</option></select></label>
+<div class="green-panel">
+ <label class="checkline"><input type="checkbox" id="frontGreen"><strong>حذف پرده سبز پیش‌رو (در صورت وجود پردهٔ سبز)</strong></label>
+ <label class="field">شروع محدودهٔ پیش‌رو از ارتفاع تصویر <output id="greenRegionText">۶۰٪</output><input type="range" id="greenRegion" min="0" max="95" step="5" value="60"></label>
+ <label class="field">قدرت حذف پرده سبز <output id="greenStrengthText">۶۰٪</output><input id="frontStrength" type="range" min="10" max="95" step="5" value="60"></label>
+ <div class="actions"><button type="button" id="sampleGreen">🎯 انتخاب رنگ سبز با موس</button><button type="button" id="resetGreen">بازگشت به سبز اصلی</button><span id="greenSwatch" title="رنگ منتخب پرده" style="width:32px;height:32px;background:#00df00;border:2px solid #fff;box-shadow:0 0 0 1px #8fa;border-radius:7px;display:inline-block"></span></div>
+ <p class="info">پردهٔ سبز پیش‌رو و پس‌زمینهٔ پشت‌سر، جداگانه تنظیم می‌شوند.</p>
+</div>
+<label class="field">زوم / اندازه گوینده <output id="personScaleText">95٪</output><input id="personScale" type="range" min="5" max="220" value="95"></label>
+<label class="field">جای افقی <input id="personX" type="range" min="0" max="100" value="50"></label>
+<label class="field">جای عمودی <input id="personY" type="range" min="0" max="100" value="50"></label>
+<label class="field">قدرت حذف رنگ <input id="keyTolerance" type="range" min="10" max="85" value="40"></label>
+<label class="field">نرمی لبهٔ حذف هوشمند <input id="edgeSoftness" type="range" min="0" max="3" value="0" step="1"></label>
+<label class="field">حذف سفیدی اطراف چهره <output id="matteTrimText">6</output><input id="matteTrim" type="range" min="0" max="20" value="0" step="1"></label>
+<button type="button" id="autoRemove" class="primary" style="background:linear-gradient(110deg,#126f78,#178552);border:0;margin:6px 0 9px">🤖 حذف هوشمند خودکار با یک کلیک</button>
+<p class="info" id="autoRemoveStatus" role="status">ویدیو را انتخاب کنید؛ این دکمه حذف پشت‌سر و پردهٔ سبز جلوی گوینده را بررسی و تنظیم می‌کند. گوینده باقی می‌ماند.</p>
+<button type="button" id="cleanupStart" aria-pressed="false">حذف سفیدی و لکه با ماوس</button><div id="cleanupTools" hidden><label class="field">لایهٔ مورد نظر<select id="cleanupLayer"><option value="main">ویدیوی گوینده</option><option value="studio">تصویر یا ویدیوی استودیو</option></select></label><label class="field">روش حذف<select id="cleanupMode"><option value="brush">قلم پاک‌کن با کشیدن ماوس</option><option value="color">انتخاب رنگ سفیدی یا لکه با کلیک</option></select></label><label class="field">اندازهٔ محدوده <output id="cleanupRadiusValue">۳٪</output><input id="cleanupRadius" type="range" min="5" max="120" value="30" step="5"></label><label class="field">محدودهٔ تشخیص رنگ<input id="cleanupTolerance" type="range" min="10" max="90" value="45" step="5"></label><button type="button" id="cleanupUndo" disabled>برگشت آخرین حذف</button><button type="button" id="cleanupReset" disabled>برگشت همهٔ حذف‌ها</button></div><p id="cleanupMessage" class="info" role="status"></p><button type="button" id="activateAI" class="primary">فعال‌سازی دستی حذف هوشمند پس‌زمینه</button>
+<p class="info" id="aiStatus">حذف هوشمند به اینترنت برای دریافت فایل‌های مدل نیاز دارد؛ ویدیوی شما روی همین دستگاه پردازش می‌شود.</p>
+<p class="info" style="background:#e6f7f2;border-radius:8px;padding:9px">برای حفظ صورت و ریش، کیفیت 1080p را انتخاب کنید؛ فیلتر زیباسازی اعمال نمی‌شود.</p><div class="actions"><button type="button" id="fitDesk">تنظیم سریع پشت میز</button></div><div class="mousehint">اگر دور چهره سفید یا هاله بود، گزینهٔ «حذف سفیدی اطراف چهره» را بالا ببرید. لوگو با موس جابه‌جا می‌شود. برای قرار گرفتن پشت میز، از «تنظیم سریع پشت میز» استفاده کنید.</div>
+</details>
+<details><summary>جای لوگو و اندازهٔ آن</summary><label class="checkline"><input type="checkbox" id="showLogo" checked><strong>نمایش لوگو</strong></label><label class="field">اندازه لوگو <output id="logoScaleText">22٪</output><input id="logoScale" type="range" min="5" max="50" value="22"></label><label class="field">جای افقی لوگو <input id="logoX" type="range" min="0" max="100" value="73"></label><label class="field">جای عمودی لوگو <input id="logoY" type="range" min="0" max="100" value="78"></label><p class="info">لوگو را انتخاب کنید، روی آن در پلیر کلیک کنید؛ سپس با موس بکشید یا از گوشه بزرگ و کوچک کنید. روی فضای خالی کلیک کنید تا کادر مخفی شود.</p></details><details><summary>تنظیم صدا</summary><label class="field">بلندی صدای ویدیوی اصلی <input id="volume" type="range" min="0" max="100" value="100"></label><p class="info">صدای ویدیوی اصلی و کلیپ‌های آغاز و پایان در بخش مربوط به خود ضبط می‌شود؛ عکس‌ها بی‌صدا هستند.</p></details>
+<p class="info warning">مدل هوشمند در اولین استفاده اینترنت لازم دارد. برای خروجی، صفحه را باز نگه دارید. فرمت MP4 یا WebM بسته به مرورگر است.</p>
+</aside></div>
+<!-- ویدیوهای آغاز و پایان: بخش مستقل در پایینِ تمام برنامه -->
+<section class="timeline"><h3>تایم‌لاین • لایهٔ گوینده بالای استودیو</h3><div class="trackrow"><span>گوینده ↑</span><div class="tracklane" id="speakerLane"><div class="clip" id="speakerClip"></div><i class="playhead"></i></div></div><div class="trackrow"><span>استودیو ↓</span><div class="tracklane" id="studioLane"><div class="clip studio" id="studioClip"></div><i class="playhead"></i></div></div><div class="timelinehint">برای رفتن به زمان دلخواه، روی نوار کلیک کنید. مدت پروژه از ویدیوی گوینده تعیین می‌شود؛ استودیوی کوتاه‌تر تکرار می‌شود.</div></section><section class="bottom-video-cards"><details><summary>تنظیمات ویدیوهای آغاز و پایان</summary>
+<div class="editor">
+<div class="titleline"><strong>ویدیوهای آغاز و پایان</strong><small id="originalDuration">مدت فایل اصلی: 00:00</small></div>
+<div class="fields">
+<label class="field">مدت ویدیوی آغاز (ثانیه)<input id="introLength" type="number" min="0" max="600" step="0.5" value="3"></label>
+<label class="field">مدت ویدیوی پایان (ثانیه)<input id="outroLength" type="number" min="0" max="600" step="0.5" value="3"></label>
+<label class="field">متن آغاز (اختیاری)<input id="introText" placeholder="عنوان آغاز"></label>
+<label class="field">متن پایان (اختیاری)<input id="outroText" placeholder="عنوان پایان"></label>
+</div>
+<div class="fields"><label class="field">نمایش تصویر جلد در آغاز (ثانیه)<input id="coverHold" type="number" min="0.5" max="3" step="0.25" value="1.25"></label><label class="field">جلد ویدیو <button type="button" id="saveCover" disabled>دانلود تصویر جلد JPG</button></label></div>
+<p class="hint">جلد، اولین تصویرِ کادر آغاز است. هنگام ذخیره، همین تصویر در ثانیهٔ نخست ویدیو قرار می‌گیرد؛ گالری و واتساپ ممکن است پیش‌نمایش را طبق تنظیمات خود انتخاب کنند.</p>
+<div class="actions"><button type="button" id="previewIntro">▶ پخش ویدیوی آغاز</button><button type="button" id="clearIntro" class="cancel">حذف آغاز</button><button type="button" id="previewOutro">▶ پخش ویدیوی پایان</button><button type="button" id="clearOutro" class="cancel">حذف پایان</button></div>
+<div class="statline" id="durationInfo">مدت ویدیوی کامل و کادرها پس از انتخاب فایل نمایش داده می‌شود.</div>
+</div>
+</details></section>
+<footer>استودیوی ابراهیمی — فایل مستقل HTML | هیچ ویدیویی به سرور ارسال نمی‌شود</footer>
+</main>
+
+<dialog id="engineDialog" aria-labelledby="engineTitle">
+<h2 id="engineTitle">مبدل ویدیو لازم است</h2>
+<p>برای بازکردن این فایل، برنامه یک‌بار حدود ۳۴ مگابایت FFmpeg دریافت می‌کند. تبدیل روی لپ‌تاپ شما انجام می‌شود.</p>
+<form method="dialog"><button value="download">دریافت مبدل و ادامه</button><button value="cancel" autofocus>لغو</button></form>
+</dialog>
+<div id="saveDialog" role="dialog" aria-modal="true" aria-labelledby="saveDialogTitle" aria-hidden="true">
+ <section id="savePanel">
+  <h2 id="saveDialogTitle">تنظیم و ذخیرهٔ ویدیو</h2>
+  <p class="dlgsub">نام فایل، کیفیت، حجم و پوشهٔ ذخیره را انتخاب کنید. پس از تکمیل پردازش، فایل ذخیره می‌شود.</p>
+  <div class="fields" id="saveFields">
+   <label class="field full">نام فایل ویدیو<input id="outputName" type="text" value="Ibrahimi_Studio" maxlength="120" placeholder="نام ویدیو بدون پسوند"></label>
+   <label class="field">رزولوشن خروجی<select id="resolution"><option value="360">360p — بسیار کم‌حجم</option><option value="480">480p — کم‌حجم</option><option value="720">720p — متوسط</option><option value="1080" selected>1080p — کیفیت بالا</option><option value="1440">1440p — 2K</option><option value="2160">2160p — 4K</option></select></label>
+   <label class="field">کیفیت تصویر<select id="quality"><option value="small">حجم کمتر</option><option value="balanced">متعادل</option><option value="high" selected>کیفیت بالا</option></select></label>
+   <label class="field">نرخ فریم<select id="fps"><option value="25" selected>25 فریم</option><option value="30">30 فریم</option></select></label>
+   <label class="field">حجم هدف (مگابایت — اختیاری)<input id="targetMB" type="number" min="1" max="50000" step="1" placeholder="خودکار بر اساس کیفیت"></label>
+  </div>
+  <div class="folderline"><button id="pickSaveFolder" type="button">انتخاب پوشهٔ ذخیره</button><span id="folderLabel">پوشهٔ پیش‌فرض دانلود مرورگر</span></div>
+  <div class="estimate" id="sizeEstimate">حجم تخمینی پس از انتخاب ویدیو نمایش داده می‌شود.</div>
+  <p class="info">حجم هدف تقریبی است و کاهش حجم زیاد ممکن است کیفیت را کاهش دهد. در حالت «اندازه دلخواه»، رزولوشن با عرض و ارتفاع انتخاب‌شدهٔ پلیر تعیین می‌شود.</p>
+  <div id="dialogProgressWrap"><div class="track"><div id="dialogProgress"></div></div><div id="dialogProgressText">۰٪ — 00:00 / 00:00</div></div>
+  <p id="dialogMessage" role="status"></p>
+  <div class="modalbuttons"><button id="startSave" type="button">شروع پردازش و ذخیره</button><button id="dialogCancelWork" type="button" class="cancel">لغو پردازش</button><button id="closeSaveDialog" type="button">بستن</button></div>
+ </section>
+</div>
+<video id="player" preload="auto" playsinline></video><video id="studioVideo" preload="auto" playsinline muted loop></video><video id="introVideo" preload="auto" playsinline loop></video><video id="outroVideo" preload="auto" playsinline loop></video>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),main=$('player'),bgVideo=$('studioVideo'),introVideo=$('introVideo'),outroVideo=$('outroVideo'),canvas=$('screen'),stage=$('stage'),stageSize=$('stageSize'),stageInner=$('stageInner'),speakerBox=$('speakerBox'),logoBox=$('logoBox'),ctx=canvas.getContext('2d',{alpha:false}),buf=document.createElement('canvas'),bctx=buf.getContext('2d',{willReadFrequently:true});
+// The video stays behind the preview canvas and remains eligible for decoding.
+stageInner.insertBefore(main,canvas);stageInner.insertBefore(bgVideo,canvas);
+const S={main:null,studio:null,studioStill:null,studioOnly:false,intro:null,introStill:null,outro:null,logo:null,pos:0,playing:false,exporting:false,cancelled:false,rec:null,audioCtx:null,source:null,gain:null,dest:null,exportURL:null,oldURLs:[],lastTick:0,boxVisible:false,logoVisible:false};
+const drag={mode:null,startX:0,startY:0,startPX:50,startPY:85,startScale:80,aspect:1,startRect:null};
+const logoDrag={mode:null,startX:0,startY:0,startRect:null};
+let viewerZoom=1;
+const frontKey={picking:false,rgb:[0,223,0]};
+const sampleCanvas=document.createElement('canvas'),sampleCtx=sampleCanvas.getContext('2d',{willReadFrequently:true});sampleCanvas.width=1;sampleCanvas.height=1;
+let timer=0,loopId=0,exportStart=0;
+// Segmentation model is downloaded once on demand; all actual video frames remain local.
+const ai={ready:false,loading:null,engine:null,mask:null,maskPixels:null,frameVersion:0,lastTime:-1,lastRequest:0,inFlight:null,sent:null};
+const matchedFrame=document.createElement('canvas');
+const matchedCtx=matchedFrame.getContext('2d');
+const aiCanvas=document.createElement('canvas'),aiCtx=aiCanvas.getContext('2d',{alpha:true});
+const maskCanvas=document.createElement('canvas'),maskCtx=maskCanvas.getContext('2d',{alpha:true,willReadFrequently:true});
+const aiCdns=['https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/','https://unpkg.com/@mediapipe/selfie_segmentation@0.1/'];
+function aiNotice(t,error=false){$('aiStatus').textContent=t;$('aiStatus').style.color=error?'#ab3d2d':'#28566a'}
+function loadScript(url){return new Promise((resolve,reject)=>{const sc=document.createElement('script');let done=false;const timer=setTimeout(()=>finish(Error('دریافت فایل هوش مصنوعی بیش از حد طول کشید.')),18000);function finish(err){if(done)return;done=true;clearTimeout(timer);if(err){sc.remove();reject(err)}else resolve()}sc.src=url;sc.crossOrigin='anonymous';sc.onload=()=>finish();sc.onerror=()=>finish(Error('دریافت مدل حذف پس‌زمینه ناموفق بود. اتصال اینترنت را بررسی کنید.'));document.head.appendChild(sc)})}
+async function ensureAI(){
+ if(ai.ready)return true;
+ if(ai.loading)return ai.loading;
+ aiNotice('در حال دریافت مدل حذف هوشمند...');$('activateAI').disabled=true;
+ ai.loading=(async()=>{
+   await waitVideoPicture(main);
+   if(!window.SelfieSegmentation){let loadError;for(const root of aiCdns){try{await loadScript(root+'selfie_segmentation.js');break}catch(e){loadError=e}}if(!window.SelfieSegmentation)throw loadError||Error('کتابخانهٔ تشخیص گوینده دریافت نشد.')}
+   let lastError=null;
+   for(const root of aiCdns){
+    let seg,active=true;
+    try{
+    seg=new window.SelfieSegmentation({locateFile:(name)=>root+name});
+    seg.setOptions({modelSelection:(main.videoWidth>=main.videoHeight?1:0),selfieMode:false});
+    seg.onResults(result=>{
+     const frame=ai.sent;
+     if(!active||!frame||frame.engine!==seg||!result.segmentationMask)return;
+     if(frame.photo){frame.matte=readReferencePersonMatte(result.segmentationMask,frame.width,frame.height);return;}
+     if(frame.clip!==S.main||switchingSource)return;
+     const scale=Math.min(1,1280/Math.max(frame.width,frame.height));
+     const w=Math.max(2,Math.round(frame.width*scale)),h=Math.max(2,Math.round(frame.height*scale));
+     if(maskCanvas.width!==w||maskCanvas.height!==h){maskCanvas.width=w;maskCanvas.height=h;}
+     maskCtx.clearRect(0,0,w,h);
+     maskCtx.drawImage(result.segmentationMask,0,0,w,h);
+     const pixels=maskCtx.getImageData(0,0,w,h),data=pixels.data;
+     let min=255,max=0;
+     const step=Math.max(4,Math.floor(data.length/2048/4)*4);
+     for(let i=3;i<data.length;i+=step){min=Math.min(min,data[i]);max=Math.max(max,data[i]);}
+     if(max-min<12){
+      for(let i=0;i<data.length;i+=4){
+       data[i+3]=Math.min(data[i+3],Math.round((data[i]+data[i+1]+data[i+2])/3));
+       data[i]=data[i+1]=data[i+2]=255;
+      }
+      maskCtx.putImageData(pixels,0,0);
+     }
+     let total=0,person=0;
+     for(let i=3;i<data.length;i+=step){total++;if(data[i]>64)person++;}
+     if(!total||person/total<.008||person/total>.995){
+      ai.mask=null;ai.maskPixels=null;
+      aiNotice('گوینده در این فریم پیدا نشد. تصویر اصلی نمایش داده می‌شود.',true);
+      return;
+     }
+     if(matchedFrame.width!==frame.width||matchedFrame.height!==frame.height){matchedFrame.width=frame.width;matchedFrame.height=frame.height;}
+     matchedCtx.drawImage(result.image||main,0,0,frame.width,frame.height);
+     ai.mask=maskCanvas;ai.maskPixels=pixels;ai.lastTime=frame.time;ai.frameVersion++;
+     if(!S.playing&&!S.exporting)render();
+    });
+    ai.mask=null;ai.maskPixels=null;
+    await runSegmentation(seg);
+    if(!ai.mask)throw Error('مدل تصویر گوینده را تشخیص نداد. روی فریمی که چهره معلوم است دوباره امتحان کنید.');
+    ai.engine=seg;ai.ready=true;aiNotice('حذف هوشمند فعال شد؛ تصویر گوینده حفظ و پشت‌سر حذف می‌شود.');
+    $('activateAI').textContent='حذف هوشمند فعال ✓';render();return true;
+    }catch(e){lastError=e;active=false;try{await seg?.close?.()}catch{}}
+   }
+   throw lastError||Error('مدل حذف هوشمند اجرا نشد.');
+ })().catch(e=>{aiNotice('خطا: '+(e.message||String(e)),true);if(!whiteCleanup.main.enabled)status('حذف هوشمند فعال نشد؛ اینترنت لازم است. پردهٔ سبز/آبی بدون اینترنت کار می‌کند.',true);ai.ready=false;return false}).finally(()=>{$('activateAI').disabled=false;ai.loading=null});
+ return ai.loading;
+}
+
+// The person matte and the face detector both run on this device.
+let edgeOnly=false;
+const portrait = {
+ enabled:false, starting:false, detector:null, loading:null, failed:false, detecting:false,
+ detection:null, detectorTime:-Infinity, detectorWall:0, clipEpoch:0, revision:0,
+ prepared:null, paintKey:null, tone:null, toneTime:-1, before:null
+};
+const portraitReadback=document.createElement('canvas');
+const portraitReadCtx=portraitReadback.getContext('2d',{willReadFrequently:true});
+const portraitMask=document.createElement('canvas');
+const portraitMaskCtx=portraitMask.getContext('2d');
+const detectorFrame=document.createElement('canvas');
+const faceRoots=[
+ 'https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4.1646425229/',
+ 'https://unpkg.com/@mediapipe/face_detection@0.4.1646425229/'
+];
+
+function portraitStatus(message){$('portraitStatus').textContent=message;$('portraitStatus').hidden=!message;}
+function resetPortraitTracking(){
+ portrait.clipEpoch++;
+ portrait.detection=null;
+ portrait.detectorTime=-Infinity;
+ portrait.detectorWall=0;
+ portrait.prepared=null;
+ portrait.paintKey=null;
+ portrait.tone=null;
+ portrait.toneTime=-1;
+ invalidateFaceReference();
+}
+function setPortraitEnabled(enabled){
+ portrait.enabled=enabled;
+ if(faceReference.asset){
+  faceReference.pausedByUser=!enabled;
+  if(!enabled)referenceMessage('عکس مرجع آماده است. برای اعمال آن «بهبود هوشمند چهره» را بزنید.');
+ }
+ resetPortraitTracking();
+ $('smartPortrait').setAttribute('aria-pressed',String(enabled));
+ $('smartPortrait').textContent=enabled?'✓ بهبود هوشمند چهره فعال است':'بهبود هوشمند چهره';
+ if(!enabled){portrait.before=null;portraitStatus('');}
+}
+function neutralFaceControls(){
+ for(const id of ['faceBrightness','faceContrast']){
+  $(id).value=100;
+  $(id+'Text').textContent='100٪';
+ }
+ $('edgeSoftness').value=0;
+ $('matteTrim').value=0;
+ $('matteTrimText').textContent='0';
+}
+
+// Values are 0–255. Preserving chroma and protecting highlights keeps skin natural.
+function portraitLuma(pixels, offset){return .2126*pixels[offset]+.7152*pixels[offset+1]+.0722*pixels[offset+2];}
+
+function guessFaceFromPerson(alpha, width, height){
+ // Estimate the crown from the person model when a face result is unavailable.
+ const rows=[];
+ let first=-1,last=-1;
+ for(let y=0;y<height;y+=2){
+  let left=width,right=-1,solid=0;
+  for(let x=0;x<width;x+=2){
+   if(alpha[4*(y*width+x)+3]<169)continue;
+   left=Math.min(left,x);right=x;solid++;
+  }
+  const span=right-left+2;
+  if(solid<3||solid*2<span*.62)continue;
+  rows.push({y,left,right,span});
+  if(first<0)first=y;
+  last=y;
+ }
+ if(first<0||last-first<16)return null;
+ const body=last-first;
+ const crown=rows.filter(row=>row.y>=first+body*.035&&row.y<=first+body*.145);
+ if(crown.length<2)return null;
+ const middle=crown.sort((a,b)=>a.span-b.span)[Math.floor(crown.length/2)];
+ const faceWidth=clamp(middle.span*.87,8,width*.82);
+ const faceHeight=clamp(faceWidth*1.20,10,Math.min(height*.67,body*.52));
+ return {x:(middle.left+middle.right)/2-faceWidth/2,y:first+faceHeight*.22,w:faceWidth,h:faceHeight};
+}
+
+function faceBounds(detection){
+ const b=detection?.boundingBox;
+ if(!b)return null;
+ const x=b.xMin??b.xmin??(b.xCenter-b.width/2);
+ const y=b.yMin??b.ymin??(b.yCenter-b.height/2);
+ const w=b.width,h=b.height;
+ if(![x,y,w,h].every(Number.isFinite)||w<.015||h<.015||w>1.08||h>1.08)return null;
+ return {x,y,w,h};
+}
+
+async function getPortraitDetector(){
+ if(portrait.detector)return portrait.detector;
+ if(portrait.loading)return portrait.loading;
+ if(portrait.failed)return null;
+ portrait.loading=(async()=>{
+  for(const root of faceRoots){
+   let detector;
+   try{
+    if(!window.FaceDetection)await loadScript(root+'face_detection.js');
+    detector=new window.FaceDetection({locateFile:file=>root+file});
+    detector.setOptions({model:'full',minDetectionConfidence:.5,selfieMode:false});
+    if(detector.initialize)await portraitTimeout(detector.initialize(),16000);
+    portrait.detector=detector;
+    return detector;
+   }catch(error){
+    console.info('Face detector unavailable from this source.',error);
+    if(detector?.close)void Promise.resolve().then(()=>detector.close()).catch(()=>{});
+   }
+  }
+  portrait.failed=true;
+  return null;
+ })().finally(()=>{portrait.loading=null;});
+ return portrait.loading;
+}
+function portraitTimeout(work, timeout){
+ let timer;
+ const deadline=new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('مدل چهره آماده نشد.')),timeout);});
+ return Promise.race([work,deadline]).finally(()=>clearTimeout(timer));
+}
+
+function detectPortraitLater(frame, time, personBox, width, height){
+ const now=performance.now();
+ if(portrait.detecting||portrait.failed||Math.abs(time-portrait.detectorTime)<.38||(portrait.detectorWall&&now-portrait.detectorWall<330))return;
+ portrait.detecting=true;
+ portrait.detectorTime=time;
+ portrait.detectorWall=now;
+ const epoch=portrait.clipEpoch;
+ const scale=Math.min(1,512/Math.max(frame.width,frame.height));
+ detectorFrame.width=Math.max(1,Math.round(frame.width*scale));
+ detectorFrame.height=Math.max(1,Math.round(frame.height*scale));
+ detectorFrame.getContext('2d').drawImage(frame,0,0,detectorFrame.width,detectorFrame.height);
+ void (async()=>{
+  try{
+   const detector=await getPortraitDetector();
+   if(!detector||epoch!==portrait.clipEpoch||!portrait.enabled)return;
+   let results=[];
+   detector.onResults(result=>{results=result.detections??[];});
+   await portraitTimeout(detector.send({image:detectorFrame}),14000);
+   if(epoch!==portrait.clipEpoch||!portrait.enabled)return;
+   const expectedX=(personBox.x+personBox.w/2)/width;
+   const expectedY=(personBox.y+personBox.h/2)/height;
+   const boxes=results.map(faceBounds).filter(Boolean);
+   const distance=box=>Math.hypot(box.x+box.w/2-expectedX,box.y+box.h/2-expectedY);
+   const box=boxes.sort((a,b)=>distance(a)-distance(b))[0];
+   if(!box||distance(box)>.38)return;
+   const previous=portrait.detection;
+   const near=previous&&Math.abs(time-previous.time)<.7&&Math.hypot(previous.box.x-box.x,previous.box.y-box.y)<box.w*.3;
+   const smooth=near?Object.fromEntries(['x','y','w','h'].map(k=>[k,previous.box[k]*.30+box[k]*.70])):box;
+   portrait.detection={box:smooth,time};
+   portrait.revision++;
+   portrait.prepared=null;
+   if(!S.playing&&!S.exporting)render();
+  }catch(error){
+   // The person model still supplies a head estimate and the exposure adjustment.
+   portrait.failed=true;
+   console.info('Face detection could not be started.',error);
+  }finally{
+   portrait.detecting=false;
+   if(epoch!==portrait.clipEpoch&&portrait.enabled&&!S.playing&&!S.exporting){portrait.prepared=null;render();}
+  }
+ })();
+}
+
+// Compare a translucent boundary pixel to nearby samples on both sides of the matte.
+function cleanHeadBoundary(alpha,rgb,w,h,face){
+ const x0=Math.max(0,Math.floor(face.x-face.w*.50)),x1=Math.min(w,Math.ceil(face.x+face.w*1.5));
+ const y0=Math.max(0,Math.floor(face.y-face.h*.72)),y1=Math.min(h,Math.ceil(face.y+face.h*.96));
+ const source=new Uint8Array((x1-x0)*(y1-y0)),stride=x1-x0;
+ for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++)source[(y-y0)*stride+x-x0]=alpha[4*(y*w+x)+3];
+ const reach=Math.max(3,Math.min(12,Math.round(face.w*.045)));
+ const directions=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]];
+ for(let y=y0+1;y<y1-1;y++)for(let x=x0+1;x<x1-1;x++){
+  const i=(y-y0)*stride+x-x0,a=source[i],p=4*(y*w+x);
+  if(a<8||a>246||portraitLuma(rgb,p)>115)continue;
+  let outside=-1,inside=-1;
+  for(let step=1;step<=reach&&(outside<0||inside<0);step++){
+   for(const [dx,dy] of directions){
+    const xx=x+dx*step, yy=y+dy*step;
+    if(xx<x0||xx>=x1||yy<y0||yy>=y1)continue;
+    const sample=source[(yy-y0)*stride+xx-x0],offset=4*(yy*w+xx);
+    if(sample<=20&&outside<0)outside=offset;
+    if(sample>=248&&inside<0)inside=offset;
+   }
+  }
+  if(outside<0||inside<0)continue;
+  const distance=q=>Math.max(Math.abs(rgb[p]-rgb[q]),Math.abs(rgb[p+1]-rgb[q+1]),Math.abs(rgb[p+2]-rgb[q+2]));
+  const near=distance(outside),far=distance(inside);
+  if(near>=24||far<=near+14)continue;
+  const confidence=(1-smoothStep(5,24,near))*smoothStep(14,48,far-near);
+  alpha[p+3]=Math.round(a*(1-.94*confidence));
+ }
+}
+
+function refineHeadAlpha(alpha, rgb, width, height, face){
+ cleanHeadBoundary(alpha,rgb,width,height,face);
+ const center=face.x+face.w/2;
+ const x0=clamp(Math.floor(center-face.w*.91),0,width-1);
+ const x1=clamp(Math.ceil(center+face.w*.91),x0+1,width);
+ const y0=clamp(Math.floor(face.y-face.h*.77),0,height-1);
+ const y1=clamp(Math.ceil(face.y+face.h*.97),y0+1,height);
+ const bandLeft=clamp(Math.round(center-face.w*.25),x0,x1-1);
+ const bandRight=clamp(Math.round(center+face.w*.25),bandLeft+1,x1);
+ const bandWidth=bandRight-bandLeft;
+ const crownBottom=clamp(Math.round(face.y+face.h*.12),y0+1,y1);
+ let stripFrom=-1,stripTo=-1;
+ const maxThickness=Math.max(2,Math.ceil(face.h*.14));
+
+ function rowEvidence(y){
+  let foreground=0,dark=0,mean=0,darkSum=0,darkSquares=0;
+  for(let x=bandLeft;x<bandRight;x++){
+   const p=4*(y*width+x);
+   if(alpha[p+3]<134)continue;
+   const luma=portraitLuma(rgb,p);
+   const chroma=Math.max(rgb[p],rgb[p+1],rgb[p+2])-Math.min(rgb[p],rgb[p+1],rgb[p+2]);
+   foreground++;mean+=luma;
+   if(luma<57&&chroma<29){dark++;darkSum+=luma;darkSquares+=luma*luma;}
+  }
+  mean/=Math.max(1,foreground);
+  const darkMean=darkSum/Math.max(1,dark);
+  const spread=Math.sqrt(Math.max(0,darkSquares/Math.max(1,dark)-darkMean*darkMean));
+  return {cover:foreground/bandWidth,mean,dark:dark/Math.max(1,foreground),spread};
+ }
+
+ // Only remove a shallow, straight, low-texture strip at the outside of the crown.
+ // Broad or textured dark regions (hair, a hat) do not meet this test.
+ let edgeRow=y0;
+ while(edgeRow<crownBottom&&rowEvidence(edgeRow).cover<.59)edgeRow++;
+ const outer=rowEvidence(Math.min(edgeRow,height-1));
+ const mixedRows=Math.max(1,Math.ceil(face.h*.057));
+ for(let y=edgeRow;y<Math.min(crownBottom,edgeRow+mixedRows+1);y++){
+  const core=rowEvidence(y);
+  if(core.cover<.59||core.dark<.76||core.mean>51||core.spread>15||outer.mean>core.mean+33)continue;
+  for(let end=y+1;end<=Math.min(crownBottom,edgeRow+maxThickness,height-1);end++){
+   const inner=rowEvidence(end);
+   if(inner.cover>.62&&inner.mean>core.mean+25&&inner.dark<.64){
+    stripFrom=edgeRow;stripTo=end;break;
+   }
+  }
+  break;
+ }
+
+ let removed=0;
+ for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++){
+  const p=4*(y*width+x);
+  const value=alpha[p+3]/255;
+  if(value===0)continue;
+  let next=value*(.78+.22*smoothStep(.08,.75,value));
+  if(y>=stripFrom&&y<stripTo){
+   const light=portraitLuma(rgb,p);
+   const chroma=Math.max(rgb[p],rgb[p+1],rgb[p+2])-Math.min(rgb[p],rgb[p+1],rgb[p+2]);
+   if(chroma<35&&light<88){next*=smoothStep(53,88,light);removed++;}
+  }
+  alpha[p+3]=Math.round(next*255);
+ }
+ return removed;
+}
+
+function measurePortraitTone(rgb, alpha, width, height, face){
+ const centerX=face.x+face.w/2, centerY=face.y+face.h*.46;
+ const histogram=new Uint32Array(32);
+ let count=0;
+ for(let y=Math.max(0,Math.floor(centerY-face.h*.32));y<Math.min(height,centerY+face.h*.32);y+=2){
+  for(let x=Math.max(0,Math.floor(centerX-face.w*.33));x<Math.min(width,centerX+face.w*.33);x+=2){
+   const p=4*(y*width+x);
+   const light=portraitLuma(rgb,p);
+   if(alpha[p+3]<177||light<30||light>246)continue;
+   histogram[Math.floor(light/8)]++;count++;
+  }
+ }
+ if(count<6)return 0;
+ let seen=0;
+ for(let i=0;i<histogram.length;i++){
+  seen+=histogram[i];
+  if(seen>=count*.5)return clamp((115-(i*8+4))*.10,0,5);
+ }
+ return 0;
+}
+
+function preparePortrait(){
+ if((!portrait.enabled&&!edgeOnly)||!ai.maskPixels||!matchedFrame.width)return null;
+ const key=ai.frameVersion+':'+portrait.revision;
+ if(portrait.prepared?.key===key)return portrait.prepared;
+ const {width,height,data:alpha}=ai.maskPixels;
+ const guess=guessFaceFromPerson(alpha,width,height);
+ if(!guess)return null;
+ const detected=portrait.detection;
+ const box=detected&&Math.abs(ai.lastTime-detected.time)<.56?detected.box:null;
+ const face=box?{x:box.x*width,y:box.y*height,w:box.w*width,h:box.h*height}:guess;
+ if(portraitReadback.width!==width||portraitReadback.height!==height){portraitReadback.width=width;portraitReadback.height=height;}
+ portraitReadCtx.drawImage(matchedFrame,0,0,width,height);
+ const rgb=portraitReadCtx.getImageData(0,0,width,height).data;
+ const matte=portraitMaskCtx.createImageData(width,height);
+ matte.data.set(alpha);
+ const removed=refineHeadAlpha(matte.data,rgb,width,height,face);
+ if(portraitMask.width!==width||portraitMask.height!==height){portraitMask.width=width;portraitMask.height=height;}
+ portraitMaskCtx.putImageData(matte,0,0);
+ const measured=measurePortraitTone(rgb,matte.data,width,height,face);
+ const recent=portrait.tone!==null&&Math.abs(ai.lastTime-portrait.toneTime)<.8;
+ const lift=recent?portrait.tone*.68+measured*.32:measured;
+ portrait.tone=lift;
+ portrait.toneTime=ai.lastTime;
+ const boxOf=rect=>({x:rect.x/width,y:rect.y/height,w:rect.w/width,h:rect.h/height});
+ const recipe={key,mask:portraitMask,box:boxOf(face),personBox:boxOf(guess),lift,removed};
+ portrait.prepared=recipe;
+ if(portrait.enabled&&!faceReference.asset)detectPortraitLater(matchedFrame,ai.lastTime,guess,width,height);
+ return recipe;
+}
+
+function sharpenPortraitPixels(pixels,width,height,cx,cy,rx,ry,lift){
+ if(width<3||height<3||rx<2||ry<2)return;
+ const light=new Float32Array(width*height);
+ for(let i=0;i<light.length;i++)light[i]=portraitLuma(pixels,i*4);
+ for(let y=1;y<height-1;y++)for(let x=1;x<width-1;x++){
+  const dx=(x-cx)/rx,dy=(y-cy)/ry;
+  const weight=1-smoothStep(.34,1,dx*dx+dy*dy);
+  const k=y*width+x,p=k*4;
+  if(weight<.004||pixels[p+3]<160)continue;
+  const value=light[k];
+  const average=(light[k-1]+light[k+1]+light[k-width]+light[k+width])*.25;
+  const detail=value-average;
+  const crisp=clamp(detail*.10,-1.5,1.5)*smoothStep(1.6,5.5,Math.abs(detail));
+  const exposure=lift*smoothStep(17,84,value)*(1-smoothStep(180,248,value));
+  const delta=(exposure+crisp)*weight*smoothStep(160,241,pixels[p+3]);
+  const safe=clamp(delta,-Math.min(pixels[p],pixels[p+1],pixels[p+2]),255-Math.max(pixels[p],pixels[p+1],pixels[p+2]));
+  pixels[p]+=safe;pixels[p+1]+=safe;pixels[p+2]+=safe;
+ }
+}
+
+function paintPortrait(target,width,height,recipe){
+ const face=recipe.box;
+ const cx=(face.x+face.w*.5)*width,cy=(face.y+face.h*.50)*height;
+ const rx=face.w*width*.68,ry=face.h*height*.69;
+ const x0=clamp(Math.floor(cx-rx)-1,0,width),y0=clamp(Math.floor(cy-ry)-1,0,height);
+ const x1=clamp(Math.ceil(cx+rx)+1,x0,width),y1=clamp(Math.ceil(cy+ry)+1,y0,height);
+ if(x1-x0<3||y1-y0<3)return;
+ const data=target.getImageData(x0,y0,x1-x0,y1-y0);
+ sharpenPortraitPixels(data.data,data.width,data.height,cx-x0,cy-y0,rx,ry,recipe.lift);
+ target.putImageData(data,x0,y0);
+}
+
+async function activatePortrait(){
+ if(importBusy||S.exporting||portrait.starting)return;
+ const whiteEpoch=whiteCleanup.portraitEpoch;
+ if(!S.main){status('ابتدا ویدیوی گوینده را انتخاب کنید.',true);return;}
+ if(portrait.enabled){
+  const before=portrait.before;
+  setPortraitEnabled(false);
+  if(before){
+   $('compose').value=before.mode;
+   for(const [id,value] of Object.entries(before.controls))$(id).value=value;
+   for(const id of ['faceBrightness','faceContrast'])$(id+'Text').textContent=$(id).value+'٪';
+   $('matteTrimText').textContent=$('matteTrim').value;
+  }
+  render();status('بهبود چهره خاموش شد.');return;
+ }
+ const button=$('smartPortrait');
+ const oldMode=$('compose').value;
+ portrait.starting=true;
+ button.disabled=true;
+ portraitStatus('در حال تشخیص چهره و لبهٔ سر…');
+ stopPreview();
+ compositionView();
+ try{
+  const p=plan();
+  if(phaseAt(S.pos,p).kind!=='main')await position(p.i);
+  await waitVideoPicture(main);
+  const ready=await ensureAI();
+  if(whiteEpoch!==whiteCleanup.portraitEpoch)return;
+  if(!ready)throw Error('مدل هوشمند آماده نشد. اتصال اینترنت را بررسی کنید.');
+  if(!ai.mask||Math.abs(main.currentTime-ai.lastTime)>.10){
+   if(ai.inFlight)await ai.inFlight;
+   await runSegmentation();
+  }
+  if(!ai.mask)throw Error('گوینده در این فریم پیدا نشد. روی فریمی که چهره معلوم است دوباره بزنید.');
+  if(whiteEpoch!==whiteCleanup.portraitEpoch)return;
+  setPortraitEnabled(true);
+  const controls=Object.fromEntries(['faceBrightness','faceContrast','edgeSoftness','matteTrim'].map(id=>[id,$(id).value]));
+  portrait.before={mode:oldMode,controls};
+  neutralFaceControls();
+  $('compose').value='ai';
+  render();
+  portraitStatus('نور و وضوح صورت و لبهٔ سر خودکار تنظیم می‌شوند. برای مقایسه دوباره همین دکمه را بزنید.');
+  status('بهبود هوشمند چهره فعال شد.');
+ }catch(error){
+  if(whiteEpoch!==whiteCleanup.portraitEpoch)return;
+  setPortraitEnabled(false);
+  $('compose').value=oldMode;
+  portraitStatus(error.message);
+  status(error.message,true);
+  render();
+ }finally{
+  if(whiteEpoch===whiteCleanup.portraitEpoch){portrait.starting=false;button.disabled=false;}
+ }
+}
+$('autoNatural').onchange=()=>{
+ if($('autoNatural').checked){edgeOnly=false;if(S.main&&!portrait.enabled)void activatePortrait()}
+ else $('naturalFace').click();
+};
+$('smartPortrait').addEventListener('click',()=>{
+ if(portrait.enabled){$('naturalFace').click();return}
+ edgeOnly=false;void activatePortrait();
+});
+
+// Facial landmarks and image samples stay inside the editor. Only the model
+// package is requested from its CDN, using the same local runtime as the mask.
+const faceReference={asset:null,loading:false,selection:0,revision:0,track:null,
+ model:null,modelLoad:null,queue:Promise.resolve(),tracking:null,lastTime:-Infinity,lastWall:0,
+ trackedSource:null,pausedByUser:false};
+const referenceVideoFrame=document.createElement('canvas');
+const referenceMaskCanvas=document.createElement('canvas');
+const referenceModelRoots=[
+ 'https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559619/',
+ 'https://unpkg.com/@mediapipe/face_mesh@0.4.1633559619/'
+];
+
+function referenceMessage(message){$('referenceStatus').textContent=message;$('referenceStatus').hidden=!message;}
+function invalidateFaceReference(){
+ faceReference.track=null;
+ faceReference.lastTime=-Infinity;
+ faceReference.lastWall=0;
+ faceReference.revision++;
+}
+function faceReferenceNeedsVideo(){
+ return faceReference.asset&&!faceReference.pausedByUser&&S.main&&!S.exporting&&!importBusy&&!portrait.starting;
+}
+
+async function getReferenceMesh(){
+ if(faceReference.model)return faceReference.model;
+ if(faceReference.modelLoad)return faceReference.modelLoad;
+ faceReference.modelLoad=(async()=>{
+  for(const root of referenceModelRoots){
+   let mesh;
+   try{
+    if(!window.FaceMesh)await loadScript(root+'face_mesh.js');
+    mesh=new window.FaceMesh({locateFile:file=>root+file});
+    mesh.setOptions({maxNumFaces:1,refineLandmarks:false,minDetectionConfidence:.56,minTrackingConfidence:.55});
+    if(mesh.initialize)await portraitTimeout(mesh.initialize(),24000);
+    faceReference.model=mesh;
+    return mesh;
+   }catch(error){
+    console.info('The landmark model was unavailable from this source.',error);
+    if(mesh?.close)void Promise.resolve().then(()=>mesh.close()).catch(()=>{});
+   }
+  }
+  throw Error('مدل عکس مرجع آماده نشد. اتصال اینترنت را بررسی کنید و دوباره عکس را انتخاب کنید.');
+ })().finally(()=>{faceReference.modelLoad=null;});
+ return faceReference.modelLoad;
+}
+
+function inferReferenceLandmarks(image,stream){
+ const work=faceReference.queue.then(async()=>{
+  const mesh=await getReferenceMesh();
+  if(faceReference.trackedSource!==stream){
+   if(mesh.reset)await mesh.reset();
+   faceReference.trackedSource=stream;
+  }
+  let points=null;
+  mesh.onResults(result=>{
+   const first=result.multiFaceLandmarks?.[0];
+   if(first?.length>=468)points=first.map(({x,y})=>({x,y}));
+  });
+  try{await portraitTimeout(mesh.send({image}),18000);}
+  catch(error){
+   faceReference.trackedSource=null;
+   faceReference.model=null;
+   if(mesh.close)void Promise.resolve().then(()=>mesh.close()).catch(()=>{});
+   throw error;
+  }
+  return points;
+ });
+ faceReference.queue=work.catch(()=>{});
+ return work;
+}
+
+function referenceFaceGeometry(points,width,height){
+ if(!points)return null;
+ const required=[1,9,10,33,50,61,101,133,152,195,234,263,280,291,330,362,454];
+ if(required.some(i=>!Number.isFinite(points[i]?.x)||!Number.isFinite(points[i]?.y)))return null;
+ const p=index=>({x:points[index].x*width,y:points[index].y*height});
+ const mean=(a,b)=>({x:(a.x+b.x)/2,y:(a.y+b.y)/2});
+ let left=mean(p(33),p(133)),right=mean(p(263),p(362));
+ if(left.x>right.x)[left,right]=[right,left];
+ const distance=Math.hypot(right.x-left.x,right.y-left.y);
+ if(distance<7||distance>Math.max(width,height)*.85)return null;
+ const u={x:(right.x-left.x)/distance,y:(right.y-left.y)/distance};
+ const v={x:-u.y,y:u.x};
+ const center=mean(left,right);
+ const crown=p(10),chin=p(152),nose=p(1),mouth=mean(p(61),p(291));
+ const local=(a,axis)=>(a.x-center.x)*axis.x+(a.y-center.y)*axis.y;
+ const zone=(name,anchor,rx,ry)=>({name,x:anchor.x,y:anchor.y,rx:rx*distance,ry:ry*distance});
+ const zones=[
+  zone('forehead',mean(crown,p(9)),.53,.33),
+  zone('cheekA',mean(p(50),p(101)),.38,.33),
+  zone('cheekB',mean(p(280),p(330)),.38,.33),
+  zone('nose',p(195),.27,.34),
+  zone('hair',{x:crown.x-v.x*distance*.29,y:crown.y-v.y*distance*.29},.93,.36)
+ ];
+ return {u,v,distance,yaw:local(nose,u)/distance,
+  heightRatio:((chin.x-crown.x)*v.x+(chin.y-crown.y)*v.y)/distance,
+  pitch:local(nose,v)/distance,zones,
+  protectedAreas:[zone('eye',left,.41,.23),zone('eye',right,.41,.23),zone('mouth',mouth,.56,.31)]};
+}
+
+function referenceLumaMap(pixels){
+ const values=new Float32Array(pixels.length/4);
+ for(let i=0;i<values.length;i++)values[i]=portraitLuma(pixels,i*4);
+ return values;
+}
+function referenceColor(pixels,offset){
+ const y=portraitLuma(pixels,offset);
+ return {y,u:pixels[offset+2]-y,v:pixels[offset]-y};
+}
+function colorSeparation(a,b){
+ return Math.hypot((a.y-b.y)/66,(a.u-b.u)/41,(a.v-b.v)/41);
+}
+function zoneRadiusSquared(x,y,zone,basis){
+ const dx=x-zone.x,dy=y-zone.y;
+ const a=(dx*basis.u.x+dy*basis.u.y)/zone.rx;
+ const b=(dx*basis.v.x+dy*basis.v.y)/zone.ry;
+ return a*a+b*b;
+}
+function zoneExtent(zone,basis){
+ return {x:Math.hypot(zone.rx*basis.u.x,zone.ry*basis.v.x),y:Math.hypot(zone.rx*basis.u.y,zone.ry*basis.v.y)};
+}
+function zoneBox(zone,basis,width,height,padding=0){
+ const extent=zoneExtent(zone,basis);
+ return {
+  x0:clamp(Math.floor(zone.x-extent.x)-padding,0,width),y0:clamp(Math.floor(zone.y-extent.y)-padding,0,height),
+  x1:clamp(Math.ceil(zone.x+extent.x)+padding,0,width),y1:clamp(Math.ceil(zone.y+extent.y)+padding,0,height)
+ };
+}
+function medianReference(values){values.sort((a,b)=>a-b);return values[Math.floor(values.length/2)];}
+function sampleReferenceZone(data,luma,width,height,zone,geometry,skin=null){
+ const ys=[],us=[],vs=[];
+ let detail=0;
+ const b=zoneBox(zone,geometry,width,height);
+ const step=Math.max(1,Math.round(Math.min(zone.rx,zone.ry)/11));
+ for(let y=Math.max(1,b.y0);y<Math.min(height-1,b.y1);y+=step){
+  for(let x=Math.max(1,b.x0);x<Math.min(width-1,b.x1);x+=step){
+   if(zoneRadiusSquared(x,y,zone,geometry)>.70)continue;
+   if(geometry.protectedAreas.some(area=>zoneRadiusSquared(x,y,area,geometry)<1))continue;
+   const i=y*width+x,k=i*4;
+   if(data[k+3]<192||luma[i]<15||luma[i]>245)continue;
+   const c=referenceColor(data,k);
+   if(skin&&colorSeparation(c,skin)<.42)continue;
+   ys.push(c.y);us.push(c.u);vs.push(c.v);
+   detail+=Math.abs(c.y-(luma[i-1]+luma[i+1]+luma[i-width]+luma[i+width])*.25);
+  }
+ }
+ if(ys.length<9)return null;
+ return {y:medianReference(ys),u:medianReference(us),v:medianReference(vs),detail:detail/ys.length};
+}
+function buildReferenceProfile(image,geometry,matte){
+ const ctx=image.getContext('2d',{willReadFrequently:true});
+ const {width,height}=image;
+ const data=ctx.getImageData(0,0,width,height).data;
+ if(matte){
+  for(let i=3;i<data.length;i+=4)data[i]=Math.min(data[i],matte.data[i]);
+ }
+ const luma=referenceLumaMap(data),palette={};
+ for(const zone of geometry.zones){
+  if(zone.name==='hair')continue;
+  const sample=sampleReferenceZone(data,luma,width,height,zone,geometry);
+  if(sample)palette[zone.name]=sample;
+ }
+ const skin=palette.cheekA??palette.cheekB??palette.forehead??palette.nose;
+ // Use the person mask to avoid taking the background or a brim as hair.
+ if(matte&&skin){
+  const hair=geometry.zones.find(zone=>zone.name==='hair');
+  const sample=sampleReferenceZone(data,luma,width,height,hair,geometry,skin);
+  if(sample&&sample.detail>=1.15)palette.hair=sample;
+ }
+ return {width,height,pixels:data,luma,palette,skin,geometry};
+}
+
+async function decodeReferencePhoto(file){
+ const image=new Image(),url=URL.createObjectURL(file);
+ try{
+  image.src=url;
+  await image.decode();
+  const {naturalWidth:w,naturalHeight:h}=image;
+  if(!w||!h)throw Error('این عکس باز نشد. یک عکس JPG یا PNG انتخاب کنید.');
+  const scale=Math.min(1,960/Math.max(w,h));
+  const canvas=document.createElement('canvas');
+  canvas.width=Math.max(1,Math.round(w*scale));
+  canvas.height=Math.max(1,Math.round(h*scale));
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  ctx.imageSmoothingQuality='high';
+  ctx.drawImage(image,0,0,canvas.width,canvas.height);
+  return canvas;
+ }catch{throw Error('این عکس باز نشد. یک عکس JPG یا PNG انتخاب کنید.');}
+ finally{URL.revokeObjectURL(url);}
+}
+function showReferenceAsset(){
+ const asset=faceReference.asset;
+ $('referenceSelected').hidden=!asset;
+ if(!asset){$('referenceThumb').removeAttribute('src');$('referenceName').textContent='';return;}
+ $('referenceName').textContent=asset.name;
+ $('referenceName').title=asset.name;
+ $('referenceThumb').src=asset.thumbnail;
+}
+async function chooseFaceReference(file){
+ if(!file||S.exporting||importBusy||portrait.starting)return;
+ const selection=++faceReference.selection;
+ const previous=faceReference.asset;
+ faceReference.loading=true;
+ $('referenceChoose').disabled=true;
+ referenceMessage('در حال خواندن عکس و تشخیص نقاط صورت…');
+ try{
+  const photo=await decodeReferencePhoto(file);
+  if(selection!==faceReference.selection)return;
+  const points=await inferReferenceLandmarks(photo,'photo-'+selection);
+  if(selection!==faceReference.selection)return;
+  const geometry=referenceFaceGeometry(points,photo.width,photo.height);
+  if(!geometry)throw Error('چهره در این عکس پیدا نشد. یک عکس روشن و روبه‌رو انتخاب کنید.');
+  const profile=buildReferenceProfile(photo,geometry,null);
+  if(!profile.skin)throw Error('رنگ و جزئیات چهره از این عکس خوانده نشد. عکس روشن‌تری انتخاب کنید.');
+  const thumb=document.createElement('canvas');
+  const ratio=72/Math.max(photo.width,photo.height);
+  thumb.width=Math.max(1,Math.round(photo.width*ratio));
+  thumb.height=Math.max(1,Math.round(photo.height*ratio));
+  thumb.getContext('2d').drawImage(photo,0,0,thumb.width,thumb.height);
+  faceReference.asset={name:file.name,photo,profile,thumbnail:thumb.toDataURL('image/jpeg',.85),matteStarted:false,matteDone:false};
+  faceReference.pausedByUser=false;
+  invalidateFaceReference();
+  showReferenceAsset();
+  referenceMessage(S.main?'عکس آماده است. در حال هماهنگ‌کردن با ویدیوی گوینده…':'عکس مرجع آماده است. ویدیوی گوینده را انتخاب کنید.');
+ }catch(error){
+  if(selection===faceReference.selection){
+   const message=error?.message||'بازکردن عکس مرجع ممکن نشد.';
+   referenceMessage(previous?message+' عکس قبلی فعال است.':message);
+  }
+ }finally{
+  if(selection===faceReference.selection){
+   faceReference.loading=false;
+   $('referenceChoose').disabled=false;
+   if(faceReference.asset&&faceReference.asset!==previous)void applySelectedReference();
+  }
+ }
+}
+
+function removeFaceReference(){
+ if(S.exporting)return;
+ faceReference.selection++;
+ faceReference.loading=false;
+ faceReference.asset=null;
+ faceReference.pausedByUser=false;
+ invalidateFaceReference();
+ $('referenceChoose').disabled=false;
+ $('referenceFile').value='';
+ showReferenceAsset();
+ referenceMessage('');
+ if(!portrait.starting)render();
+}
+$('referenceChoose').addEventListener('click',()=>{
+ if(!S.exporting&&!importBusy&&!portrait.starting)$('referenceFile').click();
+});
+$('referenceFile').addEventListener('change',event=>{
+ const file=event.target.files?.[0];
+ event.target.value='';
+ if(file)void chooseFaceReference(file);
+});
+$('referenceRemove').addEventListener('click',removeFaceReference);
+
+async function applySelectedReference(){
+ if(!faceReferenceNeedsVideo()||faceReference.loading)return;
+ const asset=faceReference.asset;
+ if(!portrait.enabled){
+  await activatePortrait();
+  if(faceReference.asset!==asset)return;
+  if(!portrait.enabled){referenceMessage('عکس آماده است. برای اعمال آن، «بهبود هوشمند چهره» را بزنید.');return;}
+ }
+ if(!S.playing&&!S.exporting)render();
+}
+
+function describeReferenceTrack(){
+ const asset=faceReference.asset;
+ if(!asset||S.exporting)return;
+ if(!faceReference.track){referenceMessage('عکس آماده است. چهرهٔ گوینده هنوز در این فریم پیدا نشد.');return;}
+ if(asset.profile.palette.hair){referenceMessage('عکس مرجع فعال است. رنگ پوست و موی قابل تشخیص و جزئیات کم‌وضوح تنظیم می‌شوند.');return;}
+ referenceMessage(asset.matteDone?'عکس مرجع روی چهره فعال است. مو در عکس برای تطبیق رنگ به‌قدر کافی مشخص نبود.':'عکس مرجع روی چهره فعال است. در حال بررسی رنگ مو…');
+}
+
+function readReferencePersonMatte(mask,width,height){
+ referenceMaskCanvas.width=width;
+ referenceMaskCanvas.height=height;
+ const ctx=referenceMaskCanvas.getContext('2d',{willReadFrequently:true});
+ ctx.drawImage(mask,0,0,width,height);
+ const image=ctx.getImageData(0,0,width,height),p=image.data;
+ let min=255,max=0;
+ const stride=Math.max(4,Math.floor(p.length/2048/4)*4);
+ for(let i=3;i<p.length;i+=stride){min=Math.min(min,p[i]);max=Math.max(max,p[i]);}
+ if(max-min<12){for(let i=0;i<p.length;i+=4)p[i+3]=Math.min(p[i+3],Math.round((p[i]+p[i+1]+p[i+2])/3));}
+ return image;
+}
+async function measureReferenceHair(asset){
+ if(asset.matteStarted||!ai.ready)return;
+ asset.matteStarted=true;
+ try{
+  if(ai.inFlight)await ai.inFlight;
+  if(faceReference.asset!==asset||!portrait.enabled)return;
+  const matte=await runSegmentation(ai.engine,asset.photo);
+  if(!matte||faceReference.asset!==asset)return;
+  const profile=buildReferenceProfile(asset.photo,asset.profile.geometry,matte);
+  if(profile.skin)asset.profile=profile;
+  faceReference.revision++;
+ }catch(error){console.info('The reference hair profile could not be measured.',error);}
+ finally{
+  asset.matteDone=true;
+  if(faceReference.asset===asset&&faceReference.track){describeReferenceTrack();if(!S.playing&&!S.exporting)render();}
+ }
+}
+
+function trackFaceForReference(recipe,force=false){
+ const asset=faceReference.asset;
+ if(!asset||faceReference.loading||!recipe||!matchedFrame.width)return null;
+ if(faceReference.tracking)return faceReference.tracking;
+ if(!asset.matteStarted&&!S.exporting)void measureReferenceHair(asset);
+ const time=ai.lastTime,now=performance.now();
+ if(!force&&(Math.abs(time-faceReference.lastTime)<.22||(faceReference.lastWall&&now-faceReference.lastWall<155)))return null;
+ faceReference.lastTime=time;
+ faceReference.lastWall=now;
+ const clip=S.main,epoch=portrait.clipEpoch;
+ const scale=Math.min(1,640/Math.max(matchedFrame.width,matchedFrame.height));
+ referenceVideoFrame.width=Math.max(1,Math.round(matchedFrame.width*scale));
+ referenceVideoFrame.height=Math.max(1,Math.round(matchedFrame.height*scale));
+ referenceVideoFrame.getContext('2d').drawImage(matchedFrame,0,0,referenceVideoFrame.width,referenceVideoFrame.height);
+ const tracked=inferReferenceLandmarks(referenceVideoFrame,clip).then(points=>{
+  if(faceReference.asset!==asset||S.main!==clip||epoch!==portrait.clipEpoch)return;
+  const valid=referenceFaceGeometry(points,referenceVideoFrame.width,referenceVideoFrame.height);
+  faceReference.track=valid?{points,time,head:recipe.personBox}:null;
+  if(valid){
+   const x=Math.min(points[234].x,points[454].x),y=Math.min(points[10].y,points[152].y);
+   const w=Math.abs(points[234].x-points[454].x),h=Math.abs(points[10].y-points[152].y);
+   if(w>.015&&h>.015){portrait.detection={box:{x,y,w,h},time};portrait.revision++;portrait.prepared=null;}
+  }
+  faceReference.revision++;
+  describeReferenceTrack();
+  if(!S.playing&&!S.exporting)render();
+ }).catch(error=>{
+  if(faceReference.asset===asset&&!S.exporting)referenceMessage('تشخیص چهرهٔ ویدیو کامل نشد. بهبود معمول چهره فعال است.');
+  console.info(error);
+ }).finally(()=>{
+  faceReference.tracking=null;
+  if(faceReference.asset&&(faceReference.asset!==asset||S.main!==clip||epoch!==portrait.clipEpoch)&&!S.playing&&!S.exporting)render();
+ });
+ faceReference.tracking=tracked;
+ return tracked;
+}
+
+async function prepareReferenceForExport(){
+ if(!portrait.enabled||!faceReference.asset)return;
+ if(faceReference.tracking)await faceReference.tracking;
+ if(!faceReference.track||Math.abs(ai.lastTime-faceReference.track.time)>.07){
+  await trackFaceForReference(preparePortrait(),true);
+ }
+}
+
+function referenceTrackGeometry(recipe,width,height){
+ const track=faceReference.track;
+ if(!track||!recipe.personBox)return null;
+ const age=Math.abs(ai.lastTime-track.time);
+ if(age>.42)return null;
+ const old=track.head,live=recipe.personBox;
+ const dx=live.x+live.w*.5-old.x-old.w*.5;
+ const dy=live.y+live.h*.5-old.y-old.h*.5;
+ const growth=live.w/Math.max(.001,old.w);
+ if(Math.abs(dx)>old.w*.3||Math.abs(dy)>old.h*.27||growth<.76||growth>1.31)return null;
+ const scale=clamp(growth,.89,1.12);
+ const originX=old.x+old.w*.5,originY=old.y+old.h*.5;
+ const points=track.points.map(({x,y})=>({x:originX+(x-originX)*scale+dx,y:originY+(y-originY)*scale+dy}));
+ const geometry=referenceFaceGeometry(points,width,height);
+ return geometry?{geometry,freshness:1-smoothStep(.15,.43,age)}:null;
+}
+
+function referenceTextureValue(profile,zone,targetGeometry,sourceZone,x,y){
+ const dx=x-zone.x,dy=y-zone.y;
+ const ratio=profile.geometry.distance/targetGeometry.distance;
+ const u=(dx*targetGeometry.u.x+dy*targetGeometry.u.y)*ratio;
+ const v=(dx*targetGeometry.v.x+dy*targetGeometry.v.y)*ratio;
+ const sx=sourceZone.x+u*profile.geometry.u.x+v*profile.geometry.v.x;
+ const sy=sourceZone.y+u*profile.geometry.u.y+v*profile.geometry.v.y;
+ const radius=clamp(ratio*1.10,.75,5.5);
+ const {width,height,pixels,luma}=profile;
+ const X=Math.round(sx),Y=Math.round(sy);
+ const at=4*(Y*width+X);
+ if(sx-radius<0||sy-radius<0||sx+radius>=width-1||sy+radius>=height-1||pixels[at+3]<192)return null;
+ if(profile.geometry.protectedAreas.some(area=>zoneRadiusSquared(sx,sy,area,profile.geometry)<1))return null;
+ if(colorSeparation(referenceColor(pixels,at),profile.palette[zone.name])>1.5)return null;
+ const sample=(a,b)=>{
+  const ix=Math.floor(a),iy=Math.floor(b),fx=a-ix,fy=b-iy,i=iy*width+ix;
+  return (luma[i]*(1-fx)+luma[i+1]*fx)*(1-fy)+(luma[i+width]*(1-fx)+luma[i+width+1]*fx)*fy;
+ };
+ const average=(sample(sx-radius,sy)+sample(sx+radius,sy)+sample(sx,sy-radius)+sample(sx,sy+radius))*.25;
+ return clamp(sample(sx,sy)-average,-16,16);
+}
+
+function paintReferencePixels(pixels,width,height,geometry,profile,freshness){
+ const luma=referenceLumaMap(pixels);
+ const poseOK=Math.abs(geometry.yaw-profile.geometry.yaw)<.21&&
+  Math.abs(geometry.pitch-profile.geometry.pitch)<.24&&Math.abs(geometry.heightRatio-profile.geometry.heightRatio)<.60;
+ const zones=[];
+ let skin;
+ for(const zone of geometry.zones){
+  const from=profile.palette[zone.name];
+  if(!from)continue;
+  const hair=zone.name==='hair';
+  const to=sampleReferenceZone(pixels,luma,width,height,zone,geometry,hair?skin:null);
+  if(!to||(hair&&(!skin||to.detail<1.10)))continue;
+  if(!hair&&!skin)skin=to;
+  const sourceZone=profile.geometry.zones.find(z=>z.name===zone.name);
+  zones.push({zone,to,sourceZone,hair,
+   y:clamp((from.y-to.y)*(hair ? .57 : .31),hair ? -18 : -12,hair ? 18 : 14),
+   u:clamp((from.u-to.u)*(hair ? .60 : .55),-12,12),v:clamp((from.v-to.v)*(hair ? .60 : .55),-12,12),
+   details:poseOK&&from.detail>=Math.max(1.3,to.detail*1.22)?(hair ? .18 : .32):0});
+ }
+ if(!zones.length)return;
+ for(let y=1;y<height-1;y++)for(let x=1;x<width-1;x++){
+  const i=y*width+x,k=i*4;
+  if(pixels[k+3]<172||geometry.protectedAreas.some(zone=>zoneRadiusSquared(x,y,zone,geometry)<1))continue;
+  const original=referenceColor(pixels,k);
+  let dy=0,du=0,dv=0,weight=0;
+  for(const rule of zones){
+   const dist=zoneRadiusSquared(x,y,rule.zone,geometry);
+   if(dist>=1)continue;
+   const similarity=colorSeparation(original,rule.to);
+   const w=(1-smoothStep(.35,1,dist))*(1-smoothStep(.52,1.5,similarity));
+   if(w<.008)continue;
+   dy+=rule.y*w;du+=rule.u*w;dv+=rule.v*w;weight+=w;
+   if(rule.details){
+    const local=luma[i]-(luma[i-1]+luma[i+1]+luma[i-width]+luma[i+width])*.25;
+    const reference=referenceTextureValue(profile,rule.zone,geometry,rule.sourceZone,x,y);
+    if(reference!==null)dy+=clamp((reference-local)*rule.details,-6,6)*w;
+   }
+  }
+  if(weight<=0)continue;
+  const gain=freshness*smoothStep(172,240,pixels[k+3])*(1-smoothStep(205,250,original.y))/Math.max(1,weight);
+  const dY=dy*gain,dU=du*gain,dV=dv*gain;
+  pixels[k]+=dY+dV;
+  pixels[k+1]+=dY-(.2126*dV+.0722*dU)/.7152;
+  pixels[k+2]+=dY+dU;
+ }
+}
+
+function paintFaceReference(target,width,height,recipe){
+ const profile=faceReference.asset?.profile;
+ if(!profile)return;
+ const match=referenceTrackGeometry(recipe,width,height);
+ if(!match)return;
+ const {geometry,freshness}=match;
+ const useful=geometry.zones.filter(zone=>profile.palette[zone.name]);
+ if(!useful.length)return;
+ const boxes=useful.map(zone=>zoneBox(zone,geometry,width,height,2));
+ const x0=Math.min(...boxes.map(b=>b.x0)),y0=Math.min(...boxes.map(b=>b.y0));
+ const x1=Math.max(...boxes.map(b=>b.x1)),y1=Math.max(...boxes.map(b=>b.y1));
+ if(x1-x0<3||y1-y0<3)return;
+ const shift=zone=>({...zone,x:zone.x-x0,y:zone.y-y0});
+ const local={...geometry,zones:useful.map(shift),protectedAreas:geometry.protectedAreas.map(shift)};
+ const image=target.getImageData(x0,y0,x1-x0,y1-y0);
+ paintReferencePixels(image.data,image.width,image.height,local,profile,freshness);
+ target.putImageData(image,x0,y0);
+}
+
+
+$('activateAI').addEventListener('click',()=>{if(!S.main){status('ابتدا ویدیوی گوینده را انتخاب کنید.',true);return}$('compose').value='ai';if(ai.ready){render();status('حذف پشت‌سر فعال است؛ حذف سبز پیش‌رو را نیز می‌توانید روشن نگه دارید.');return}void ensureAI()});
+// Look for a broad, saturated green screen in front of the speaker, not a
+// small green item of clothing. This avoids erasing the speaker by default.
+function findGreenScreen(){
+ const w=160,h=Math.round(w*(main.videoHeight||9)/(main.videoWidth||16));
+ if(!w||!h||main.readyState<2)return null;
+ const c=document.createElement('canvas');c.width=w;c.height=h;
+ const cx=c.getContext('2d',{willReadFrequently:true});cx.drawImage(main,0,0,w,h);
+ const data=cx.getImageData(0,0,w,h).data;let n=0,r=0,g=0,b=0,minX=w,maxX=0;
+ for(let y=Math.floor(h*.35);y<h;y++)for(let x=0;x<w;x+=2){const i=(y*w+x)*4,R=data[i],G=data[i+1],B=data[i+2];
+  if(G>75&&G>R*1.37&&G>B*1.26){n++;r+=R;g+=G;b+=B;minX=Math.min(minX,x);maxX=Math.max(maxX,x)}}
+ const sampled=Math.ceil((h-Math.floor(h*.35))*w/2);
+ if(n<sampled*.11||(maxX-minX)/w<.42)return null;
+ return [Math.round(r/n),Math.round(g/n),Math.round(b/n)];
+}
+async function removeBackgroundAutomatically(){
+ if(!S.main){status('اول ویدیوی اصلی گوینده را انتخاب کنید.',true);return}
+ if(S.exporting||portrait.starting)return;
+ const buttons=[$('autoRemove'),$('autoRemoveQuick')];buttons.forEach(b=>{b.disabled=true;b.textContent='⏳ در حال فعال‌سازی هوش مصنوعی...'});
+ try{
+  await waitVideoPicture(main);
+  $('compose').value='ai';$('frontGreen').checked=false;
+  $('edgeSoftness').value=0;$('matteTrim').value=0;
+  const green=findGreenScreen();
+  if(green){frontKey.rgb=green;$('frontGreen').checked=true;$('greenRegion').value=0;$('frontStrength').value=80;$('greenSwatch').style.background=`rgb(${green.join(',')})`}
+  $('greenRegionText').textContent=$('greenRegion').value+'٪';$('greenStrengthText').textContent=$('frontStrength').value+'٪';$('matteTrimText').textContent=$('matteTrim').value;
+  $('autoRemoveStatus').textContent='در حال فعال‌سازی تشخیص گوینده و جداسازی تصویر...';
+  if(!await ensureAI())throw Error('هوش مصنوعی اجرا نشد. اتصال اینترنت را بررسی کنید و دوباره بزنید.');
+  await runSegmentation();render();
+  const success=green?'پشت‌سر و پردهٔ سبز جلوی گوینده تنظیم شد.':'پس‌زمینهٔ اطراف گوینده حذف شد. پردهٔ سبز گسترده تشخیص داده نشد.';
+  $('autoRemoveStatus').textContent='✅ '+success;status(success);
+ }catch(e){$('autoRemoveStatus').textContent='⚠️ '+(e.message||String(e));status('حذف خودکار کامل نشد. '+(e.message||String(e)),true)}
+ finally{buttons.forEach(b=>b.disabled=false);$('autoRemove').textContent='🤖 حذف هوشمند خودکار با یک کلیک';$('autoRemoveQuick').textContent='🤖 حذف هوشمند پس‌زمینه — یک کلیک'}
+}
+$('autoRemove').addEventListener('click',()=>{void removeBackgroundAutomatically()});
+$('autoRemoveQuick').addEventListener('click',()=>{void removeBackgroundAutomatically()});
+$('showOriginalVideo').addEventListener('click',()=>{if(!S.main){status('ابتدا فایل ویدیوی گوینده را از کادر شمارهٔ ۲ انتخاب کنید.',true);return}stopPreview();setPortraitEnabled(false);resetSmartWhite('main');invalidateCleanup();$('compose').value='overlay';$('frontGreen').checked=false;$('personScale').value=95;$('personX').value=50;$('personY').value=50;$('personScaleText').textContent='۹۵٪';S.pos=plan().i;void position(S.pos);status('حالت نمایش ویدیوی اصلی فعال شد. اکنون باید تصویر گوینده بدون حذف پس‌زمینه دیده شود.')});
+function runSegmentation(engine=ai.engine,photo=null){
+ if(ai.inFlight)return ai.inFlight;
+ if(!engine||(!photo&&main.readyState<2))return Promise.resolve();
+ const frame=photo?{engine,photo,width:photo.width,height:photo.height,matte:null}:
+  {engine,clip:S.main,width:main.videoWidth,height:main.videoHeight,time:main.currentTime||0};
+ ai.sent=frame;
+ const send=Promise.resolve().then(()=>engine.send({image:photo||main}));
+ ai.inFlight=portraitTimeout(send,22000).then(()=>frame.matte).finally(()=>{ai.inFlight=null;ai.sent=null;});
+ return ai.inFlight;
+}
+async function maybeSegment(){
+ if(!ai.ready||ai.inFlight||switchingSource||main.readyState<2||$('compose').value!=='ai')return;
+ const t=main.currentTime||0,now=performance.now();
+ if(Math.abs(t-ai.lastTime)<.055||now-ai.lastRequest<85)return;
+ ai.lastRequest=now;
+ try{await runSegmentation();}catch(error){aiNotice('پردازش هوشمند انجام نشد. دوباره امتحان کنید.',true);console.info(error);}
+}
+
+const num=(id,f=0)=>{const a=Number($(id).value);return Number.isFinite(a)?a:f},clamp=(x,a,b)=>Math.min(b,Math.max(a,x)),fmt=n=>{n=Math.max(0,Math.floor(n||0));return String(Math.floor(n/3600)).padStart(2,'0')+':'+String(Math.floor(n%3600/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')},short=n=>{n=Math.max(0,Math.floor(n||0));return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')};
+function status(t,err=false){if(err)$('previewMessage').textContent=t;$('status').textContent=t;$('status').classList.toggle('error',err)}
+function pickDuration(){return Number.isFinite(main.duration)&&main.duration>0?main.duration:0}
+function plan(){const clip=S.main?pickDuration():(S.studio?.type==='video'?(Number.isFinite(bgVideo.duration)?bgVideo.duration:0):(S.studio?10:0)),i=(S.intro||$('introText').value.trim())?clamp(num('introLength',3),0,600):0,o=(S.outro||$('outroText').value.trim())?clamp(num('outroLength',3),0,600):0;return {start:0,end:clip,clip,i,o,body:clip,total:i+clip+o}}
+function validate(){if(!S.main)throw Error('اول ویدیوی اصلی را انتخاب کنید.');if($('compose').value==='ai'&&!ai.ready)throw Error('برای خروجی با حذف هوشمند، ابتدا مدل حذف پس‌زمینه را فعال کنید.');const p=plan();if(p.clip<=.05)throw Error('مدت ویدیوی اصلی معتبر نیست.');return p}
+function updateInfo(){const p=plan();$('originalDuration').textContent='مدت ویدیوی اصلی: '+short(pickDuration());$('durationInfo').textContent='ویدیوی کامل: '+short(p.clip)+' | آغاز: '+short(p.i)+' | پایان: '+short(p.o)+' | خروجی: '+short(p.total);$('seek').value=p.total?Math.round(S.pos/p.total*1000):0;$('clock').textContent=short(S.pos)+' / '+short(p.total);$('processedTime').textContent='پردازش: 00:00 / '+short(p.total)}
+function setProgress(percent,sec,total){percent=clamp(percent,0,100);$('progressBar').style.width=percent.toFixed(1)+'%';$('percent').textContent=Math.floor(percent)+'٪';$('processedTime').textContent='پردازش: '+short(sec)+' / '+short(total);$('dialogProgress').style.width=percent.toFixed(1)+'%';$('dialogProgressText').textContent=Math.floor(percent)+'٪ — '+short(sec)+' / '+short(total)}
+function objectURL(file){const url=URL.createObjectURL(file);S.oldURLs.push(url);return url}
+async function loadVideo(el,file){
+ return new Promise((resolve,reject)=>{
+  const url=objectURL(file);let settled=false;
+  const cleanup=()=>{clearTimeout(timeout);el.removeEventListener('loadedmetadata',good);el.removeEventListener('error',bad)};
+  const good=()=>{if(settled)return;if(!el.videoWidth||!el.videoHeight)return;settled=true;cleanup();resolve(url)};
+  const bad=()=>{if(settled)return;settled=true;cleanup();reject(Error('مرورگر نتوانست این ویدیو را باز کند. برای سازگاری از MP4 با کدک H.264 استفاده کنید.'))};
+  const timeout=setTimeout(()=>{if(!settled){settled=true;cleanup();reject(Error('بازشدن ویدیو طول کشید؛ دوباره فایل را انتخاب کنید یا «پخش مستقیم فایل» را بزنید.'))}},20000);
+  el.addEventListener('loadedmetadata',good);el.addEventListener('error',bad);
+  el.preload='auto';el.playsInline=true;el.src=url;el.load();
+ });
+}
+async function decodeFirstFrame(video){
+ if(video.readyState>=2&&video.videoWidth)return;
+ const wasMuted=video.muted;video.muted=true;
+ try{await Promise.race([video.play(),new Promise(r=>setTimeout(r,1800))])}catch{}
+ try{await waitVideoPicture(video)}finally{video.pause();video.muted=wasMuted}
+}
+async function loadImage(file){const img=new Image(),url=objectURL(file);img.src=url;await img.decode();return img}
+function refreshCard(kind,file){$(kind+'Name').textContent=file.name;$(kind+'Card').classList.add('active')}
+function waitVideoPicture(video){return new Promise((resolve,reject)=>{
+ if(video.readyState>=2 && video.videoWidth)return resolve();
+ let done=false; const cleanup=()=>{video.removeEventListener('loadeddata',ok);video.removeEventListener('error',bad)};
+ const ok=()=>{if(done)return;done=true;cleanup();resolve()}; const bad=()=>{if(done)return;done=true;cleanup();reject(Error('اولین فریم ویدیو باز نشد.'))};
+ video.addEventListener('loadeddata',ok);video.addEventListener('error',bad);
+ if(video.readyState>=2 && video.videoWidth)ok();
+ setTimeout(()=>{if(done)return;done=true;cleanup();reject(Error('فریم آغاز آماده نشد. فرمت فایل را بررسی کنید.'))},9000)
+ })}
+async function snapshotIntroVideo(video){
+ video.pause();try{video.currentTime=0}catch{}
+ await waitVideoPicture(video);
+ const c=document.createElement('canvas');c.width=video.videoWidth;c.height=video.videoHeight;
+ c.getContext('2d').drawImage(video,0,0,c.width,c.height);return c;
+}
+function coverAvailable(){return (S.intro?.type==='image') || (S.intro?.type==='video'&&!!S.introStill) || !!$('introText').value.trim()}
+function coverReady(){ $('saveCover').disabled=!coverAvailable(); }
+function downloadCoverJpg(){
+ if(!coverAvailable()){status('ابتدا یک کادر آغاز (عکس یا ویدیو) انتخاب کنید.',true);return}
+ stopPreview();const oldPos=S.pos;S.pos=0;setCanvas(true);drawFrame(0);
+ canvas.toBlob(blob=>{
+  if(!blob){status('تصویر جلد ساخته نشد.',true);setCanvas(false);position(oldPos);return}
+  const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='Ibrahimi_Video_Cover.jpg';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),10000);
+  setCanvas(false);void position(oldPos);status('تصویر جلد JPG آماده شد.');
+ },'image/jpeg',.93);
+}
+$('saveCover').addEventListener('click',downloadCoverJpg);
+
+main.addEventListener('loadeddata',()=>{if(S.main&&!S.exporting){render();syncSpeakerBox();syncLogoBox();}});
+main.addEventListener('seeked',()=>{if(S.main&&!S.playing&&!S.exporting)render();});
+let importBusy=false;
+function importLock(locked){importBusy=locked;for(const id of ['mainCard','studioCard','exportBtn'])$(id).disabled=locked||(id==='exportBtn'&&!S.main);}
+function compositionView(){S.studioOnly=false;const n=$('nativePreview');n.pause();if(n.hasAttribute('src')){n.removeAttribute('src');n.load()}n.style.display='none';stageSize.style.display='block';$('nativeToggle').textContent='پخش مستقیم فایل';}
+function directView(source){if(!source.src){status('ابتدا فایل ویدیوی موردنظر را انتخاب کنید.',true);return}stopPreview();const n=$('nativePreview');n.src=source.src;n.muted=source===bgVideo;n.style.display='block';stageSize.style.display='none';$('nativeToggle').textContent='بازگشت به ترکیب استودیو';n.play().catch(()=>{});$('previewMessage').textContent='پخش مستقیم فایل اصلی؛ برای دیدن ترکیب استودیو، دکمهٔ بازگشت را بزنید.';}
+$('nativeToggle').onclick=()=>{if(S.exporting)return;if($('nativePreview').style.display==='block'){compositionView();render();$('previewMessage').textContent='نمایش ترکیب استودیو و گوینده';return}directView(main.src?main:bgVideo)};
+$('nativeStudio').onclick=()=>{if(S.exporting)return;if(S.studio?.type==='image'){compositionView();render();return}directView(bgVideo)};
+$('nativePreview').addEventListener('error',()=>{if($('nativePreview').hasAttribute('src'))$('previewMessage').textContent='پخش مستقیم ممکن نشد. ویدیو را از کادر استودیو یا گوینده دوباره انتخاب کنید.'});
+const desktopAssets = {studio: 0, main: 0};
+let activeConversion = 0;
+let switchingSource = false;
+
+const desktopErrors = {
+ selection: 'فایل انتخاب‌شده خوانده نشد. آن را از یک پوشهٔ روی لپ‌تاپ انتخاب کنید.',
+ missing: 'فایل در دسترس نیست. ویدیو را دوباره انتخاب کنید.',
+ busy: 'کار قبلی هنوز در حال انجام است.',
+ storage: 'فایل موقت ساخته نشد. فضای خالی دیسک را بررسی کنید.',
+ setup_tools: 'ابزارهای تبدیل در ویندوز در دسترس نیستند. اگر FFmpeg نصب دارید، آن را در PATH ویندوز قرار دهید و برنامه را دوباره باز کنید.',
+ download: 'دریافت مبدل کامل نشد. اتصال اینترنت را بررسی کنید و ویدیو را دوباره انتخاب کنید.',
+ checksum: 'فایل مبدل کامل یا معتبر نبود. ویدیو را دوباره انتخاب کنید تا دریافت تکرار شود.',
+ extract: 'بستهٔ مبدل باز نشد. فضای خالی دیسک و به‌روز بودن ویندوز را بررسی کنید.',
+ convert: 'تبدیل این فایل انجام نشد. فایل ممکن است ناقص باشد یا کدک آن پشتیبانی نشود. فضای خالی دیسک را هم بررسی کنید.',
+ cancelled: 'تبدیل ویدیو لغو شد.',
+ preview: 'پلیر نتوانست تصویر ویدیو را باز کند.'
+};
+
+class DesktopError extends Error {
+ constructor(code) {
+  super(desktopErrors[code] || 'ارتباط با برنامه قطع شد. فایل EXE را دوباره باز کنید.');
+  this.code = code;
+ }
+}
+
+async function desktopRequest(path, method = 'GET') {
+ let response;
+ try {
+  response = await fetch('api/' + path, {
+   method, cache: 'no-store',
+   headers: method === 'POST' ? {'X-Ibrahimi-Studio': 'desktop'} : {}
+  });
+ } catch {
+  throw new DesktopError('connection');
+ }
+ const data = await response.json();
+ if (!response.ok) throw new DesktopError(data.error);
+ return data;
+}
+
+function loadDesktopFrame(video, url) {
+ return new Promise((resolve, reject) => {
+  let done = false;
+  const previousMute = video.muted;
+  const finish = ok => {
+   if (done) return;
+   done = true;
+   clearTimeout(limit);
+   clearTimeout(warmup);
+   for (const event of ['loadeddata', 'canplay', 'loadedmetadata']) video.removeEventListener(event, check);
+   video.removeEventListener('error', fail);
+   video.pause();
+   video.muted = previousMute;
+   if (ok) resolve();
+   else reject(new DesktopError('preview'));
+  };
+  const check = () => {
+   if (video.readyState >= 2 && video.videoWidth > 0 && Number.isFinite(video.duration) && video.duration > 0) finish(true);
+  };
+  const fail = () => finish(false);
+  const limit = setTimeout(fail, 16000);
+  const warmup = setTimeout(() => {
+   if (!done) {
+    video.muted = true;
+    video.play().catch(() => {});
+   }
+  }, 900);
+  for (const event of ['loadeddata', 'canplay', 'loadedmetadata']) video.addEventListener(event, check);
+  video.addEventListener('error', fail);
+  video.preload = 'auto';
+  video.src = url;
+  video.load();
+ });
+}
+
+function askForConverter() {
+ const dialog = $('engineDialog');
+ return new Promise(resolve => {
+  dialog.returnValue = '';
+  dialog.addEventListener('close', () => resolve(dialog.returnValue === 'download'), {once:true});
+  dialog.showModal();
+ });
+}
+
+async function convertDesktopAsset(asset) {
+ const endpoint = 'convert/' + asset.id;
+ let start;
+ try {
+  start = await desktopRequest(endpoint, 'POST');
+ } catch (error) {
+  if (error.code !== 'engine_required') throw error;
+  if (!await askForConverter()) throw new DesktopError('cancelled');
+  start = await desktopRequest(endpoint + '?setup=1', 'POST');
+ }
+ if (start.ready) return;
+ activeConversion = asset.id;
+ $('conversionTools').hidden = false;
+ $('cancelConversion').disabled = false;
+ const labels = {
+  download: 'در حال دریافت مبدل ویدیو (حدود ۳۴ مگابایت، فقط یک‌بار)…',
+  verify: 'در حال بررسی فایل مبدل…',
+  extract: 'در حال آماده‌سازی مبدل…',
+  convert: 'در حال تبدیل ویدیو روی لپ‌تاپ…'
+ };
+ try {
+  for (;;) {
+   const result = await desktopRequest('status/' + asset.id);
+   if (result.phase === 'ready') return;
+   if (result.phase === 'failed') throw new DesktopError(result.error);
+   if (result.phase === 'cancelled') throw new DesktopError('cancelled');
+   const time = result.time ? ' زمان تبدیل‌شده: ' + result.time : '';
+   $('previewMessage').textContent = (labels[result.phase] || labels.convert) + time;
+   await new Promise(resolve => setTimeout(resolve, 650));
+  }
+ } finally {
+  activeConversion = 0;
+  $('conversionTools').hidden = true;
+ }
+}
+
+$('cancelConversion').onclick = () => {
+ if (!activeConversion) return;
+ $('cancelConversion').disabled = true;
+ desktopRequest('cancel/' + activeConversion, 'POST').catch(error => status(error.message, true));
+};
+
+async function loadDesktopAsset(role) {
+ if (importBusy || S.exporting || portrait.starting || whiteCleanup.busy) return;
+ const studio = role === 'studio';
+ const video = studio ? bgVideo : main;
+ const previousSource = video.getAttribute('src');
+ const previousTime = video.currentTime;
+ const previousId = desktopAssets[role];
+ let asset, committed = false;
+ importLock(true);
+ try {
+  asset = await desktopRequest('choose/' + role, 'POST');
+  if (asset.cancelled) return;
+  stopPreview();
+  compositionView();
+  $('previewMessage').textContent = 'در حال بازکردن «' + asset.name + '»…';
+  const original = 'media/' + asset.id + '/original';
+  if (studio && asset.type.startsWith('image/')) {
+   const picture = new Image();
+   picture.src = original;
+   await picture.decode();
+   video.pause();
+   video.removeAttribute('src');
+   video.load();
+   S.studio = {type:'image', media:picture};
+  } else {
+   switchingSource = true;
+   try {
+    await loadDesktopFrame(video, original);
+   } catch (error) {
+    if (error.code !== 'preview') throw error;
+    $('previewMessage').textContent = 'در حال آماده‌کردن نسخهٔ قابل پخش…';
+    await convertDesktopAsset(asset);
+    await loadDesktopFrame(video, 'media/' + asset.id + '/mp4');
+   }
+   if (studio) {
+    video.muted = true;
+    video.loop = true;
+    S.studio = {type:'video', media:video};
+   } else {
+    S.main = asset;
+    ai.mask = null;
+    ai.maskPixels = null;
+    ai.lastTime = -1;
+    resetPortraitTracking();
+   }
+  }
+  desktopAssets[role] = asset.id;
+  committed = true;
+  switchingSource = false;
+  if(!studio)speechCancel?.();resetCleanup(role);disableDesk();refreshCard(role, asset);
+  movieTile(role,studio && S.studio.type==='image'?null:video);
+  if(!studio){showCues([]);$('speechMessage').textContent=''}
+  $('chairMsg').textContent='';
+  $('empty').style.display = 'none';
+  S.pos = plan().i;
+  if (studio) {
+   S.studioStill = null;
+   if (S.studio.type === 'video') cacheStudioFrame();
+   if ($('compose').value === 'full') $('compose').value = 'overlay';
+  } else {
+   applySeat();
+   S.boxVisible = true;
+   $('autoRemoveStatus').textContent = 'برای جداکردن گوینده از پس‌زمینه، «حذف هوشمند» را بزنید.';
+  }
+  updateInfo();
+  syncTimeline();
+  render();
+  const message = studio ? 'استودیو در پلیر آماده است.' : 'گوینده روی لایهٔ استودیو قرار گرفت.';
+  $('previewMessage').textContent = message;
+  status(message);
+  if (previousId) void desktopRequest('release/' + previousId, 'POST').catch(() => {});
+ } catch (error) {
+  if (switchingSource && !committed) {
+   if (previousSource) {
+    try {
+     await loadDesktopFrame(video, previousSource);
+     video.currentTime = previousTime;
+    } catch {}
+   } else {
+    video.removeAttribute('src');
+    video.load();
+   }
+  }
+  switchingSource = false;
+  render();
+  status(error.message || 'بازکردن فایل ممکن نشد.', true);
+ } finally {
+  switchingSource = false;
+  importLock(false);
+  if(committed&&role==='main'){
+   portrait.failed=false;
+   if(faceReference.asset&&!faceReference.pausedByUser)void applySelectedReference();
+   else if($('autoNatural').checked&&!portrait.enabled)void activatePortrait();
+ }
+  if (asset?.id && !committed) void desktopRequest('release/' + asset.id, 'POST').catch(() => {});
+ }
+}
+
+$('studioCard').onclick = () => void loadDesktopAsset('studio');
+$('mainCard').onclick = () => void loadDesktopAsset('main');
+const heartbeat = setInterval(() => void desktopRequest('heartbeat', 'POST').catch(() => {}), 20000);
+$('quitDesktop').onclick = async () => {
+ if (S.exporting || importBusy || portrait.starting || faceReference.loading) { status('ابتدا پردازش فعلی را تمام یا لغو کنید.', true); return; }
+ stopPreview();
+ compositionView();
+ for (const video of [main, bgVideo, $('nativePreview')]) {
+  video.removeAttribute('src');
+  video.load();
+ }
+ clearInterval(heartbeat);
+ try { await desktopRequest('quit', 'POST'); } catch {}
+ document.querySelector('main').remove();
+ const closed = document.createElement('p');
+ closed.className = 'closed-note';
+ closed.textContent = 'استودیو بسته شد. می‌توانید این پنجره را ببندید.';
+ document.body.prepend(closed);
+};
+
+$('logoFile').addEventListener('change',async()=>{const f=$('logoFile').files[0];if(!f||S.exporting)return;try{S.logo=await loadImage(f);refreshCard('logo',f);S.logoVisible=true;render();status('لوگو آماده است. آن را با موس بکشید؛ از دایرهٔ گوشه برای تغییر اندازه استفاده کنید.')}catch(e){status('لوگو باز نشد: '+e.message,true)}});
+for(const id of ['intro','outro'])$(id+'File').addEventListener('change',async()=>{
+ const f=$(id+'File').files[0];if(!f||S.exporting)return;
+ try{
+   const video=id==='intro'?introVideo:outroVideo;
+   video.pause();video.loop=true;
+   const media=f.type.startsWith('video/')? (await loadVideo(video,f),{type:'video',media:video}) : {type:'image',media:await loadImage(f)};
+   S[id]=media;
+   if(id==='intro'){
+     S.introStill=null;
+     if(media.type==='video')S.introStill=await snapshotIntroVideo(video);
+     else S.introStill=media.media;
+     coverReady();
+   }
+   if(media.type==='video'){
+     const dur=Number.isFinite(video.duration)?video.duration:3;
+     $(id+'Length').value=Math.max(.5,Math.min(600,Math.round(dur*10)/10));
+   }
+   refreshCard(id,f);movieTile(id,media.type==='video'?video:null);updateInfo();render();status((id==='intro'?'آغاز':'پایان')+' مستقل آماده شد؛ مدت را هم می‌توانید دستی تنظیم کنید.');
+ }catch(e){status('کادر باز نشد: '+e.message,true)}
+});
+for(const id of ['intro','outro']){
+ $('preview'+(id==='intro'?'Intro':'Outro')).addEventListener('click',async()=>{
+   stopPreview();const p=plan();if(!(id==='intro'?p.i:p.o)){status('ابتدا برای این کادر عکس، ویدیو یا متن انتخاب کنید.',true);return}
+   await position(id==='intro'?0:Math.max(0,p.total-p.o));$('playBtn').click();
+   status('در حال پخش ویدیوی '+(id==='intro'?'آغاز':'پایان')+' با مدت انتخاب‌شده.');
+ });
+ $('clear'+(id==='intro'?'Intro':'Outro')).addEventListener('click',()=>{
+   stopPreview();(id==='intro'?introVideo:outroVideo).pause(); S[id]=null;if(id==='intro'){S.introStill=null;coverReady()}
+   $(id+'File').value='';$(id+'Text').value='';$(id+'Name').textContent='عکس یا ویدیوی جداگانه';$(id+'Card').classList.remove('active');
+   S.pos=0;updateInfo();render();status('کادر '+(id==='intro'?'آغاز':'پایان')+' حذف شد.');
+ });
+}
+function chosenDimensions(){
+ const ratio=$('ratio').value,res=num('resolution',1080);
+ let w,h;
+ if(ratio==='custom'){
+   w=clamp(num('customWidth',800),100,3840);
+   h=clamp(num('customHeight',540),100,3840);
+ }else if(ratio==='9:16'){w=Math.round(res*9/16);h=res}
+ else if(ratio==='1:1'){w=res;h=res}
+ else{w=Math.round(res*16/9);h=res}
+ w=Math.round(w/2)*2;h=Math.round(h/2)*2;
+ return {w,h}
+}
+function layoutViewer(){
+ const cw=canvas.width||960,ch=canvas.height||540;
+ const available=Math.max(180,stage.clientWidth-38);
+ const maxH=Math.max(120,stage.clientHeight-28);
+ const scale=Math.min(1,available/cw,maxH/ch);
+ const visibleW=cw*scale,visibleH=ch*scale;
+ stageInner.style.width=visibleW+'px';stageInner.style.height=visibleH+'px';
+ stageInner.style.transform='scale('+viewerZoom+')';
+ stageSize.style.width=(visibleW*viewerZoom)+'px';stageSize.style.height=(visibleH*viewerZoom)+'px';
+ if(stageSize.parentElement && viewerZoom<=1){stageSize.style.marginLeft='auto';stageSize.style.marginRight='auto'}else{stageSize.style.marginLeft='0';stageSize.style.marginRight='0'}
+ if($('viewerZoomLabel'))$('viewerZoomLabel').textContent=Math.round(viewerZoom*100)+'٪';
+}
+function setCanvas(large=false){
+ const target=chosenDimensions();let w=target.w,h=target.h;
+ if(!large){const scale=Math.min(1,960/w,540/h);w=Math.max(2,Math.round((w*scale)/2)*2);h=Math.max(2,Math.round((h*scale)/2)*2)}
+ if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}
+ canvas.style.aspectRatio=w+'/'+h;
+ $('frameDimensions').textContent=target.w+' × '+target.h+' پیکسل';
+ // During export the recording canvas may be full-size, but its visual preview remains independently zoomable.
+ layoutViewer();
+}
+function cover(media,x,y,w,h,contain=false){const mw=media.videoWidth||media.naturalWidth||media.width,mh=media.videoHeight||media.naturalHeight||media.height;if(!mw||!mh)return;let sc=(contain?Math.min:Math.max)(w/mw,h/mh),dw=mw*sc,dh=mh*sc;ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(media,x+(w-dw)/2,y+(h-dh)/2,dw,dh)}
+function roundedRect(x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r)}
+function drawTitle(text){if(!text)return;const W=canvas.width,H=canvas.height;ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='rgba(7,26,35,.68)';roundedRect(W*.08,H*.41,W*.84,H*.2,Math.max(8,W*.02));ctx.fill();ctx.fillStyle='#fff';ctx.font='bold '+Math.round(Math.max(20,W*.046))+'px Tahoma,Arial';const lines=wrap(text,Math.round(W*.8),2);lines.forEach((line,i)=>ctx.fillText(line,W/2,H*.50+(i-(lines.length-1)/2)*W*.055));ctx.restore()}
+function wrap(s,maxWidth,maxLines){const parts=s.replace(/\s+/g,' ').trim().split(' '),lines=[];let cur='';for(const part of parts){const next=cur?cur+' '+part:part;if(ctx.measureText(next).width>maxWidth&&cur){lines.push(cur);cur=part;if(lines.length>=maxLines)break}else cur=next}if(cur&&lines.length<maxLines)lines.push(cur);return lines}
+function introHold(){return Math.min(plan().i,Math.max(.5,num('coverHold',1.25)))}
+function cardTime(kind,time){return kind==='intro'?Math.max(0,time-introHold()):time}
+function phaseAt(t,p){if(t<p.i)return {kind:'intro',time:t};if(t<p.i+p.body || (!p.o&&p.body>0) || (!p.total&&S.studio)){const rel=Math.max(0,Math.min(t-p.i,Math.max(0,p.clip-.01)));return {kind:'main',time:p.start+rel}}return {kind:'outro',time:Math.max(0,t-p.i-p.body)}}
+function speakerRect(){
+ const W=canvas.width,H=canvas.height;
+ const scale=num('personScale',80)/100;
+ let ww=W*scale,hh=ww*(main.videoHeight||9)/(main.videoWidth||16);
+ if(hh>H*.98){const k=H*.98/hh;ww*=k;hh*=k}
+ const x=(W-ww)*(num('personX',50)/100),y=(H-hh)*(num('personY',85)/100);
+ return {x,y,w:ww,h:hh,W,H};
+}
+function syncSpeakerBox(){
+ if(!speakerBox) return; const compose=$('compose').value;
+ if(!S.main || compose==='full' || !S.boxVisible || phaseAt(S.pos,plan()).kind!=='main' || S.exporting){speakerBox.classList.remove('active');return}
+ const r=speakerRect(),scaleX=stageInner.clientWidth/r.W,scaleY=stageInner.clientHeight/r.H;
+ speakerBox.style.left=(r.x*scaleX)+'px';speakerBox.style.top=(r.y*scaleY)+'px';
+ speakerBox.style.width=(r.w*scaleX)+'px';speakerBox.style.height=(r.h*scaleY)+'px';
+ speakerBox.classList.add('active');
+}
+function showSpeakerBox(v=true){S.boxVisible=v; syncSpeakerBox()}
+function clamp01(v){return Math.min(100,Math.max(0,v))}
+function updateSlidersFromRect(left,top,width){
+ const W=canvas.width,H=canvas.height; const aspect=(main.videoHeight||9)/(main.videoWidth||16); let ww=Math.max(W*.05, Math.min(W*1.3, width)); let hh=ww*aspect;
+ if(hh>H*.98){const k=H*.98/hh;ww*=k;hh*=k}
+ left=Math.max(0, Math.min(W-ww, left)); top=Math.max(0, Math.min(H-hh, top));
+ $('personScale').value=Math.round((ww/W)*100);$('personScaleText').textContent=$('personScale').value+'٪'; $('personX').value=Math.round((W-ww)?left/(W-ww)*100:0); $('personY').value=Math.round((H-hh)?top/(H-hh)*100:0);
+ render();
+}
+function logoRect(){
+ const W=canvas.width,H=canvas.height; let scale=num('logoScale',22)/100,ww=W*scale;
+ let aspect=1; if(S.logo){aspect=(S.logo.naturalHeight||S.logo.height||1)/(S.logo.naturalWidth||S.logo.width||1)}
+ let hh=ww*aspect; if(hh>H*.6){const k=(H*.6)/hh;ww*=k;hh*=k}
+ const x=(W-ww)*(num('logoX',73)/100),y=(H-hh)*(num('logoY',78)/100); return {x,y,w:ww,h:hh,W,H};
+}
+function syncLogoBox(){
+ if(!S.logo || !$('showLogo').checked || !S.logoVisible || S.exporting || phaseAt(S.pos,plan()).kind!=='main'){logoBox.classList.remove('active');return}
+ const r=logoRect(),scaleX=stageInner.clientWidth/r.W,scaleY=stageInner.clientHeight/r.H;
+ logoBox.style.left=(r.x*scaleX)+'px';logoBox.style.top=(r.y*scaleY)+'px';
+ logoBox.style.width=(r.w*scaleX)+'px';logoBox.style.height=(r.h*scaleY)+'px';logoBox.classList.add('active');
+}
+function showLogoBox(v=true){S.logoVisible=v; syncLogoBox()}
+function updateLogoSliders(left,top,width){
+ const W=canvas.width,H=canvas.height; let aspect=1; if(S.logo){aspect=(S.logo.naturalHeight||S.logo.height||1)/(S.logo.naturalWidth||S.logo.width||1)}
+ let ww=Math.max(W*.05, Math.min(W*.5, width)),hh=ww*aspect; if(hh>H*.6){const k=(H*.6)/hh;ww*=k;hh*=k}
+ left=Math.max(0,Math.min(W-ww,left)); top=Math.max(0,Math.min(H-hh,top));
+ $('logoScale').value=Math.round((ww/W)*100); $('logoScaleText').textContent=$('logoScale').value+'٪';
+ $('logoX').value=Math.round((W-ww)?left/(W-ww)*100:0); $('logoY').value=Math.round((H-hh)?top/(H-hh)*100:0); render();
+}
+function pointerPos(ev){const cRect=canvas.getBoundingClientRect();const r=speakerRect();const scaleX=cRect.width/r.W, scaleY=cRect.height/r.H; return {clientX:ev.clientX,clientY:ev.clientY,canvasX:(ev.clientX-cRect.left)/scaleX,canvasY:(ev.clientY-cRect.top)/scaleY,scaleX,scaleY}}
+function smoothStep(a,b,x){let t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t)}
+function prepVideoPixels(media=main){
+ const mw=main.videoWidth,mh=main.videoHeight;if(!mw||!mh)return false;
+ // Keep color-key masks as detailed as the output instead of permanently downscaling faces to 800/1280px.
+ // Only the transparency is used for AI mode; face RGB always comes from the untouched input video.
+ const maxw=S.exporting ? ($('quality').value==='high'?1920:1440) : Math.max(960,Math.min(1280,canvas.width*1.25));
+ const qw=Math.max(2,Math.min(mw,Math.round(maxw))),qh=Math.max(2,Math.round(qw*mh/mw));
+ if(buf.width!==qw||buf.height!==qh){buf.width=qw;buf.height=qh}
+ bctx.clearRect(0,0,qw,qh);bctx.imageSmoothingEnabled=true;bctx.imageSmoothingQuality='high';
+ bctx.drawImage(media,0,0,qw,qh);return true
+}
+function removeColorPixels(d,w,h,type,fromHeight=0,strength=60){
+ const start=Math.max(0,Math.floor(h*fromHeight/100)), tol=clamp(strength,10,95)/100;
+ const rgb=frontKey.rgb, sampleSum=rgb[0]+rgb[1]+rgb[2]||1;
+ const target=[rgb[0]/sampleSum,rgb[1]/sampleSum,rgb[2]/sampleSum];
+ const hue=(r,g,b)=>{const M=Math.max(r,g,b),m=Math.min(r,g,b),d=M-m;if(!d)return 0;let h=M===r?(g-b)/d+(g<b?6:0):M===g?(b-r)/d+2:(r-g)/d+4;return (h*60)%360};
+ const greenHue=hue(...rgb);
+ for(let y=start;y<h;y++)for(let x=0;x<w;x++){
+   const k=(y*w+x)*4, r=d[k],g=d[k+1],b=d[k+2];
+   if(d[k+3]===0)continue;
+   let excess,match;
+   if(type==='green'){
+      excess=(g-Math.max(r,b))/255;
+      if(excess<.015)continue;
+      const pixelHue=hue(r,g,b),hdiff=Math.abs(pixelHue-greenHue),dist=Math.min(hdiff,360-hdiff);
+      const hueMatch=1-smoothStep(22+tol*20,46+tol*47,dist);
+      // The sampled green hue actually influences the result, without masking skin.
+      const dominant=smoothStep(.035+(1-tol)*.06,.095+(1-tol)*.11,excess);
+      match=dominant*(.1+.9*hueMatch);
+   }else{
+      excess=(b-Math.max(r,g))/255;
+      match=smoothStep(.035+(1-tol)*.06,.095+(1-tol)*.11,excess);
+   }
+   const alpha=1-clamp(match,0,1);
+   d[k+3]=Math.round(d[k+3]*alpha);
+   // Very small spill reduction on edge pixels, never whole skin/face.
+   if(alpha>.05&&alpha<.9){if(type==='green')d[k+1]=Math.min(g,Math.round(Math.max(r,b)*1.18));else d[k+2]=Math.min(b,Math.round(Math.max(r,g)*1.18))}
+ }
+}
+// Remove color spill only at transparent matte boundaries. Disabled at zero so
+// the source image stays untouched (preserves beard and hair detail).
+function trimFringePixels(data,width,height,amount){
+ amount=Math.max(0,Math.min(20,Number(amount)||0));
+ if(!amount || width<3 || height<3)return;
+ const mask=new Uint8Array(width*height);
+ for(let i=0,idx=3;i<mask.length;i++,idx+=4)mask[i]=data[idx];
+ const drop=amount*10;
+ for(let y=1;y<height-1;y++){
+  let p=y*width+1;
+  for(let x=1;x<width-1;x++,p++){
+   const alpha=mask[p];if(alpha===0)continue;
+   const neighbors=(mask[p-1]<55)+(mask[p+1]<55)+(mask[p-width]<55)+(mask[p+width]<55);
+   if(!neighbors)continue;
+   const k=p*4;
+   data[k+3]=Math.max(0,alpha-drop-(neighbors-1)*10);
+   if(data[k+3]<26)data[k+3]=0;
+   if(data[k+3]>0 && data[k+3]<230){
+    const r=data[k],g=data[k+1],b=data[k+2],m=Math.max(r,b);
+    if(g>m)data[k+1]=Math.round(g*.6+m*.4);
+    // remove white fringe by slightly darkening bright semi-transparent edge pixels
+    const avg=(r+g+b)/3;
+    const spread=Math.max(r,g,b)-Math.min(r,g,b);
+    if(avg>170 && spread<45){
+      const pull=Math.min(55, amount*3 + neighbors*5);
+      data[k]=Math.max(0,r-pull);
+      data[k+1]=Math.max(0,g-pull);
+      data[k+2]=Math.max(0,b-pull);
+      data[k+3]=Math.max(0,data[k+3]-amount*4);
+      if(data[k+3]<26)data[k+3]=0;
+    }
+   }
+  }
+ }
+}
+function keyedSource({whole=null,front=false,media=main}={}){
+ if(!prepVideoPixels(media))return null;
+ if(!whole&&!front)return buf;
+ const pixels=bctx.getImageData(0,0,buf.width,buf.height);
+ if(whole)removeColorPixels(pixels.data,buf.width,buf.height,whole,0,num('keyTolerance',40));
+ else if(front)removeColorPixels(pixels.data,buf.width,buf.height,'green',num('greenRegion',60),num('frontStrength',60));
+ trimFringePixels(pixels.data,buf.width,buf.height,num('matteTrim',0));
+ bctx.putImageData(pixels,0,0);return buf;
+}
+function aiLayer(x,y,w,h,front){
+ if(!ai.ready||!ai.mask||main.readyState<2)return false;
+ const mw=matchedFrame.width,mh=matchedFrame.height;
+ if(!mw||!mh)return false;
+ const maxWidth=S.exporting?1920:Math.max(960,canvas.width);
+ const cw=Math.min(mw,maxWidth),ch=Math.max(2,Math.round(cw*mh/mw));
+ const recipe=preparePortrait();
+ if(recipe&&portrait.enabled&&faceReference.asset)trackFaceForReference(recipe);
+ const softness=num('edgeSoftness',0),trim=num('matteTrim',0);
+ const key=recipe?[recipe.key,cleanup.revision,faceReference.revision,cw,ch,softness,trim,front,frontKey.rgb.join(','),$('greenRegion').value,$('frontStrength').value].join(':'):null;
+ if(!key||key!==portrait.paintKey){
+  if(aiCanvas.width!==cw||aiCanvas.height!==ch){aiCanvas.width=cw;aiCanvas.height=ch;}
+  aiCtx.clearRect(0,0,cw,ch);
+  aiCtx.globalCompositeOperation='source-over';
+  aiCtx.imageSmoothingEnabled=true;
+  aiCtx.imageSmoothingQuality='high';
+  aiCtx.drawImage(matchedFrame,0,0,cw,ch);
+  aiCtx.globalCompositeOperation='destination-in';
+  aiCtx.save();
+  if(softness>0)aiCtx.filter='blur('+softness+'px)';
+  aiCtx.drawImage(recipe?.mask??ai.mask,0,0,cw,ch);
+  aiCtx.restore();
+  if(front){
+   const keyMask=keyedSource({front:true,media:matchedFrame});
+   if(keyMask)aiCtx.drawImage(keyMask,0,0,cw,ch);
+  }
+  aiCtx.globalCompositeOperation='source-over';
+  if(trim>0){const pixels=aiCtx.getImageData(0,0,cw,ch);trimFringePixels(pixels.data,cw,ch,trim);aiCtx.putImageData(pixels,0,0);}
+  if(recipe&&portrait.enabled){
+   paintPortrait(aiCtx,cw,ch,recipe);
+   if(faceReference.asset)paintFaceReference(aiCtx,cw,ch,recipe);
+  }
+  if(recipe&&portrait.enabled)beautyPass(aiCtx,cw,ch,recipe);
+  applyCleanup(aiCtx,cw,ch);
+  applySmartWhite(aiCtx,cw,ch,"main",matchedFrame,true);
+  portrait.paintKey=key;
+ }
+ ctx.save();
+ ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+ ctx.filter='brightness('+num('faceBrightness',100)+'%) contrast('+num('faceContrast',100)+'%)';
+ if(desk.active)paintAtDesk(x,y,w,h);else ctx.drawImage(aiCanvas,x,y,w,h);
+ ctx.restore();
+ return true;
+}
+function drawPicture(t){
+ const p=plan(),q=phaseAt(clamp(t,0,p.total),p),W=canvas.width,H=canvas.height;
+ ctx.fillStyle='#0d2532';ctx.fillRect(0,0,W,H);
+ if(q.kind==='intro'||q.kind==='outro'){
+   const img=q.kind==='intro'?S.intro:S.outro;
+   if(img&&img.type==='video'){
+     const video=img.media;
+     if(q.kind==='intro' && S.introStill && q.time<introHold()){
+       ctx.save();ctx.filter='brightness('+num('sceneBrightness',100)+'%)';cover(S.introStill,0,0,W,H);ctx.restore();
+     }else if(video.readyState>=2){ctx.save();ctx.filter='brightness('+num('sceneBrightness',100)+'%)';cover(video,0,0,W,H);ctx.restore();}
+     else {ctx.fillStyle='#173f59';ctx.fillRect(0,0,W,H)}
+   }else if(img&&img.type==='image'){ctx.save();ctx.filter='brightness('+num('sceneBrightness',100)+'%)';cover(img.media,0,0,W,H);ctx.restore();}else{const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#174d60');g.addColorStop(1,'#061a30');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+   drawTitle($(q.kind+'Text').value.trim());return
+ }
+ const compose= S.studio && $('compose').value==='full' ? 'overlay' : $('compose').value;
+ if(compose==='full'){
+   if(main.readyState>=2){ctx.save();ctx.filter='brightness('+num('faceBrightness',100)+'%) contrast('+num('faceContrast',100)+'%)';cover(cleanupMediaLayer(main,"main"),0,0,W,H);ctx.restore();}else drawTitle('در حال آماده‌سازی تصویر'); if(S.logo && $('showLogo').checked){const lr=logoRect();ctx.drawImage(S.logo,lr.x,lr.y,lr.w,lr.h)} return
+ }
+ if(S.studio){
+   const media=S.studio.type==='video'?(bgVideo.readyState>=2?bgVideo:S.studioStill):S.studio.media;
+   if(media){ctx.save();ctx.filter='brightness('+num('sceneBrightness',100)+'%)';cover(cleanupMediaLayer(media,"studio"),0,0,W,H);ctx.restore()}
+   else drawTitle('در انتظار تصویر استودیو — پخش را بزنید');
+ }else {ctx.fillStyle='#285c87';ctx.fillRect(0,0,W,H)}
+ if(S.studioOnly&&!S.exporting)return;
+ const {x,y,w:ww,h:hh}=speakerRect();
+ if(main.readyState>=2){
+   const whole=compose==='green'||compose==='blue'?compose:null;
+   const front=$('frontGreen').checked && !whole && (compose!=='ai'||ai.ready);
+   let source=main;
+   if(whole||(front&&compose!=='ai')){
+     try{source=keyedSource({whole,front})||main}
+     catch(err){console.warn('Color removal failed. Showing the original speaker video.',err);source=main}
+   }
+   if(compose==='ai'){
+     if(!aiLayer(x,y,ww,hh,front)){
+       // Always show the ORIGINAL video while AI is loading or unavailable.
+       // An unfinished mask must never make the speaker disappear.
+       ctx.save();ctx.filter='brightness('+num('faceBrightness',100)+'%) contrast('+num('faceContrast',100)+'%)';ctx.drawImage(cleanupMediaLayer(main,"main"),x,y,ww,hh);ctx.restore();
+       if(!S.exporting){ctx.save();ctx.strokeStyle='#e8c982';ctx.lineWidth=Math.max(2,W*.003);ctx.strokeRect(x,y,ww,hh);ctx.restore()}
+     }
+     if(ai.ready)void maybeSegment();
+   }else {ctx.save();ctx.filter='brightness('+num('faceBrightness',100)+'%) contrast('+num('faceContrast',100)+'%)';ctx.drawImage(cleanupMediaLayer(source,"main"),x,y,ww,hh);ctx.restore();}
+ }
+ if(S.logo && $('showLogo').checked){const lr=logoRect();ctx.drawImage(S.logo,lr.x,lr.y,lr.w,lr.h)}
+}
+function seekCardVideo(video,t){
+ if(!Number.isFinite(video.duration)||video.duration<=0)return;
+ const target=((t%video.duration)+video.duration)%video.duration;
+ if(Math.abs(video.currentTime-target)>.16)try{video.currentTime=Math.min(video.duration-.005,target)}catch{}
+}
+function updateCardPlayback(q,playing){
+ for(const id of ['intro','outro']){
+   const item=S[id],video=id==='intro'?introVideo:outroVideo;
+   if(item?.type!=='video')continue;
+   if(q.kind===id){
+     const rel=cardTime(id,q.time||0);
+     if(!playing || (id==='intro' && q.time<introHold())){
+       video.pause();seekCardVideo(video,rel);
+     }else{
+       if(video.paused)video.play().catch(()=>{});
+       if(Math.abs(video.currentTime-(rel%video.duration))>.45)seekCardVideo(video,rel);
+     }
+   }else video.pause();
+ }
+}
+function render(){if(S.exporting||switchingSource)return;setCanvas(false);const q=phaseAt(S.pos,plan());updateCardPlayback(q,false);drawFrame(S.pos);syncSpeakerBox();syncLogoBox()}
+main.addEventListener('loadeddata',()=>{if(S.main&&!S.exporting&&!S.playing)render()});
+main.addEventListener('seeked',()=>{if(S.main&&!S.exporting&&!S.playing)render()});
+main.addEventListener('error',()=>{if(S.main&&!importBusy)status('تصویر ویدیو در مرورگر باز نشد. فایل MP4 را در Chrome جداگانه آزمایش کنید.',true)});
+if(typeof main.requestVideoFrameCallback==='function'){
+ const afterDecodedFrame=()=>{if(S.main&&!S.exporting&&!S.playing)render();main.requestVideoFrameCallback(afterDecodedFrame)};
+ main.requestVideoFrameCallback(afterDecodedFrame);
+}
+function updateClock(){syncTimeline();const p=plan();$('seek').value=p.total?clamp(Math.round(S.pos/p.total*1000),0,1000):0;$('clock').textContent=short(S.pos)+' / '+short(p.total)}
+function seekSource(t){return new Promise(resolve=>{if(!S.main)return resolve();const target=clamp(t,0,Math.max(0,pickDuration()-.01));if(Math.abs((main.currentTime||0)-target)<.03)return resolve();let done=false;const finish=()=>{if(done)return;done=true;main.removeEventListener('seeked',finish);resolve()};main.addEventListener('seeked',finish,{once:true});try{main.currentTime=target}catch{}setTimeout(finish,800)})}
+async function position(t){const p=plan();S.pos=clamp(t,0,p.total);const q=phaseAt(S.pos,p);if(q.kind==='main'){await seekSource(q.time);if(S.studio?.type==='video'){bgVideo.currentTime=q.time%bgVideo.duration;await new Promise(r=>{bgVideo.addEventListener('seeked',r,{once:true});setTimeout(r,700)})}}render();updateClock()}
+$('seek').addEventListener('input',()=>{stopPreview();position(plan().total*num('seek')/1000)});
+function stopPreview(){S.playing=false;main.pause();bgVideo.pause();introVideo.pause();outroVideo.pause();$('playBtn').textContent='▶';cancelAnimationFrame(loopId)}
+const pendingPlayback = new WeakSet();
+function requestPlayback(video, onError) {
+ if (!video.paused || pendingPlayback.has(video)) return;
+ pendingPlayback.add(video);
+ video.play().catch(error => {
+  if (error.name !== 'AbortError' && onError) onError();
+ }).finally(() => pendingPlayback.delete(video));
+}
+function playStudioAt(time) {
+ if (S.studio?.type !== 'video') return;
+ const duration = bgVideo.duration;
+ if (Number.isFinite(duration) && duration > 0 && !bgVideo.seeking) {
+  const target = time % duration;
+  if (Math.abs(bgVideo.currentTime - target) > .5) bgVideo.currentTime = target;
+ }
+ requestPlayback(bgVideo, () => { $('previewMessage').textContent = 'پخش استودیو متوقف شد؛ دوباره ▶ را بزنید.'; });
+}
+function previewTick(ts) {
+ if (!S.playing) return;
+ const delta = Math.min((ts - S.lastTick) / 1000, .25);
+ S.lastTick = ts;
+ S.pos += Math.max(0, delta);
+ const p = plan();
+ if (S.pos >= p.total) {
+  S.pos = p.total;
+  stopPreview(); render(); updateClock();
+  return;
+ }
+ const q = phaseAt(S.pos, p);
+ if (q.kind === 'main') {
+  playStudioAt(q.time);
+  if (S.main) {
+   if (!main.seeking && Math.abs(main.currentTime - q.time) > .35) main.currentTime = q.time;
+   requestPlayback(main);
+  }
+ } else { main.pause(); bgVideo.pause(); }
+ updateCardPlayback(q, true);
+ drawFrame(S.pos); syncSpeakerBox(); syncLogoBox(); updateClock();
+ loopId = requestAnimationFrame(previewTick);
+}
+$('playBtn').addEventListener('click',async()=>{
+ if((!S.main&&!S.studio)||S.exporting||importBusy||portrait.starting)return;
+ if(S.playing){stopPreview();return}
+ compositionView();
+ if(S.pos>=plan().total-.03)await position(0);
+ const q=phaseAt(S.pos,plan());
+ if(q.kind==='main'){playStudioAt(q.time);if(S.main)requestPlayback(main);}
+ S.playing=true;S.lastTick=performance.now();$('playBtn').textContent='Ⅱ';loopId=requestAnimationFrame(previewTick);
+});
+for(const id of ['introLength','outroLength','introText','outroText','coverHold'])$(id).addEventListener('input',()=>{if(S.exporting)return;S.pos=Math.min(S.pos,plan().total);coverReady();updateInfo();render()});
+
+for(const id of ['ratio','resolution','customWidth','customHeight','compose','personScale','personX','personY','keyTolerance','edgeSoftness','matteTrim','faceBrightness','faceContrast','sceneBrightness','logoScale','logoX','logoY','showLogo'])$(id).addEventListener('input',()=>{
+ if($('faceBrightnessText'))$('faceBrightnessText').textContent=$('faceBrightness').value+'٪';
+ if($('faceContrastText'))$('faceContrastText').textContent=$('faceContrast').value+'٪';
+ if($('sceneBrightnessText'))$('sceneBrightnessText').textContent=$('sceneBrightness').value+'٪';
+ if($('logoScaleText'))$('logoScaleText').textContent=$('logoScale').value+'٪';
+ if($('personScaleText'))$('personScaleText').textContent=$('personScale').value+'٪';
+ if($('matteTrimText'))$('matteTrimText').textContent=$('matteTrim').value;
+ if(S.exporting)return;
+ $('customSize').hidden=$('ratio').value!=='custom';
+ render();
+ if($('compose').value!=='ai'&&portrait.enabled)setPortraitEnabled(false);
+ if($('compose').value==='ai'&&ai.ready)void maybeSegment();
+});
+for(const id of ['frontGreen','greenRegion','frontStrength'])$(id).addEventListener('input',()=>{
+ $('greenRegionText').textContent=$('greenRegion').value+'٪';$('greenStrengthText').textContent=$('frontStrength').value+'٪';
+ if(!S.exporting)render();
+});
+$('sampleGreen').addEventListener('click',()=>{
+ if(!S.main){status('ابتدا ویدیوی گوینده را انتخاب کنید.',true);return}
+ frontKey.picking=!frontKey.picking; $('sampleGreen').classList.toggle('pick-active',frontKey.picking);
+ $('sampleGreen').textContent=frontKey.picking?'روی قسمت سبز ویدیو کلیک کنید':'🎯 انتخاب رنگ سبز با موس';
+ stage.style.cursor=frontKey.picking?'crosshair':'';
+ if(frontKey.picking)status('روی قسمت سبز جلوی دست‌های گوینده کلیک کنید تا همان رنگ پاک شود.');
+});
+$('resetGreen').addEventListener('click',()=>{frontKey.rgb=[0,223,0];$('greenSwatch').style.background='rgb(0,223,0)';$('frontGreen').checked=true;render();status('رنگ پرده سبز به حالت اصلی بازگشت.')});
+$('fitDesk').textContent='تنظیم گوینده روی صندلی';$('fitDesk').addEventListener('click',()=>{applySeat();render();showSpeakerBox(true)});
+function sampleFrontGreen(ev){
+ if(!frontKey.picking||!S.main||main.readyState<2)return false;
+ ev.preventDefault();ev.stopPropagation();const r=speakerRect(),p=pointerPos(ev);
+ if(p.canvasX<r.x||p.canvasX>r.x+r.w||p.canvasY<r.y||p.canvasY>r.y+r.h){status('برای انتخاب رنگ، روی قسمت سبز داخل قاب گوینده کلیک کنید.',true);return true}
+ const sx=Math.floor(clamp((p.canvasX-r.x)/r.w,0,.999)*main.videoWidth),sy=Math.floor(clamp((p.canvasY-r.y)/r.h,0,.999)*main.videoHeight);
+ try{sampleCtx.clearRect(0,0,1,1);sampleCtx.drawImage(main,sx,sy,1,1,0,0,1,1);const pixel=sampleCtx.getImageData(0,0,1,1).data;
+   if(pixel[1]<=Math.max(pixel[0],pixel[2])*1.09){status('رنگ انتخاب‌شده سبز نیست. روی خودِ پرده سبز کلیک کنید.',true);return true}
+   frontKey.rgb=[pixel[0],pixel[1],pixel[2]];$('greenSwatch').style.background=`rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
+   $('frontGreen').checked=true;frontKey.picking=false;$('sampleGreen').classList.remove('pick-active');$('sampleGreen').textContent='🎯 انتخاب رنگ سبز با موس';stage.style.cursor='';render();status('رنگ سبز پرده انتخاب شد؛ پیش‌رو حذف می‌شود.');
+ }catch(e){status('رنگ پرده انتخاب نشد: '+e.message,true)}return true;
+}
+canvas.addEventListener('click',ev=>{
+ if(sampleFrontGreen(ev))return;
+ if(S.exporting)return;
+ const p=pointerPos(ev); let hitLogo=false;
+ if(S.logo && $('showLogo').checked){const lr=logoRect(); if(p.canvasX>=lr.x && p.canvasX<=lr.x+lr.w && p.canvasY>=lr.y && p.canvasY<=lr.y+lr.h){showLogoBox(true);hitLogo=true}else showLogoBox(false)}
+ if(S.main && $('compose').value!=='full' && !hitLogo){const r=speakerRect(); if(p.canvasX>=r.x && p.canvasX<=r.x+r.w && p.canvasY>=r.y && p.canvasY<=r.y+r.h){showSpeakerBox(true)}else showSpeakerBox(false)}
+ else showSpeakerBox(false);
+});
+speakerBox.addEventListener('pointerdown',ev=>{
+ if(sampleFrontGreen(ev))return;
+ if(!S.main||S.exporting||$('compose').value==='full') return;
+ ev.preventDefault(); ev.stopPropagation(); const p=pointerPos(ev), r=speakerRect();
+ drag.startX=p.canvasX; drag.startY=p.canvasY; drag.startPX=Number($('personX').value); drag.startPY=Number($('personY').value); drag.startScale=Number($('personScale').value); drag.aspect=r.h/r.w; drag.startRect=r;
+ drag.mode=ev.target.classList.contains('handle')?'resize':'move';
+ try{speakerBox.setPointerCapture(ev.pointerId)}catch{}
+ showSpeakerBox(true)
+});
+speakerBox.addEventListener('pointermove',ev=>{
+ if(!drag.mode) return; ev.preventDefault(); const p=pointerPos(ev), r=drag.startRect;
+ if(drag.mode==='move'){
+   const left=r.x+(p.canvasX-drag.startX), top=r.y+(p.canvasY-drag.startY);
+   updateSlidersFromRect(left,top,r.w);
+ }else if(drag.mode==='resize'){
+   const width=Math.max(canvas.width*.05, r.w+(p.canvasX-drag.startX));
+   updateSlidersFromRect(r.x,r.y,width);
+ }
+});
+function endDrag(ev){ if(!drag.mode) return; drag.mode=null; try{speakerBox.releasePointerCapture(ev.pointerId)}catch{} syncSpeakerBox(); }
+speakerBox.addEventListener('pointerup',endDrag); speakerBox.addEventListener('pointercancel',endDrag);
+stage.addEventListener('mouseleave',()=>{ if(!drag.mode) return; drag.mode=null; syncSpeakerBox() });
+logoBox.addEventListener('pointerdown',ev=>{ if(!S.logo||S.exporting) return; ev.preventDefault(); ev.stopPropagation(); const p=pointerPos(ev), r=logoRect(); logoDrag.startX=p.canvasX; logoDrag.startY=p.canvasY; logoDrag.startRect=r; logoDrag.mode=ev.target.classList.contains('handle')?'resize':'move'; try{logoBox.setPointerCapture(ev.pointerId)}catch{} showLogoBox(true);});
+logoBox.addEventListener('pointermove',ev=>{ if(!logoDrag.mode) return; ev.preventDefault(); const p=pointerPos(ev),r=logoDrag.startRect; if(logoDrag.mode==='move'){updateLogoSliders(r.x+(p.canvasX-logoDrag.startX),r.y+(p.canvasY-logoDrag.startY),r.w)} else {updateLogoSliders(r.x,r.y,Math.max(canvas.width*.05,r.w+(p.canvasX-logoDrag.startX)))} });
+function endLogoDrag(ev){ if(!logoDrag.mode) return; logoDrag.mode=null; try{logoBox.releasePointerCapture(ev.pointerId)}catch{} syncLogoBox(); }
+logoBox.addEventListener('pointerup',endLogoDrag); logoBox.addEventListener('pointercancel',endLogoDrag);
+document.addEventListener('pointerdown',ev=>{if(!speakerBox.contains(ev.target))showSpeakerBox(false); if(!logoBox.contains(ev.target))showLogoBox(false)},true);
+window.addEventListener('resize',()=>setTimeout(()=>{layoutViewer();syncSpeakerBox();syncLogoBox()},50));
+
+let exportRecorder=null;
+async function setupAudio(){
+ if(!S.audioCtx){
+   S.audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+   S.source=S.audioCtx.createMediaElementSource(main);S.gain=S.audioCtx.createGain();S.dest=S.audioCtx.createMediaStreamDestination();
+   S.source.connect(S.gain);S.gain.connect(S.dest);S.gain.connect(S.audioCtx.destination);
+   S.cardGains={};
+   for(const id of ['intro','outro']){
+     const el=id==='intro'?introVideo:outroVideo;
+     const src=S.audioCtx.createMediaElementSource(el),gain=S.audioCtx.createGain();
+     src.connect(gain);gain.connect(S.dest);gain.connect(S.audioCtx.destination);
+     S.cardGains[id]=gain;
+   }
+ }
+ await S.audioCtx.resume();S.gain.gain.value=num('volume',100)/100;main.muted=false;
+ for(const id of ['intro','outro']){(id==='intro'?introVideo:outroVideo).muted=false}
+}
+function gateCardAudio(kind){
+ if(!S.cardGains)return;
+ for(const id of ['intro','outro'])S.cardGains[id].gain.value=(kind===id&&S[id]?.type==='video')?1:0;
+ S.gain.gain.value=kind==='main'?num('volume',100)/100:0;
+}
+$('volume').addEventListener('input',()=>{if(S.gain)S.gain.gain.value=num('volume',100)/100});
+const zoomOutBtn=$('zoomOut'),zoomInBtn=$('zoomIn'),zoomResetBtn=$('zoomReset');
+if(zoomOutBtn)zoomOutBtn.addEventListener('click',()=>{viewerZoom=Math.max(.5,Math.round((viewerZoom-.25)*100)/100);layoutViewer();});
+if(zoomInBtn)zoomInBtn.addEventListener('click',()=>{viewerZoom=Math.min(3,Math.round((viewerZoom+.25)*100)/100);layoutViewer();});
+if(zoomResetBtn)zoomResetBtn.addEventListener('click',()=>{viewerZoom=1;layoutViewer();stage.scrollTop=0;stage.scrollLeft=0;});
+const SAVE={dir:null, name:'Ibrahimi_Studio',lastBlob:null};
+function safeVideoName(value){return (String(value||'Ibrahimi_Studio').replace(/[\\/:*?"<>|\x00-\x1f]/g,'_').replace(/[. ]+$/,'').trim().slice(0,120)||'Ibrahimi_Studio')}
+function exportBitrate(){
+ const fps=num('fps',25),p=plan(),size=chosenDimensions(),pixels=size.w*size.h;
+ const base={'small':1.3,'balanced':2.5,'high':4.6}[$('quality').value]||4.6;
+ let br=base*1e6*Math.max(.20,Math.pow(pixels/(1280*720),.78))*(fps/25);
+ const target=Number($('targetMB').value);
+ if($('targetMB').value.trim()&&Number.isFinite(target)&&target>0&&p.total>0){br=Math.max(250000,Math.min(45000000,(target*1024*1024*8/p.total)-128000));}
+ return Math.round(Math.max(250000,Math.min(45000000,br)));
+}
+function updateSaveEstimate(){
+ const p=plan(),size=chosenDimensions(),br=exportBitrate();
+ const mb=(br+128000)*p.total/8/1048576;
+ $('sizeEstimate').textContent='ابعاد: '+size.w+' × '+size.h+' | مدت: '+short(p.total)+' | حجم تخمینی: '+(p.total?mb.toFixed(1):'—')+' مگابایت. حجم واقعی پس از ذخیره نمایش داده می‌شود.';
+}
+function openSaveDialog(){
+ if(!S.main){status('ابتدا ویدیوی گوینده را انتخاب کنید.',true);return}
+ if(S.exporting)return;
+ $('outputName').value=safeVideoName($('outputName').value);
+ $('dialogMessage').textContent='';$('dialogProgressWrap').style.display='none';
+ $('saveFields').style.opacity='1';$('startSave').disabled=false;$('closeSaveDialog').disabled=false;
+ $('saveDialog').classList.add('visible');$('saveDialog').setAttribute('aria-hidden','false');updateSaveEstimate();
+ $('outputName').focus();
+}
+function closeSaveDialog(){if(S.exporting)return;$('saveDialog').classList.remove('visible');$('saveDialog').setAttribute('aria-hidden','true')}
+$('closeSaveDialog').addEventListener('click',closeSaveDialog);
+$('saveDialog').addEventListener('click',e=>{if(e.target===$('saveDialog'))closeSaveDialog()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!S.exporting&&$('saveDialog').classList.contains('visible'))closeSaveDialog()});
+for(const id of ['resolution','quality','fps','targetMB'])$(id).addEventListener('input',updateSaveEstimate);
+$('ratio').addEventListener('change',updateSaveEstimate);
+for(const id of ['customWidth','customHeight'])$(id).addEventListener('input',updateSaveEstimate);
+for(const id of ['introLength','outroLength'])$(id).addEventListener('input',updateSaveEstimate);
+$('pickSaveFolder').addEventListener('click',async()=>{
+ if(S.exporting)return;
+ if(typeof window.showDirectoryPicker!=='function'){
+  $('folderLabel').textContent='انتخاب پوشه در این مرورگر فعال نیست؛ ذخیره در Downloads مرورگر انجام می‌شود.';
+  $('dialogMessage').textContent='در Edge جدید، انتخاب پوشه ممکن است فعال باشد. در غیر آن، فایل پس از پردازش در دانلودهای مرورگر قرار می‌گیرد.';
+  return;
+ }
+ try{
+  const handle=await window.showDirectoryPicker({mode:'readwrite',id:'ibrahimi-video-output'});
+  SAVE.dir=handle;$('folderLabel').textContent='پوشهٔ انتخابی: '+handle.name;
+  $('dialogMessage').textContent='پوشه انتخاب شد. فایل پس از کامل‌شدن پردازش در آن ذخیره می‌شود.';
+ }catch(e){if(e.name!=='AbortError')$('dialogMessage').textContent='انتخاب پوشه ممکن نشد: '+(e.message||e.name)}
+});
+async function saveFinishedBlob(blob,fullName){
+ if(SAVE.dir){
+  // Avoid silently overwriting an earlier video with the same name.
+  const suffix=fullName.lastIndexOf('.'),base=suffix>0?fullName.slice(0,suffix):fullName,ext=suffix>0?fullName.slice(suffix):'';
+  let finalName=fullName;
+  for(let i=0;i<100;i++){
+   finalName=i?base+' ('+i+')'+ext:fullName;
+   let exists=false;
+   try{await SAVE.dir.getFileHandle(finalName);exists=true}catch(e){if(e.name!=='NotFoundError')throw e}
+   if(!exists)break;
+   if(i===99)throw Error('در این پوشه نام آزاد پیدا نشد؛ نام فایل را تغییر دهید.');
+  }
+  const file=await SAVE.dir.getFileHandle(finalName,{create:true});
+  const writable=await file.createWritable();
+  try{await writable.write(blob);await writable.close()}catch(e){try{await writable.abort()}catch{}throw e}
+  return {inFolder:true,filename:finalName};
+ }
+ const a=document.createElement('a');a.href=S.exportURL;a.download=fullName;a.style.display='none';document.body.appendChild(a);a.click();a.remove();
+ return {inFolder:false};
+}
+$('dialogCancelWork').addEventListener('click',()=>{S.cancelled=true;$('dialogMessage').textContent='در حال لغو پردازش...'});
+$('startSave').addEventListener('click',()=>{SAVE.name=safeVideoName($('outputName').value);$('outputName').value=SAVE.name;void doExport()});
+function formatSupported(){const pref=['video/mp4;codecs="avc1.42E01E,mp4a.40.2"','video/mp4;codecs="avc1.42E01E"','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];return pref.find(s=>window.MediaRecorder&&MediaRecorder.isTypeSupported(s))||''}
+async function doExport(){if(S.exporting||importBusy||portrait.starting||whiteCleanup.busy)return;if(faceReference.loading){$('dialogMessage').textContent='صبر کنید تا خواندن عکس مرجع تمام شود.';return;}compositionView();let p;try{if($('compose').value==='ai'&&!ai.ready){status('در حال فعال‌سازی هوش مصنوعی برای ذخیره...');if(!await ensureAI())throw Error('هوش مصنوعی هنوز فعال نشده است؛ یک‌بار دکمهٔ «🤖 حذف هوشمند خودکار» را بزنید.')}p=validate();if(!HTMLCanvasElement.prototype.captureStream||!window.MediaRecorder)throw Error('مرورگر از ذخیره ویدیو پشتیبانی نمی‌کند. از Edge یا Chrome جدید استفاده کنید.');if(p.total>7200)throw Error('برای جلوگیری از فشار به حافظه، سقف خروجی ۲ ساعت است.');}catch(e){status(e.message,true);$('dialogMessage').textContent='خطا: '+e.message;return}stopPreview();S.exporting=true;S.cancelled=false;S.pos=0;$('exportBtn').disabled=true;$('cancelBtn').style.display='block';$('result').style.display='none';$('dialogProgressWrap').style.display='block';$('dialogCancelWork').style.display='inline-block';$('startSave').disabled=true;$('closeSaveDialog').disabled=true;$('referenceChoose').disabled=true;$('referenceRemove').disabled=true;$('saveFields').style.opacity='.65';$('dialogMessage').textContent='در حال پردازش ویدیو...';if(S.exportURL){URL.revokeObjectURL(S.exportURL);S.exportURL=null}setProgress(0,0,p.total);status('در حال آماده‌سازی ویدیو و صدا...');let stream,rec,frames=[],started=false;
+try{setCanvas(true);await setupAudio();await seekSource(p.start);if($('compose').value==='ai'&&ai.ready){await waitVideoPicture(main);if(ai.inFlight)await ai.inFlight;await runSegmentation();await prepareReferenceForExport()}if(S.intro?.type==='video'){
+  introVideo.pause();
+  // Use the already-decoded still. Re-seeking a paused file during export can stall loadeddata in Edge.
+  if(!S.introStill)S.introStill=await snapshotIntroVideo(introVideo);
+  try{introVideo.currentTime=0}catch{}
+}if(S.studio?.type==='video'){try{bgVideo.currentTime=0}catch{}}updateCardPlayback(phaseAt(0,p),false);gateCardAudio(phaseAt(0,p).kind);drawFrame(0);const fps=num('fps',25),br=exportBitrate();const mime=formatSupported();if(!mime)throw Error('کُدک ضبط در مرورگر موجود نیست.');const vidStream=canvas.captureStream(fps);stream=new MediaStream([...vidStream.getVideoTracks(),...S.dest.stream.getAudioTracks()]);rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:br,audioBitsPerSecond:128000});exportRecorder=rec;
+const finished=new Promise((resolve,reject)=>{rec.ondataavailable=e=>{if(e.data?.size)frames.push(e.data)};rec.onerror=e=>reject(e.error||Error('خطای موتور ذخیره'));rec.onstop=()=>resolve()});rec.start(1000);started=true;
+// Keep the first frame visible while the encoder produces its initial keyframe.
+if(p.i>0){drawFrame(0);await new Promise(r=>setTimeout(r,130))}
+exportStart=performance.now();let lastPhase='';
+await new Promise((resolve,reject)=>{let done=false;const finish=(e)=>{if(done)return;done=true;if(e)reject(e);else resolve()};let lastRel=-1;function tick(){if(S.cancelled){finish(Error('ذخیره لغو شد.'));return}let rel=Math.min(p.total,(performance.now()-exportStart)/1000),q=phaseAt(rel,p);S.pos=rel;
+if(q.kind==='main'){playStudioAt(q.time);if(lastPhase!=='main'){try{main.currentTime=q.time;main.play().catch(()=>{})}catch{}}else if(q.time<lastRel-.3||Math.abs(main.currentTime-q.time)>.55){try{main.currentTime=q.time}catch{}}lastRel=q.time}else{if(lastPhase==='main'){main.pause();bgVideo.pause()}}
+if(q.kind!==lastPhase)gateCardAudio(q.kind);
+updateCardPlayback(q,true);lastPhase=q.kind;drawFrame(rel);setProgress(rel/p.total*100,rel,p.total);if(rel>=p.total){finish();return}timer=requestAnimationFrame(tick)}timer=requestAnimationFrame(tick)});
+main.pause();bgVideo.pause();introVideo.pause();outroVideo.pause();gateCardAudio('none');if(rec.state!=='inactive')rec.stop();await finished;stream.getVideoTracks().forEach(t=>t.stop());if(S.cancelled)throw Error('ذخیره لغو شد.');if(!frames.length)throw Error('مرورگر هیچ فریم ویدیویی تولید نکرد.');const type=rec.mimeType||mime,blob=new Blob(frames,{type});if(blob.size<1024)throw Error('فایل خروجی خالی است.');const ext=type.includes('mp4')?'mp4':'webm',fileName=SAVE.name+'.'+ext;S.exportURL=URL.createObjectURL(blob);
+const a=$('downloadResult');a.href=S.exportURL;a.download=fileName;a.setAttribute('type',type);
+$('result').style.display='block';$('resultInfo').textContent='فرمت: '+ext.toUpperCase()+' | مدت: '+short(p.total)+' | حجم واقعی: '+(blob.size/1024/1024).toFixed(1)+' مگابایت | نام: '+fileName;
+setProgress(100,p.total,p.total);
+$('dialogMessage').textContent='پردازش کامل شد. در حال ذخیرهٔ فایل...';
+try{const saved=await saveFinishedBlob(blob,fileName);
+  const msg=saved.inFolder?'ذخیره موفق: '+saved.filename+' در پوشهٔ '+SAVE.dir.name:'پردازش کامل شد و دانلود فایل «'+fileName+'» آغاز شد. ذخیرهٔ نهایی را در مرورگر بررسی کنید.';
+  $('dialogMessage').textContent=msg;status(msg);
+}catch(saveError){$('dialogMessage').textContent='پردازش کامل است، اما ذخیره در پوشه موفق نشد: '+(saveError.message||String(saveError))+' . از دکمهٔ «دانلود ویدیوی آماده» زیر ذخیره استفاده کنید.';status('پردازش کامل است؛ برای دریافت از دکمه دانلود استفاده کنید.',true)}
+}catch(e){if(rec&&rec.state!=='inactive')try{rec.stop()}catch{}if(stream)stream.getVideoTracks().forEach(t=>t.stop());status(e.message||String(e),true);$('dialogMessage').textContent='خطا: '+(e.message||String(e));if(!started) setProgress(0,0,p.total)}finally{cancelAnimationFrame(timer);main.pause();bgVideo.pause();introVideo.pause();outroVideo.pause();gateCardAudio('none');S.exporting=false;exportRecorder=null;$('exportBtn').disabled=!S.main;$('cancelBtn').style.display='none';$('dialogCancelWork').style.display='none';$('startSave').disabled=false;$('closeSaveDialog').disabled=false;$('referenceChoose').disabled=false;$('referenceRemove').disabled=false;$('saveFields').style.opacity='1';S.pos=0;render();updateClock();}}
+$('exportBtn').addEventListener('click',openSaveDialog);$('cancelBtn').addEventListener('click',()=>{S.cancelled=true;status('در حال لغو ضبط...')});
+$('downloadResult').addEventListener('click',()=>{status('دانلود فایل آماده آغاز شد. پوشه Downloads را بررسی کنید.');});
+window.addEventListener('beforeunload',()=>{for(const u of S.oldURLs)URL.revokeObjectURL(u);if(S.exportURL)URL.revokeObjectURL(S.exportURL)});
+
+
+function cacheStudioFrame(){
+ if(S.studio?.type!=='video'||bgVideo.readyState<2||!bgVideo.videoWidth)return;
+ if(!S.studioStill)S.studioStill=document.createElement('canvas');
+ const c=S.studioStill;c.width=bgVideo.videoWidth;c.height=bgVideo.videoHeight;c.getContext('2d').drawImage(bgVideo,0,0);
+}
+$('showComposite').onclick=()=>{if(S.exporting)return;stopPreview();compositionView();if($('compose').value==='full')$('compose').value='overlay';S.pos=plan().i;void position(S.pos);$('previewMessage').textContent=S.studio?'استودیو در زیر و گوینده در بالا؛ برای برداشتن زمینهٔ گوینده، حذف هوشمند را بزنید.':'ابتدا فایل استودیو را از کادر شمارهٔ ۱ انتخاب کنید.'};
+$('studioOnly').onclick=()=>{if(S.exporting)return;if(!S.studio){status('ابتدا فایل استودیو را انتخاب کنید.',true);return}stopPreview();compositionView();S.studioOnly=true;S.pos=plan().i;render();$('previewMessage').textContent='فقط لایهٔ استودیو؛ برای برگشت، «نمایش استودیو + گوینده» را بزنید.'};
+$('naturalFace').onclick=()=>{
+ if(S.exporting||portrait.starting)return;
+ $('autoNatural').checked=false;edgeOnly=true;setPortraitEnabled(false);
+ neutralFaceControls();
+ compositionView();render();status('فیلتر چهره برداشته شد.');
+};
+bgVideo.addEventListener('loadeddata',()=>{if(!switchingSource&&S.studio?.type==='video'){cacheStudioFrame();if(!S.exporting&&!S.playing)render()}});
+bgVideo.addEventListener('seeked',()=>{if(!switchingSource&&S.studio?.type==='video'&&!S.exporting){cacheStudioFrame();if(!S.playing)render()}});
+
+function beautyPixels(data,w,h,ox,oy,face,skin,hair,beard){
+ const lum=new Uint8Array(w*h);
+ for(let i=0;i<lum.length;i++)lum[i]=portraitLuma(data,i*4);
+ for(let y=1;y<h-1;y++)for(let x=1;x<w-1;x++){
+  const i=y*w+x,p=i*4;if(data[p+3]<160)continue;
+  const fx=(ox+x-face.x)/face.w-.5,fy=(oy+y-face.y)/face.h;
+  const zone=(cy,rx,ry)=>Math.max(0,1-(fx/rx)**2-((fy-cy)/ry)**2);
+  const v=lum[i],avg=(lum[i-1]+lum[i+1]+lum[i-w]+lum[i+w])/4,detail=v-avg;
+  const smooth=Math.abs(detail)<12?(-detail*.6+2.2):0;
+  const faceWeight=zone(.52,.5,.50);
+  const contrast=clamp(detail*.9+(v-115)*.045,-12,12);
+  const delta=(skin*faceWeight*smooth+contrast*(hair*zone(-.12,.61,.37)+beard*zone(.87,.48,.32)))*Math.min(1,data[p+3]/240);
+  for(let c=0;c<3;c++)data[p+c]+=delta;
+ }
+}
+function beautyPass(target,width,height,recipe){
+ const strengths=['smoothFace','styleHair','styleBeard'].map(id=>Number($(id).value)/100);
+ if(!strengths.some(Boolean))return;
+ const box=recipe.box,face={x:box.x*width,y:box.y*height,w:box.w*width,h:box.h*height};
+ const x=clamp(Math.floor(face.x-face.w*.15),0,width),y=clamp(Math.floor(face.y-face.h*.52),0,height);
+ const w=Math.min(width-x,Math.ceil(face.w*1.3)),h=Math.min(height-y,Math.ceil(face.h*1.8));
+ if(w<3||h<3)return;
+ const pixels=target.getImageData(x,y,w,h);
+ beautyPixels(pixels.data,w,h,x,y,face,...strengths);
+ target.putImageData(pixels,x,y);
+}
+for(const id of ['smoothFace','styleHair','styleBeard']){
+ $(id).oninput=()=>{$(id+'Value').textContent=$(id).value+'٪';portrait.paintKey=null;render()};
+}
+
+const SPEECH_WORKER_SOURCE="let asr;\nconst roots=['https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2','https://unpkg.com/@xenova/transformers@2.17.2'];\nasync function prepare(start){\n let failure;\n for(const [i,root] of roots.entries()){\n  if(i<start)continue;\n  try{\n   postMessage({phase:'\u0645\u062f\u0644 \u06af\u0641\u062a\u0627\u0631 \u0641\u0627\u0631\u0633\u06cc',attempt:i+1});\n   const lib=await import(root+'/dist/transformers.min.js');\n   lib.env.allowLocalModels=false;\n   lib.env.backends.onnx.wasm.numThreads=1;\n   lib.env.backends.onnx.wasm.wasmPaths=root+'/dist/';\n   lib.env.remoteHost=i?'https://hf-mirror.com/':'https://huggingface.co/';\n   return await lib.pipeline('automatic-speech-recognition','Xenova/whisper-small',{\n    progress_callback:event=>{\n     if(event.status==='progress')postMessage({file:event.file,loaded:event.loaded,total:event.total});\n     else if(event.status==='initiate')postMessage({file:event.file,loaded:0});\n    }});\n  }catch(error){failure=error;postMessage({phase:'\u062a\u0644\u0627\u0634 \u0628\u0627 \u0645\u0633\u06cc\u0631 \u062f\u0648\u0645 \u062f\u0631\u06cc\u0627\u0641\u062a \u0645\u062f\u0644'})}\n }\n throw Error('\u062f\u0631\u06cc\u0627\u0641\u062a \u06cc\u0627 \u0627\u062c\u0631\u0627\u06cc \u0645\u062f\u0644 \u06af\u0641\u062a\u0627\u0631 \u0645\u0645\u06a9\u0646 \u0646\u0634\u062f. '+failure.message);\n}\nconst sampleRate=16000;\nfunction speechRegions(samples){\n const hop=320,levels=[];\n for(let i=0;i<samples.length;i+=hop){\n  let energy=0;const end=Math.min(i+hop,samples.length);\n  for(let j=i;j<end;j++)energy+=samples[j]*samples[j];\n  levels.push(Math.sqrt(energy/(end-i)));\n }\n const sorted=levels.slice().sort((a,b)=>a-b);\n const loud=sorted[Math.floor(sorted.length*.95)]||0;\n const gate=Math.max(.0003,Math.min(.012,loud*.033));\n const regions=[];let first=-1,last=-1;\n function flush(){\n  if(first>=0&&last-first>=3)regions.push([Math.max(0,first*hop-3200),Math.min(samples.length,(last+1)*hop+4000)]);\n  first=-1;\n }\n for(let i=0;i<levels.length;i++){\n  if(levels[i]>=gate){if(first<0)first=i;last=i}\n  else if(first>=0&&i-last>=35)flush();\n }\n flush();return regions;\n}\nfunction repeatedLoop(text){\n const words=text.replace(/[\\u064b-\\u065f\\u0670\\u200c]/gu,'').replace(/[^\\p{L}\\p{N}]+/gu,' ').trim().split(/\\s+/);\n for(let span=1;span<=5;span++){\n  let consecutive=0;\n  for(let i=span;i<words.length;i++){\n   consecutive=words[i]===words[i-span]?consecutive+1:0;\n   if(consecutive>=Math.max(5,span*3))return true;\n  }\n }\n return false;\n}\nasync function decodeRegion(samples,retry=false){\n return asr(samples,{language:'persian',task:'transcribe',return_timestamps:true,do_sample:false,num_beams:retry?3:1,\n  chunk_length_s:26,stride_length_s:4,max_new_tokens:320,\n  chunk_callback_function:()=>postMessage({phase:'\u062f\u0631 \u062d\u0627\u0644 \u067e\u0631\u062f\u0627\u0632\u0634 \u06af\u0641\u062a\u0627\u0631 \u0641\u0627\u0631\u0633\u06cc',recognizing:true})});\n}\nself.onmessage=async({data})=>{\n try{\n  const samples=data.samples,regions=speechRegions(samples),chunks=[];\n  if(regions.length)asr ||= await prepare(data.start);\n  for(let i=0;i<regions.length;i++){\n   postMessage({phase:'\u062a\u0634\u062e\u06cc\u0635 \u06af\u0641\u062a\u0627\u0631 \u0641\u0627\u0631\u0633\u06cc \u2022 \u0628\u062e\u0634 '+(i+1)+' \u0627\u0632 '+regions.length,recognizing:true});\n   const [a,b]=regions[i],duration=(b-a)/sampleRate;\n   const result=await decodeRegion(samples.subarray(a,b));\n   const rows=result.chunks?.length?result.chunks:[{text:result.text,timestamp:[0,duration]}];\n   for(let j=0;j<rows.length;j++){\n    const row=rows[j],start=Math.max(0,row.timestamp?.[0]??0);\n    const end=Math.min(duration,row.timestamp?.[1]??rows[j+1]?.timestamp?.[0]??duration);\n    if(end<=start||!row.text?.trim())continue;\n    let text=row.text.trim();\n    if(repeatedLoop(text)){\n     const attempt=await decodeRegion(samples.subarray(a+Math.floor(start*sampleRate),Math.min(b,a+Math.ceil(end*sampleRate))),true);\n     text=(attempt.text||'').trim();\n    }\n    const review=!text||repeatedLoop(text);\n    chunks.push({timestamp:[a/sampleRate+start,a/sampleRate+end],text:review?'':text,review});\n   }\n  }\n  postMessage({out:{chunks,text:''}});\n }catch(e){postMessage({error:e.message})}\n};\n";
+let speechWorker,speechCancel;
+function transcribeAudio(samples,msg,start=0){
+ return new Promise((resolve,reject)=>{
+  if(!speechWorker){
+   const url=URL.createObjectURL(new Blob([SPEECH_WORKER_SOURCE],{type:'text/javascript'}));
+   try{speechWorker=new Worker(url,{type:'module'})}finally{setTimeout(()=>URL.revokeObjectURL(url),10000)}
+  }
+  const worker=speechWorker;
+  let timer,done=false,recognizing=false,attempt=start+1;
+  function finish(error,result){
+   if(done)return;done=true;clearTimeout(timer);speechCancel=null;
+   $('stopSpeech').hidden=true;worker.onmessage=worker.onerror=null;
+   if(error){worker.terminate();speechWorker=null;reject(error)}else resolve(result);
+  }
+  function watchdog(ms){clearTimeout(timer);timer=setTimeout(()=>{
+   if(!recognizing&&attempt===1){done=true;worker.terminate();speechWorker=null;msg.textContent='دریافت متوقف شد. تلاش از مسیر دوم…';resolve(transcribeAudio(samples,msg,1));return}
+   finish(Error('پاسخی از مدل نرسید. دوباره «ساخت زیرنویس» را بزنید.'));
+  },ms)}
+  speechCancel=()=>finish(Error('پردازش زیرنویس متوقف شد.'));
+  $('stopSpeech').hidden=false;watchdog(90000);
+  worker.onerror=e=>finish(Error(e.message||'اجرای موتور گفتار ممکن نشد.'));
+  worker.onmessage=({data})=>{
+   if(data.error)return finish(Error(data.error));
+   if(data.out)return finish(null,data.out);
+   if(data.attempt)attempt=data.attempt;
+   if(data.recognizing)recognizing=true;
+   watchdog(data.recognizing?600000:120000);
+   if(data.file){
+    const count=data.total?Math.min(100,Math.round(100*data.loaded/data.total))+'٪':(data.loaded/1048576).toFixed(1)+' مگابایت';
+    msg.textContent='دریافت '+data.file.split('/').pop()+' — '+count;
+   }else msg.textContent=(data.phase||'آماده‌سازی')+(data.attempt?' • مسیر '+data.attempt:'')+'…';
+  };
+  worker.postMessage({samples,start});
+ });
+}
+$('stopSpeech').onclick=()=>speechCancel?.();
+
+let cues=[],modelModule,recognizer,chairDetector;
+async function visionModule(){
+ if(!modelModule){
+  const lib=await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js');
+  lib.env.allowLocalModels=false;
+  lib.env.backends.onnx.wasm.numThreads=1;
+  modelModule=lib;
+ }
+ return modelModule;
+}
+function movieTile(role,video){
+ const card=$(role+'Card');
+ const old=card.querySelector('.movieTile');
+ if(old){old.pause();old.removeAttribute('src');old.load();old.remove()}
+ if(!video?.src)return;
+ const tile=document.createElement('video');
+ tile.className='movieTile';tile.muted=true;tile.playsInline=true;tile.loop=true;tile.setAttribute('aria-hidden','true');
+ tile.src=video.currentSrc||video.src;card.appendChild(tile);tile.play().catch(()=>{});
+}
+function showCues(items){
+ cues=items;
+ const editor=$('cueEditor');editor.replaceChildren();
+ for(const c of cues){
+  const row=document.createElement('label'), input=document.createElement('input');
+  row.textContent=new Date(Math.round(c.start*1000)).toISOString().slice(11,19);
+  input.value=c.text;if(c.review)input.placeholder='گفتار نامطمئن — برای تایپ کلیک کنید';input.dir='rtl';input.setAttribute('aria-label','ویرایش زیرنویس');
+  input.oninput=()=>{c.text=input.value;render()};row.append(input);editor.append(row);
+ }
+ render();
+}
+function drawFrame(t){
+ drawPicture(t);
+ const q=phaseAt(t,plan());
+ if(q.kind!=='main'||S.studioOnly||!$('showCues').checked)return;
+ const cue=cues.find(c=>q.time>=c.start&&q.time<c.end);
+ if(!cue||!cue.text.trim())return;
+ const w=canvas.width,h=canvas.height;
+ ctx.save();ctx.direction='rtl';ctx.font='bold '+Math.round(Math.min(w*.052,h*.055))+'px Tahoma, sans-serif';
+ ctx.textAlign='center';ctx.textBaseline='middle';
+ const lines=wrap(cue.text,w*.86,4),step=Math.min(w*.052,h*.055)*1.5;
+ const bottom=h*.945,top=bottom-lines.length*step;
+ ctx.fillStyle='rgba(0,0,0,.78)';ctx.fillRect(w*.045,top,w*.91,bottom-top);
+ ctx.fillStyle='#fff';lines.forEach((line,i)=>ctx.fillText(line,w/2,top+(i+.5)*step,w*.87));ctx.restore();
+}
+$('showCues').onchange=render;
+$('transcribe').onclick=async()=>{
+ const clip=S.main,msg=$('speechMessage');
+ if(!clip){msg.textContent='ابتدا ویدیوی گوینده را انتخاب کنید.';return}
+ $('transcribe').disabled=true;
+ try{
+  msg.textContent='در حال خواندن صدای ویدیوی گوینده…';
+  const response=await fetch(main.currentSrc||main.src);
+  if(!response.ok)throw Error('خواندن فایل ممکن نشد.');
+  const audioCtx=new AudioContext({sampleRate:16000});
+  let decoded;try{decoded=await audioCtx.decodeAudioData(await response.arrayBuffer())}finally{await audioCtx.close()}
+  const mixer=new OfflineAudioContext(1,Math.ceil(decoded.duration*16000),16000);
+  const source=mixer.createBufferSource();source.buffer=decoded;source.connect(mixer.destination);source.start();
+  const mono=(await mixer.startRendering()).getChannelData(0);
+  if(S.main!==clip)return;
+  msg.textContent='در حال راه‌اندازی موتور گفتار فارسی…';
+  const out=await transcribeAudio(new Float32Array(mono),msg);
+  if(S.main!==clip)return;
+  const chunks=out.chunks||[];
+  const items=chunks.map((c,i)=>({start:c.timestamp[0]??0,end:c.timestamp[1]??chunks[i+1]?.timestamp[0]??decoded.duration,text:c.text.trim(),review:c.review})).filter(c=>c.text||c.review);
+  $('showCues').checked=true;showCues(items);
+  msg.textContent=items.some(c=>c.review)?'زیرنویس آماده شد. بخش‌های دارای تکرار نامطمئن برای ویرایش خالی مانده‌اند.':items.length?'زیرنویس آماده است. برای اصلاح، متن هر سطر را تغییر دهید.':'گفتاری تشخیص داده نشد.';
+ }catch(err){if(S.main===clip)msg.textContent='زیرنویس: '+err.message}
+ finally{$('transcribe').disabled=false}
+};
+$('chairAI').onclick=async()=>{
+ const studio=S.studio,clip=S.main,msg=$('chairMsg');
+ if(!studio||!clip){msg.textContent='ابتدا تصویر اتاق و ویدیوی گوینده را انتخاب کنید.';return}
+ stopPreview();compositionView();$('chairAI').disabled=true;
+ try{
+  msg.textContent='در حال شناسایی صندلی در تصویر اتاق…';
+  const frame=document.createElement('canvas');frame.width=canvas.width;frame.height=canvas.height;
+  const media=studio.media,mw=media.videoWidth||media.naturalWidth,mh=media.videoHeight||media.naturalHeight;
+  const k=Math.max(frame.width/mw,frame.height/mh);
+  frame.getContext('2d').drawImage(media,(frame.width-mw*k)/2,(frame.height-mh*k)/2,mw*k,mh*k);
+  const lib=await visionModule();
+  chairDetector ||= await lib.pipeline('object-detection','Xenova/detr-resnet-50');
+  const objects=await chairDetector(new lib.RawImage(frame.getContext('2d').getImageData(0,0,frame.width,frame.height).data,frame.width,frame.height,4),{threshold:.45,percentage:true});
+  if(S.studio!==studio||S.main!==clip)return;
+  const chair=objects.filter(o=>o.label==='chair').sort((a,b)=>b.score-a.score)[0];
+  if(!chair){msg.textContent='صندلی پیدا نشد. «انتخاب جای صندلی در تصویر» را بزنید.';return}
+  const b=chair.box;seat={x:(b.xmin+b.xmax)/2,y:b.ymin+.58*(b.ymax-b.ymin)};
+  $('compose').value='ai';applySeat();render();showSpeakerBox(true);
+  msg.textContent='گوینده روی صندلی قرار گرفت. با ماوس جای دقیق را تنظیم کنید.';
+  await ensureAI();
+ }catch(err){msg.textContent='تشخیص صندلی ممکن نشد. جای صندلی را با ماوس انتخاب کنید. '+err.message}
+ finally{$('chairAI').disabled=false}
+};
+
+const desk={active:false,depth:.70,engine:null,hands:[],frame:-1,time:-10,busy:null,epoch:0,loading:false};
+function disableDesk(){
+ desk.epoch++;desk.active=false;desk.hands=[];desk.frame=-1;desk.time=-10;
+ $('deskAdjust').hidden=true;$('deskMsg').textContent='';
+}
+function syncDepth(value){
+ desk.depth=clamp(value,.10,.97);
+ $('deskDepth').value=Math.round(desk.depth*100);
+ $('depthLabel').textContent=$('deskDepth').value+'٪';
+}
+function detectHands(){
+ if(desk.busy)return desk.busy;
+ if(!desk.engine||!ai.mask)return Promise.resolve();
+ if(desk.frame===ai.frameVersion)return Promise.resolve();
+ const epoch=desk.epoch,frame=ai.frameVersion,time=ai.lastTime;
+ desk.frame=frame;
+ desk.engine.onResults(result=>{
+  if(epoch!==desk.epoch)return;
+  desk.hands=result.multiHandLandmarks||[];desk.time=time;
+ });
+ desk.busy=desk.engine.send({image:matchedFrame}).catch(()=>{
+  if(epoch===desk.epoch){desk.hands=[];$('deskMsg').textContent='ردیابی دست در این فریم ممکن نشد.'}
+ }).finally(()=>{desk.busy=null;if(!S.playing&&!S.exporting&&desk.active)render()});
+ return desk.busy;
+}
+function paintAtDesk(x,y,w,h){
+ const line=desk.depth*canvas.height;
+ ctx.save();ctx.beginPath();ctx.rect(0,0,canvas.width,line);ctx.clip();ctx.drawImage(aiCanvas,x,y,w,h);ctx.restore();
+ if(Math.abs(ai.lastTime-desk.time)<.5){
+  ctx.save();ctx.beginPath();ctx.rect(0,line,canvas.width,canvas.height-line);ctx.clip();
+  for(const hand of desk.hands){
+   const point=i=>[x+w*hand[i].x,y+h*hand[i].y];
+   const path=new Path2D();path.moveTo(...point(0));
+   for(const i of [1,2,5,9,13,17])path.lineTo(...point(i));path.closePath();
+   const a=point(5),b=point(17),palm=Math.hypot(a[0]-b[0],a[1]-b[1]);
+   for(const finger of [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16],[17,18,19,20]]){
+    for(let j=1;j<4;j++){
+     const a=point(finger[j-1]),b=point(finger[j]),r=Math.max(1,palm*(j===1?.17:.13)),angle=Math.atan2(b[1]-a[1],b[0]-a[0]);
+     const fingerPath=new Path2D();fingerPath.arc(...a,r,angle+Math.PI/2,angle+Math.PI*1.5);
+     fingerPath.arc(...b,r,angle-Math.PI/2,angle+Math.PI/2);fingerPath.closePath();
+     ctx.save();ctx.clip(fingerPath);ctx.drawImage(aiCanvas,x,y,w,h);ctx.restore();
+    }
+   }
+   ctx.save();ctx.clip(path);ctx.drawImage(aiCanvas,x,y,w,h);ctx.restore();
+  }
+  ctx.restore();
+ }
+ if(desk.frame!==ai.frameVersion)void detectHands();
+}
+async function estimateTable(media){
+ const lib=await visionModule();
+ chairDetector ||= await lib.pipeline('object-detection','Xenova/detr-resnet-50');
+ const frame=document.createElement('canvas');frame.width=canvas.width;frame.height=canvas.height;
+ const g=frame.getContext('2d'),mw=media.videoWidth||media.naturalWidth,mh=media.videoHeight||media.naturalHeight;
+ const k=Math.max(frame.width/mw,frame.height/mh);
+ g.drawImage(media,(frame.width-mw*k)/2,(frame.height-mh*k)/2,mw*k,mh*k);
+ const data=g.getImageData(0,0,frame.width,frame.height).data;
+ const objects=await chairDetector(new lib.RawImage(data,frame.width,frame.height,4),{threshold:.35,percentage:true});
+ return objects.filter(o=>o.label==='dining table').sort((a,b)=>b.score-a.score)[0]?.box;
+}
+$('deskDepth').oninput=()=>{syncDepth(Number($('deskDepth').value)/100);render()};
+$('deskOff').onclick=()=>{disableDesk();render()};
+$('deskPlace').onclick=async()=>{
+ if(S.exporting||desk.loading)return;
+ if(!S.main||!S.studio){$('deskMsg').textContent='ابتدا اتاق دارای میز و ویدیوی گوینده را انتخاب کنید.';return}
+ disableDesk();const epoch=desk.epoch;
+ desk.loading=true;$('deskPlace').disabled=true;
+ try{
+  stopPreview();compositionView();$('compose').value='ai';
+  $('deskMsg').textContent='در حال جداکردن گوینده…';
+  if(!await ensureAI())throw Error('مدل حذف پس‌زمینه آماده نشد.');
+  if(epoch!==desk.epoch)return;
+  if(!ai.mask)await runSegmentation();
+  if(!ai.mask)throw Error('یک فریم روشن از گوینده را انتخاب کنید.');
+  $('deskMsg').textContent='در حال شناسایی میز و دست‌ها…';
+  const [table,hands]=await Promise.allSettled([estimateTable(S.studio.media),(async()=>{
+   if(!desk.engine){
+    const root='https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/';
+    if(!window.Hands)await loadScript(root+'hands.js');
+    const engine=new window.Hands({locateFile:name=>root+name});
+    engine.setOptions({maxNumHands:2,modelComplexity:0,minDetectionConfidence:.45,minTrackingConfidence:.45});
+    await engine.initialize();desk.engine=engine;
+   }
+   if(epoch===desk.epoch)await detectHands();
+  })()]);
+  if(epoch!==desk.epoch||S.exporting)return;
+  const box=table.value;
+  syncDepth(box?box.ymin+.14*(box.ymax-box.ymin):.70);
+  const targetX=box?(box.xmin+box.xmax)/2:.5;
+  const wrists=desk.hands.map(h=>h[0]);
+  const anchor=wrists.length?wrists.reduce((p,h)=>({x:p.x+h.x/wrists.length,y:p.y+h.y/wrists.length}),{x:0,y:0}):{x:.5,y:.72};
+  $('personScale').value=65;const r=speakerRect();
+  desk.active=true;$('deskAdjust').hidden=false;
+  updateSlidersFromRect(targetX*r.W-anchor.x*r.w,desk.depth*r.H-anchor.y*r.h,r.w);
+  showSpeakerBox(true);render();
+  $('deskMsg').textContent=(box?'جای میز شناسایی شد. ':'ارتفاع میز را با نوار تنظیم کنید. ')+(hands.status==='rejected'?'مدل دست در دسترس نیست.':wrists.length?'جای گوینده با دست‌های دیده‌شده تنظیم شد.':'دست‌ها در این فریم دیده نشدند.');
+ }catch(e){if(epoch===desk.epoch)$('deskMsg').textContent=e.message}
+ finally{desk.loading=false;$('deskPlace').disabled=false}
+};
+$('speechQuick').onclick=()=>{$('transcribe').closest('details').open=true;$('transcribe').click();$('speechMessage').scrollIntoView({block:'nearest'})};
+
+// Local, edge-connected white-background removal. RGB detail is never resized
+// in the output: only an erasure matte is calculated on the smaller surface.
+const whiteCleanup={main:{enabled:false,strength:55},studio:{enabled:false,strength:55},busy:false,portraitEpoch:0,caches:{},stats:{}};
+const whiteSample=document.createElement('canvas'),whiteSampleCtx=whiteSample.getContext('2d',{willReadFrequently:true});
+function detectWhiteMatte(data,width,height,strength=55,protectMatte=false){
+ const count=width*height,eligible=new Uint8Array(count),visited=new Uint8Array(count),queue=new Int32Array(count);
+ const removal=new Uint8ClampedArray(count),histogram=new Uint32Array(256);
+ const chroma=22+strength*.30,base=239-strength*.65;
+ let borderSamples=0,transparent=0;
+ // Adapt to compression and slightly grey whites using border evidence only.
+ for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+  const p=y*width+x,k=p*4;
+  if(data[k+3]<32){transparent++;continue;}
+  if(x>1&&x<width-2&&y>1&&y<height-2)continue;
+  const lo=Math.min(data[k],data[k+1],data[k+2]),hi=Math.max(data[k],data[k+1],data[k+2]);
+  if(lo>=base-18&&hi-lo<=chroma){histogram[lo]++;borderSamples++;}
+ }
+ let median=255,acc=0;
+ if(borderSamples)for(let i=0;i<256;i++){acc+=histogram[i];if(acc>=borderSamples/2){median=i;break;}}
+ const floor=Math.max(174,Math.min(base,median-18-strength*.15));
+ // In person-segmentation mode, retain high-confidence white clothing inside
+ // the person. Only a shallow band next to the existing matte is cleaned.
+ let distance=null;
+ if(protectMatte&&transparent>count*.001){
+  distance=new Uint16Array(count);distance.fill(4095);
+  for(let p=0;p<count;p++)if(data[p*4+3]<230)distance[p]=0;
+  for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+   const p=y*width+x;
+   if(x)distance[p]=Math.min(distance[p],distance[p-1]+1);
+   if(y)distance[p]=Math.min(distance[p],distance[p-width]+1);
+  }
+  for(let y=height-1;y>=0;y--)for(let x=width-1;x>=0;x--){
+   const p=y*width+x;
+   if(x+1<width)distance[p]=Math.min(distance[p],distance[p+1]+1);
+   if(y+1<height)distance[p]=Math.min(distance[p],distance[p+width]+1);
+  }
+ }
+ const band=Math.max(2,Math.round(Math.max(width,height)*(.003+strength*.000065)));
+ let solid=0;
+ for(let p=0;p<count;p++){
+  const k=p*4,a=data[k+3];
+  if(a<32){eligible[p]=2;continue;}
+  solid++;
+  if(distance&&a>=245&&distance[p]>band)continue;
+  const lo=Math.min(data[k],data[k+1],data[k+2]),hi=Math.max(data[k],data[k+1],data[k+2]);
+  if(lo<floor||hi-lo>chroma)continue;
+  eligible[p]=1;
+  removal[p]=Math.round(255*smoothStep(floor-1,floor+20,lo)*(1-smoothStep(chroma-8,chroma+1,hi-lo)));
+ }
+ let tail=0;
+ function visit(p){if(visited[p]||!eligible[p])return;visited[p]=1;queue[tail++]=p;}
+ for(let x=0;x<width;x++){visit(x);visit((height-1)*width+x);}
+ for(let y=0;y<height;y++){visit(y*width);visit(y*width+width-1);}
+ // Existing alpha seeds white halos around a previously separated person,
+ // including cut-out regions which do not touch the image border.
+ for(let p=0;p<count;p++)if(eligible[p]===2)visit(p);
+ for(let i=0;i<tail;i++){
+  const p=queue[i],x=p%width;
+  if(x)visit(p-1);if(x+1<width)visit(p+1);
+  if(p>=width)visit(p-width);if(p+width<count)visit(p+width);
+ }
+ let erased=0,strong=0;
+ for(let p=0;p<count;p++){
+  if(!visited[p]||eligible[p]!==1){removal[p]=0;continue;}
+  if(removal[p]>12)erased++;
+  if(removal[p]>230)strong++;
+ }
+ return {removal,erased,strong,solid,width,height};
+}
+function applySmartWhite(target,width,height,layer,media,protectMatte=false){
+ const settings=whiteCleanup[layer];if(!settings.enabled)return;
+ const version=media===matchedFrame?ai.frameVersion:(media?.currentTime||0);
+ const key=[version,width,height,settings.strength,cleanup.revision,protectMatte,S.exporting,$('compose').value,$('frontGreen').checked,$('frontStrength').value,$('greenRegion').value,$('keyTolerance').value,$('matteTrim').value,$('edgeSoftness').value,portrait.revision,faceReference.revision].join(':');
+ let cache=whiteCleanup.caches[layer];
+ if(!cache||cache.key!==key||cache.media!==media){
+  const scale=Math.min(1,(S.exporting?960:640)/Math.max(width,height));
+  const w=Math.max(2,Math.round(width*scale)),h=Math.max(2,Math.round(height*scale));
+  whiteSample.width=w;whiteSample.height=h;
+  whiteSampleCtx.drawImage(target.canvas,0,0,width,height,0,0,w,h);
+  const pixels=whiteSampleCtx.getImageData(0,0,w,h);
+  const result=detectWhiteMatte(pixels.data,w,h,settings.strength,protectMatte);
+  const surface=document.createElement('canvas');surface.width=w;surface.height=h;
+  const context=surface.getContext('2d'),matte=context.createImageData(w,h);
+  for(let p=0;p<result.removal.length;p++)matte.data[p*4+3]=result.removal[p];
+  context.putImageData(matte,0,0);
+  cache=whiteCleanup.caches[layer]={key,media,surface};
+  whiteCleanup.stats[layer]={erased:result.erased,solid:result.solid,strong:result.strong,total:w*h};
+ }
+ target.save();target.globalCompositeOperation='destination-out';
+ target.imageSmoothingEnabled=true;target.drawImage(cache.surface,0,0,width,height);target.restore();
+}
+function invalidateSmartWhite(){whiteCleanup.caches={};invalidateCleanup();}
+function syncSmartWhite(){
+ const layer=$('whiteLayer').value,settings=whiteCleanup[layer];
+ $('whiteStrength').value=settings.strength;$('whiteStrengthValue').textContent=settings.strength+'٪';
+ $('smartWhite').setAttribute('aria-pressed',String(settings.enabled));
+ $('smartWhite').textContent=settings.enabled?'✓ حذف خودکار سفیدی فعال است':'✨ حذف هوشمند سفیدی — یک کلیک';
+ $('whiteOff').disabled=!settings.enabled;
+ $('smartWhiteQuick').setAttribute('aria-pressed',String(whiteCleanup.main.enabled||whiteCleanup.studio.enabled));
+}
+function resetSmartWhite(layer){
+ for(const name of layer?[layer]:['main','studio']){whiteCleanup[name].enabled=false;delete whiteCleanup.stats[name];}
+ whiteCleanup.caches={};syncSmartWhite();$('whiteMessage').textContent='';
+}
+async function enableSmartWhite(layer){
+ if(S.exporting||importBusy||whiteCleanup.busy)return;
+ if(!layer)layer=$('whiteLayer').value;
+ const media=layer==='studio'?(S.studio?.type==='video'?bgVideo:S.studio?.media):main;
+ if((layer==='main'&&!S.main)||!media){$('whiteMessage').textContent='ابتدا فایل این لایه را انتخاب کنید.';return;}
+ whiteCleanup.busy=true;
+ for(const id of ['smartWhite','smartWhiteQuick','whiteLayer','whiteStrength','whiteOff'])$(id).disabled=true;
+ const previous=whiteCleanup[layer].enabled;
+ try{
+  stopPreview();compositionView();setCleanupActive(false);S.studioOnly=false;
+  // A pending automatic online face filter must not later override this local
+  // choice or keep playback locked while its model download is timing out.
+  if(layer==='main'&&portrait.starting){
+   whiteCleanup.portraitEpoch++;portrait.starting=false;$('smartPortrait').disabled=false;portraitStatus('');
+  }
+  if(media instanceof HTMLVideoElement)await waitVideoPicture(media);
+  if(phaseAt(S.pos,plan()).kind!=='main')await position(plan().i);
+  if(layer==='main'&&$('compose').value==='ai'&&!ai.ready)$('compose').value='overlay';
+  $('whiteLayer').value=layer;
+  whiteCleanup[layer].enabled=true;delete whiteCleanup.stats[layer];invalidateSmartWhite();
+  $('whiteMessage').textContent='در حال تشخیص سفیدی…';
+  await new Promise(resolve=>requestAnimationFrame(resolve));
+  render();
+  const result=whiteCleanup.stats[layer];
+  if(!result||result.erased<Math.max(2,result.total*.0001)){
+   whiteCleanup[layer].enabled=previous;invalidateSmartWhite();render();
+   $('whiteMessage').textContent='سفیدیِ متصل به لبه پیدا نشد. شدت را بیشتر کنید؛ برای پس‌زمینهٔ رنگی از حذف پس‌زمینه استفاده کنید.';
+  }else if(result.strong>result.solid*.995&&result.solid>result.total*.5){
+   whiteCleanup[layer].enabled=previous;invalidateSmartWhite();render();
+   $('whiteMessage').textContent='این فریم تقریباً کاملاً سفید است. فریمی را انتخاب کنید که سوژه در آن دیده شود.';
+  }else{
+   showSpeakerBox(false);
+   const message='سفیدی اطراف '+(layer==='main'?'گوینده':'لایهٔ استودیو')+' خودکار حذف شد؛ هنگام پخش و ذخیره هم اعمال می‌شود.';
+   $('whiteMessage').textContent=message;status(message);
+  }
+ }catch(error){
+  whiteCleanup[layer].enabled=previous;invalidateSmartWhite();render();$('whiteMessage').textContent='حذف سفیدی انجام نشد: '+error.message;
+ }finally{
+  whiteCleanup.busy=false;
+  for(const id of ['smartWhite','smartWhiteQuick','whiteLayer','whiteStrength'])$(id).disabled=false;
+  syncSmartWhite();
+ }
+}
+$('smartWhite').onclick=()=>void enableSmartWhite();
+$('smartWhiteQuick').onclick=()=>void enableSmartWhite(S.main?'main':'studio');
+$('whiteLayer').onchange=()=>{syncSmartWhite();$('whiteMessage').textContent='';};
+$('whiteStrength').oninput=()=>{
+ if(S.exporting||whiteCleanup.busy){syncSmartWhite();return;}
+ const settings=whiteCleanup[$('whiteLayer').value];settings.strength=Number($('whiteStrength').value);
+ invalidateSmartWhite();syncSmartWhite();render();
+};
+$('whiteOff').onclick=()=>{
+ if(S.exporting||whiteCleanup.busy)return;
+ whiteCleanup[$('whiteLayer').value].enabled=false;invalidateSmartWhite();syncSmartWhite();render();
+ $('whiteMessage').textContent='حذف خودکار سفیدی برای این لایه برگشت داده شد.';
+};
+syncSmartWhite();
+
+const cleanup={active:false,loading:false,groups:[],stroke:null,pointer:null,revision:0,caches:{},epoch:0};
+const cleanupSource=document.createElement('canvas'),cleanupSourceCtx=cleanupSource.getContext('2d',{willReadFrequently:true});
+const cleanupMask=document.createElement('canvas'),cleanupMaskCtx=cleanupMask.getContext('2d');
+function cleanupHead(){
+ const pixels=ai.maskPixels;
+ if(!pixels)return null;
+ const box=guessFaceFromPerson(pixels.data,pixels.width,pixels.height);
+ return box?{x:box.x/pixels.width,y:box.y/pixels.height,w:box.w/pixels.width,h:box.h/pixels.height}:null;
+}
+function cleanupAnchor(x,y,radius,head){
+ const near=head&&x>=head.x-head.w*.7&&x<=head.x+head.w*1.7&&y>=head.y-head.h*.7&&y<=head.y+head.h*1.2;
+ return near?{relative:true,x:(x-head.x)/head.w,y:(y-head.y)/head.h,radius:radius/head.w}:{relative:false,x,y,radius};
+}
+function cleanupLocation(point,head){
+ if(!point.relative)return point;
+ if(!head)return point.fallback||null;
+ return {x:head.x+point.x*head.w,y:head.y+point.y*head.h,radius:point.radius*head.w};
+}
+function cleanupStamp(mask,rgb,width,height,point,mode){
+ const cx=point.x*width,cy=point.y*height,radius=Math.max(1,point.radius*width);
+ const x0=Math.max(0,Math.floor(cx-radius)),y0=Math.max(0,Math.floor(cy-radius));
+ const x1=Math.min(width,Math.ceil(cx+radius+1)),y1=Math.min(height,Math.ceil(cy+radius+1));
+ if(x1<=x0||y1<=y0)return 0;
+ const tileWidth=x1-x0,tileHeight=y1-y0;
+ const tolerance=point.tolerance||28;
+ let changed=0;
+ function strength(x,y){
+  const distance=Math.hypot(x-cx,y-cy)/radius;
+  if(distance>1)return 0;
+  let opacity=1-smoothStep(.78,1,distance);
+  if(mode==='color'){
+   const p=4*(y*width+x);
+   const difference=Math.max(Math.abs(rgb[p]-point.color[0]),Math.abs(rgb[p+1]-point.color[1]),Math.abs(rgb[p+2]-point.color[2]));
+   opacity*=1-smoothStep(tolerance*.7,tolerance,difference);
+  }
+  return Math.round(255*opacity);
+ }
+ function erase(x,y,value){
+  const p=4*(y*width+x)+3;
+  if(value>mask[p]){mask[p]=value;changed++}
+ }
+ if(mode==='brush'){
+  for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++)erase(x,y,strength(x,y));
+  return changed;
+ }
+ const sx=Math.floor(cx),sy=Math.floor(cy);
+ if(sx<x0||sx>=x1||sy<y0||sy>=y1||!strength(sx,sy))return 0;
+ const visited=new Uint8Array(tileWidth*tileHeight),queue=new Int32Array(tileWidth*tileHeight);
+ let tail=1;queue[0]=(sy-y0)*tileWidth+sx-x0;visited[queue[0]]=1;
+ function visit(x,y){
+  if(x<x0||x>=x1||y<y0||y>=y1)return;
+  const local=(y-y0)*tileWidth+x-x0;
+  if(visited[local])return;
+  visited[local]=1;
+  if(strength(x,y))queue[tail++]=local;
+ }
+ for(let i=0;i<tail;i++){
+  const local=queue[i],x=x0+local%tileWidth,y=y0+Math.floor(local/tileWidth);
+  erase(x,y,strength(x,y));
+  visit(x-1,y);visit(x+1,y);visit(x,y-1);visit(x,y+1);
+ }
+ return changed;
+}
+function cleanupMedia(layer){
+ if(layer==='studio')return S.studio?.media;
+ if(!S.main)return null;
+ return $('compose').value==='ai'&&ai.ready&&ai.mask?matchedFrame:main;
+}
+function cleanupDimensions(media){
+ return {w:media?.videoWidth||media?.naturalWidth||media?.width||0,h:media?.videoHeight||media?.naturalHeight||media?.height||0};
+}
+function applyCleanup(target,width,height,media=matchedFrame,layer='main'){
+ const groups=cleanup.groups.filter(group=>group.layer===layer);
+ if(!groups.length)return;
+ const frame=media===matchedFrame?ai.frameVersion:media.currentTime||0;
+ const key=[frame,cleanup.revision,width,height].join(':');
+ let cache=cleanup.caches[layer];
+ if(cache?.key!==key){
+  cleanupSource.width=width;cleanupSource.height=height;
+  cleanupSourceCtx.drawImage(media,0,0,width,height);
+  const rgb=cleanupSourceCtx.getImageData(0,0,width,height).data;
+  const mask=cleanupMaskCtx.createImageData(width,height),head=media===matchedFrame?cleanupHead():null;
+  for(const group of groups)for(const point of group.points){
+   const location=cleanupLocation(point,head);
+   if(location)cleanupStamp(mask.data,rgb,width,height,{...point,...location},group.mode);
+  }
+  const surface=document.createElement('canvas');surface.width=width;surface.height=height;
+  surface.getContext('2d').putImageData(mask,0,0);
+  cache=cleanup.caches[layer]={key,surface};
+ }
+ target.save();target.globalCompositeOperation='destination-out';target.drawImage(cache.surface,0,0,width,height);target.restore();
+}
+const cleanupPaint={main:document.createElement('canvas'),studio:document.createElement('canvas')};
+function cleanupMediaLayer(media,layer){
+ if(!whiteCleanup[layer].enabled&&!cleanup.groups.some(group=>group.layer===layer))return media;
+ const source=layer==='main'?main:media,{w,h}=cleanupDimensions(media);
+ if(!w||!h)return media;
+ const width=Math.min(w,S.exporting?1920:960),height=Math.max(1,Math.round(width*h/w));
+ const surface=cleanupPaint[layer];surface.width=width;surface.height=height;
+ const context=surface.getContext('2d');context.drawImage(media,0,0,width,height);
+ applyCleanup(context,width,height,source,layer);
+ applySmartWhite(context,width,height,layer,source);
+ return surface;
+}
+function invalidateCleanup(){cleanup.revision++;cleanup.caches={};portrait.paintKey=null}
+function endCleanupStroke(){
+ cleanup.stroke=null;
+ if(cleanup.pointer!==null){try{stageInner.releasePointerCapture(cleanup.pointer)}catch{}}
+ cleanup.pointer=null;
+}
+function setCleanupActive(active){
+ cleanup.active=active;endCleanupStroke();
+ $('cleanupTools').hidden=!active;
+ $('cleanupStart').textContent=active?'پایان پاک‌کردن':'حذف سفیدی و لکه با ماوس';
+ $('cleanupStart').setAttribute('aria-pressed',String(active));
+ stageInner.classList.toggle('cleaning',active);$('cleanupCursor').hidden=true;
+}
+function resetCleanup(layer){
+ resetSmartWhite(layer);
+ cleanup.epoch++;setCleanupActive(false);cleanup.groups=layer?cleanup.groups.filter(group=>group.layer!==layer):[];invalidateCleanup();
+ $('cleanupMessage').textContent='';$('cleanupUndo').disabled=!cleanup.groups.length;$('cleanupReset').disabled=!cleanup.groups.length;
+}
+function cleanupChanged(){
+ invalidateCleanup();$('cleanupUndo').disabled=!cleanup.groups.length;$('cleanupReset').disabled=!cleanup.groups.length;render();
+}
+function cleanupRect(){
+ const layer=$('cleanupLayer').value,media=cleanupMedia(layer),{w,h}=cleanupDimensions(media);
+ if(layer==='main'&&($('compose').value!=='full'||S.studio))return speakerRect();
+ const scale=Math.max(canvas.width/w,canvas.height/h),width=w*scale,height=h*scale;
+ return {x:(canvas.width-width)/2,y:(canvas.height-height)/2,w:width,h:height};
+}
+function cleanupPoint(event){
+ const p=pointerPos(event),r=cleanupRect();
+ return {x:(p.canvasX-r.x)/r.w,y:(p.canvasY-r.y)/r.h,radius:Number($('cleanupRadius').value)/1000,canvasX:p.canvasX,canvasY:p.canvasY};
+}
+function cleanupCursor(event){
+ const p=cleanupPoint(event),r=cleanupRect(),cursor=$('cleanupCursor');
+ const valid=p.x>=0&&p.x<1&&p.y>=0&&p.y<1;
+ cursor.hidden=!cleanup.active||!valid||S.exporting;
+ const sx=stageInner.clientWidth/canvas.width,sy=stageInner.clientHeight/canvas.height;
+ cursor.style.left=(p.canvasX*sx)+'px';cursor.style.top=(p.canvasY*sy)+'px';
+ cursor.style.width=(2*p.radius*r.w*sx)+'px';cursor.style.height=(2*p.radius*r.w*sy)+'px';
+ return p;
+}
+function addCleanupPoint(p,refresh=true){
+ if(p.x<0||p.x>=1||p.y<0||p.y>=1)return;
+ const group=cleanup.stroke;if(!group)return;
+ const media=cleanupMedia(group.layer),{w,h}=cleanupDimensions(media);
+ const head=media===matchedFrame?cleanupHead():null;
+ const point=cleanupAnchor(p.x,p.y,p.radius,head);point.fallback={x:p.x,y:p.y,radius:p.radius};
+ if(group.mode==='color'){
+  cleanupSource.width=w;cleanupSource.height=h;
+  cleanupSourceCtx.drawImage(media,0,0,w,h);
+  const x=Math.min(w-1,Math.floor(p.x*w)),y=Math.min(h-1,Math.floor(p.y*h));
+  point.color=Array.from(cleanupSourceCtx.getImageData(x,y,1,1).data).slice(0,3);
+  point.tolerance=Number($('cleanupTolerance').value);
+ }
+ group.points.push(point);if(refresh)cleanupChanged();
+}
+$('cleanupStart').onclick=async()=>{
+ if(S.exporting||cleanup.loading||importBusy)return;
+ if(cleanup.active){setCleanupActive(false);return}
+ if(!S.main&&!S.studio){$('cleanupMessage').textContent='ابتدا تصویر یا ویدیو را انتخاب کنید.';return}
+ const epoch=cleanup.epoch;
+ cleanup.loading=true;$('cleanupStart').disabled=true;
+ try{
+  stopPreview();compositionView();
+  if(phaseAt(S.pos,plan()).kind!=='main')await position(plan().i);
+  if(epoch!==cleanup.epoch)return;
+  if(!cleanupMedia($('cleanupLayer').value))$('cleanupLayer').value=S.main?'main':'studio';
+  const media=cleanupMedia($('cleanupLayer').value),{w,h}=cleanupDimensions(media);
+  if(!w||!h)throw Error('تصویر آماده نیست. یک فریم ویدیو را باز کنید و دوباره بزنید.');
+  pickingSeat=false;frontKey.picking=false;
+  $('pickSeat').textContent='⌖ انتخاب جای صندلی در تصویر';
+  $('sampleGreen').classList.remove('pick-active');$('sampleGreen').textContent='🎯 انتخاب رنگ سبز با موس';stage.style.cursor='';
+  setCleanupActive(true);showSpeakerBox(false);render();
+  $('cleanupMessage').textContent='روی سفیدی یا لکه کلیک کنید. برای حذف مستقیم، «قلم پاک‌کن» را انتخاب و ماوس را بکشید. حذف در خروجی هم اعمال می‌شود.';
+ }catch(error){if(epoch===cleanup.epoch)$('cleanupMessage').textContent=error.message}
+ finally{cleanup.loading=false;$('cleanupStart').disabled=false}
+};
+$('cleanupUndo').onclick=()=>{if(S.exporting)return;endCleanupStroke();cleanup.groups.pop();cleanupChanged()};
+$('cleanupReset').onclick=()=>{if(S.exporting)return;endCleanupStroke();cleanup.groups=[];cleanupChanged()};
+$('cleanupRadius').oninput=()=>{$('cleanupRadiusValue').textContent=Number($('cleanupRadius').value)/10+'٪'};
+$('cleanupMode').onchange=endCleanupStroke;
+$('cleanupLayer').onchange=()=>{
+ endCleanupStroke();$('cleanupCursor').hidden=true;
+ if(!cleanupMedia($('cleanupLayer').value)){setCleanupActive(false);$('cleanupMessage').textContent='ابتدا فایل این لایه را وارد کنید.'}
+};
+stageInner.addEventListener('pointerdown',event=>{
+ if(!cleanup.active)return;
+ event.preventDefault();event.stopImmediatePropagation();
+ if(S.exporting||event.button!==0||cleanup.pointer!==null)return;
+ const p=cleanupCursor(event);if(p.x<0||p.x>=1||p.y<0||p.y>=1)return;
+ cleanup.pointer=event.pointerId;
+ stageInner.setPointerCapture(event.pointerId);
+ cleanup.stroke={mode:$('cleanupMode').value,layer:$('cleanupLayer').value,points:[],last:p};cleanup.groups.push(cleanup.stroke);
+ addCleanupPoint(p);
+},true);
+stageInner.addEventListener('pointermove',event=>{
+ if(!cleanup.active)return;
+ const p=cleanupCursor(event);
+ if(!cleanup.stroke||cleanup.pointer!==event.pointerId)return;
+ event.preventDefault();event.stopImmediatePropagation();
+ if(cleanup.stroke.mode!=='brush')return;
+ const last=cleanup.stroke.last,media=cleanupMedia(cleanup.stroke.layer),size=cleanupDimensions(media),aspect=size.h/size.w;
+ const distance=Math.hypot(p.x-last.x,(p.y-last.y)*aspect);
+ const steps=Math.ceil(distance/Math.max(.002,p.radius*.4));
+ for(let i=1;i<=steps;i++)addCleanupPoint({...p,x:last.x+(p.x-last.x)*i/steps,y:last.y+(p.y-last.y)*i/steps},false);
+ if(steps)cleanupChanged();
+ cleanup.stroke.last=p;
+},true);
+for(const name of ['pointerup','pointercancel','lostpointercapture'])stageInner.addEventListener(name,event=>{
+ if(cleanup.pointer!==event.pointerId)return;
+ endCleanupStroke();
+},true);
+stageInner.addEventListener('pointerleave',()=>{$('cleanupCursor').hidden=true});
+stageInner.addEventListener('click',event=>{if(cleanup.active){event.preventDefault();event.stopImmediatePropagation()}},true);
+$('compose').addEventListener('change',endCleanupStroke);
+$('playBtn').addEventListener('click',()=>setCleanupActive(false),true);
+$('exportBtn').addEventListener('click',()=>setCleanupActive(false),true);
+
+let seat={x:.5,y:.83},pickingSeat=false;
+function applySeat(){
+ $('personScale').value=65;
+ const r=speakerRect();
+ updateSlidersFromRect(seat.x*canvas.width-r.w/2,seat.y*canvas.height-r.h*.86,r.w);
+}
+$('resetSeat').onclick=()=>{if(S.exporting)return;seat={x:.5,y:.83};applySeat();render();showSpeakerBox(true)};
+$('pickSeat').onclick=()=>{if(S.exporting)return;if(!S.studio){status('ابتدا استودیو را انتخاب کنید.',true);return}pickingSeat=!pickingSeat;showSpeakerBox(false);showLogoBox(false);$('pickSeat').textContent=pickingSeat?'روی مرکز نشیمن صندلی کلیک کنید':'⌖ انتخاب جای صندلی در تصویر';stage.style.cursor=pickingSeat?'crosshair':''};
+canvas.addEventListener('click',e=>{if(!pickingSeat)return;e.stopImmediatePropagation();const p=pointerPos(e);seat={x:p.canvasX/canvas.width,y:p.canvasY/canvas.height};pickingSeat=false;stage.style.cursor='';$('pickSeat').textContent='⌖ انتخاب جای صندلی در تصویر';if(S.main){applySeat();render();showSpeakerBox(true)}status('جای صندلی ثبت شد؛ اندازه و جای دقیق گوینده را با موس یا نوارها تنظیم کنید.')},true);
+function syncTimeline(){const p=plan(),total=p.total||1;for(const kind of ['speaker','studio']){const el=$(kind+'Clip'),has=kind==='speaker'?S.main:S.studio;el.style.display=has?'block':'none';el.style.left=(p.i/total*100)+'%';el.style.width=(p.clip/total*100)+'%';el.textContent=has?(kind==='speaker'?$('mainName').textContent:$('studioName').textContent):'';}document.querySelectorAll('.playhead').forEach(el=>el.style.left=(S.pos/total*100)+'%')}
+for(const id of ['speakerLane','studioLane'])$(id).onclick=e=>{if(S.exporting)return;stopPreview();const r=$(id).getBoundingClientRect();void position(clamp((e.clientX-r.left)/r.width,0,1)*plan().total)};
+setCanvas(false);ctx.fillStyle='#0c2530';ctx.fillRect(0,0,canvas.width,canvas.height);$('faceBrightnessText').textContent=$('faceBrightness').value+'٪';$('faceContrastText').textContent=$('faceContrast').value+'٪';$('sceneBrightnessText').textContent=$('sceneBrightness').value+'٪';$('logoScaleText').textContent=$('logoScale').value+'٪';$('personScaleText').textContent=$('personScale').value+'٪';$('matteTrimText').textContent=$('matteTrim').value;updateInfo();
+syncTimeline();window.IbrahimiTest={plan,phaseAt,seekSource,render,position,getState:()=>S, getKey:()=>frontKey, keyedSource, detectWhiteMatte, getWhiteCleanup:()=>whiteCleanup, cleanupMediaLayer};
+})();
+</script>
+</body></html>

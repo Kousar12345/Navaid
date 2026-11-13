@@ -103,15 +103,18 @@ footer{font-size:12px;text-align:center;color:#718791;padding:20px}
 #previewMessage{color:#ffc482;font-size:13px;line-height:1.8;padding:6px;min-height:28px}
 #logoBox{display:none;position:absolute;border:2px solid #73e7d2;z-index:6;cursor:move;touch-action:none}#logoBox.active{display:block}#logoBox .handle{position:absolute;right:-8px;bottom:-8px;width:16px;height:16px;border-radius:50%;background:#fff;cursor:nwse-resize}
 .movieTile{display:block;width:100%;height:64px;object-fit:contain;background:#161819;margin-top:5px;pointer-events:none}#cueEditor{max-height:220px;overflow:auto}#cueEditor label{display:flex;align-items:center;gap:.4em}#cueEditor input{min-width:0;flex:1}#stage{direction:ltr}#viewerZoomLabel{align-self:center}#cleanupCursor{position:absolute;z-index:10;border:1px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #171717;transform:translate(-50%,-50%);pointer-events:none;box-sizing:border-box}#cleanupCursor[hidden]{display:none}#stageInner.cleaning,#stageInner.cleaning *{cursor:crosshair!important}#cleanupTools label{display:block;margin:8px 0}</style>
+<style>
+/* Native file picker: visible and accessible, including when JavaScript fails. */
+#studioCard input#studioLocalFile,#mainCard input#mainLocalFile{display:block!important;visibility:visible!important;opacity:1!important;width:100%;font:inherit;font-size:13px;color:#183b42;background:#e8faf5;border:1px solid #60ada1;border-radius:9px;padding:7px;cursor:pointer;box-sizing:border-box}
+#studioCard input::file-selector-button,#mainCard input::file-selector-button{background:#147d69;color:white;border:0;border-radius:7px;padding:8px 12px;margin-inline-end:8px;cursor:pointer}
+</style>
 </head>
 <body>
 <main>
 <header><div><h1>استودیوی ابراهیمی | نسخهٔ ۷</h1><p>۱. استودیو را وارد کنید   ←   ۲. گوینده را اضافه کنید   ←   ۳. جای صندلی را تنظیم کنید</p></div><button id="quitDesktop" type="button">بستن برنامه</button></header>
 <div class="imports">
-<button class="filecard" id="studioCard" type="button"><strong>۱. ویدیوی استودیو</strong><small id="studioName">لایهٔ زیرین — عکس یا ویدیو</small></button>
-<button class="filecard" id="mainCard" type="button"><strong>۲. ویدیوی گوینده</strong><small id="mainName">انتخاب از گالری یا لپ‌تاپ</small></button>
-<input id="studioLocalFile" type="file" accept="video/*,image/*,.mp4,.mov,.webm,.m4v,.mkv,.jpg,.jpeg,.png,.webp" hidden aria-label="انتخاب فایل استودیو">
-<input id="mainLocalFile" type="file" accept="video/*,.mp4,.mov,.webm,.m4v,.mkv" hidden aria-label="انتخاب ویدیوی گوینده">
+<div class="filecard" id="studioCard"><strong>۱. ویدیوی استودیو</strong><small id="studioName">لایهٔ زیرین — عکس یا ویدیو</small><input id="studioLocalFile" type="file" accept="video/*,image/*,.mp4,.mov,.webm,.m4v,.mkv,.jpg,.jpeg,.png,.webp" aria-label="انتخاب فایل استودیو"></div>
+<div class="filecard" id="mainCard"><strong>۲. ویدیوی گوینده</strong><small id="mainName">انتخاب از گالری یا لپ‌تاپ</small><input id="mainLocalFile" type="file" accept="video/*,.mp4,.mov,.webm,.m4v,.mkv" aria-label="انتخاب ویدیوی گوینده"></div>
 <label class="filecard" id="introCard"><strong>۳. ویدیوی آغاز</strong><small id="introName">ویدیو یا عکس از گالری</small><input id="introFile" type="file" accept="image/*,video/*"></label>
 <label class="filecard" id="outroCard"><strong>۴. ویدیوی پایان</strong><small id="outroName">ویدیو یا عکس از گالری</small><input id="outroFile" type="file" accept="image/*,video/*"></label>
 <label class="filecard" id="logoCard"><strong>۵. لوگو</strong><small id="logoName">PNG یا تصویر لوگو</small><input id="logoFile" type="file" accept="image/*"></label>
@@ -1277,7 +1280,7 @@ $('saveCover').addEventListener('click',downloadCoverJpg);
 main.addEventListener('loadeddata',()=>{if(S.main&&!S.exporting){render();syncSpeakerBox();syncLogoBox();}});
 main.addEventListener('seeked',()=>{if(S.main&&!S.playing&&!S.exporting)render();});
 let importBusy=false;
-function importLock(locked){importBusy=locked;for(const id of ['mainCard','studioCard','exportBtn'])$(id).disabled=locked||(id==='exportBtn'&&!S.main);}
+function importLock(locked){importBusy=locked;for(const id of ['mainLocalFile','studioLocalFile','exportBtn'])$(id).disabled=locked||(id==='exportBtn'&&!S.main);}
 function compositionView(){S.studioOnly=false;const n=$('nativePreview');n.pause();if(n.hasAttribute('src')){n.removeAttribute('src');n.load()}n.style.display='none';stageSize.style.display='block';$('nativeToggle').textContent='پخش مستقیم فایل';}
 function directView(source){if(!source.src){status('ابتدا فایل ویدیوی موردنظر را انتخاب کنید.',true);return}stopPreview();const n=$('nativePreview');n.src=source.src;n.muted=source===bgVideo;n.style.display='block';stageSize.style.display='none';$('nativeToggle').textContent='بازگشت به ترکیب استودیو';n.play().catch(()=>{});$('previewMessage').textContent='پخش مستقیم فایل اصلی؛ برای دیدن ترکیب استودیو، دکمهٔ بازگشت را بزنید.';}
 $('nativeToggle').onclick=()=>{if(S.exporting)return;if($('nativePreview').style.display==='block'){compositionView();render();$('previewMessage').textContent='نمایش ترکیب استودیو و گوینده';return}directView(main.src?main:bgVideo)};
@@ -1563,11 +1566,8 @@ async function loadBrowserAsset(role, file) {
 }
 for(const role of ['studio','main']) {
  const input=$(role+'LocalFile');
- $(role+'Card').onclick=()=>{
-  if(importBusy||S.exporting||portrait.starting||whiteCleanup.busy)return;
-  if(desktopFilePickerAvailable)void loadDesktopAsset(role);
-  else input.click();
- };
+ // Native file input remains visible and works without a programmatic click.
+ // The browser directly opens its own system file picker.
  input.addEventListener('change',()=>{
   const file=input.files&&input.files[0];
   input.value='';

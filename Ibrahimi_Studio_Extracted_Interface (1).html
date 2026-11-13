@@ -130,6 +130,7 @@ footer{font-size:12px;text-align:center;color:#718791;padding:20px}
 <div class="seattools" aria-label="زوم پیش‌نمایش"><button id="zoomIn">＋ زوم</button><output id="viewerZoomLabel">۱۰۰٪</output><button id="zoomOut">− زوم</button><button id="zoomReset">اندازهٔ اصلی</button></div><div class="stage" id="stage"><video id="nativePreview" controls playsinline preload="auto"></video><div id="stageSize"><div id="stageInner"><canvas id="screen" width="960" height="540"></canvas><div id="cleanupCursor" aria-hidden="true" hidden></div><div id="speakerBox"><div class="handle br" title="تغییر اندازه گوینده"></div></div><div id="logoBox"><div class="handle br" title="تغییر اندازه لوگو"></div></div><div id="empty"><h2>ابتدا استودیو را انتخاب کنید</h2><p>سپس ویدیوی گوینده روی استودیو قرار می‌گیرد.</p></div></div></div></div>
 
 <div class="seattools"><button id="smartWhiteQuick" type="button" aria-pressed="false">✨ حذف خودکار سفیدی اطراف — بدون موس</button></div>
+<div class="seattools"><button id="focusSpeaker" type="button" style="background:#167c68;color:#fff;font-weight:700">🎥 نمایش ویدیوی گوینده در وسط</button></div>
 <div class="seattools"><button id="showComposite" type="button">نمایش استودیو + گوینده</button><button id="studioOnly" type="button">بررسی لایهٔ استودیو</button><button id="naturalFace" type="button">حذف فیلتر چهره</button></div><div id="previewMessage" role="status">استودیو یا ویدیوی گوینده را انتخاب کنید.</div><div id="conversionTools" hidden><button id="cancelConversion" type="button">لغو تبدیل</button></div><div class="seattools"><button id="nativeToggle" type="button">پخش مستقیم فایل</button><button id="nativeStudio" type="button">نمایش مستقیم استودیو</button></div><div class="seattools"><button type="button" id="deskPlace">جابه‌جایی هوشمند پشت میز</button><button type="button" id="speechQuick">زیرنویس فارسی از صدای گوینده</button><button id="chairAI">تشخیص هوشمند صندلی</button><span id="chairMsg" role="status"></span><button id="pickSeat">⌖ انتخاب جای صندلی در تصویر</button><button id="resetSeat">تنظیم اولیهٔ گوینده</button></div><div id="deskMsg" role="status"></div><div id="deskAdjust" hidden><label>ارتفاع سطح میز <input id="deskDepth" type="range" min="10" max="97" value="70"><output id="depthLabel"></output></label><button id="deskOff">برداشتن حالت پشت میز</button></div><div class="transport"><button id="playBtn" type="button">▶</button><input id="seek" aria-label="نوار زمان" type="range" min="0" max="1000" value="0"><output id="clock">00:00 / 00:00</output></div>
 
 </section>
@@ -1553,9 +1554,20 @@ async function loadBrowserAsset(role, file) {
   $('chairMsg').textContent='';$('empty').style.display='none';
   S.pos=plan().i;
   if(studio){if($('compose').value==='full')$('compose').value='overlay';}
-  else {applySeat();S.boxVisible=true;$('autoRemoveStatus').textContent='برای جداکردن گوینده از پس‌زمینه، «حذف هوشمند» را بزنید.';}
+  else {
+   // Show the actual speaker frame immediately; never leave the canvas on the intro/outro.
+   $('compose').value='overlay'; S.studioOnly=false;
+   $('personScale').value='70';$('personScaleText').textContent='70٪';
+   $('personX').value='50';$('personY').value='50';
+   S.boxVisible=true;
+   $('autoRemoveStatus').textContent='گوینده در مرکز صحنه قرار گرفت. با موس آن را جابه‌جا کنید یا اندازه‌اش را تغییر دهید.';
+   try{await decodeFirstFrame(main);}catch(error){console.warn('Speaker first frame:',error);}
+   const duration=Number.isFinite(main.duration)?main.duration:0;
+   S.pos=plan().i+Math.min(.15,Math.max(0,duration-.01));
+  }
   updateInfo();syncTimeline();render();
-  const message=studio?'ویدیوی استودیو از دستگاه شما بارگذاری شد.':'ویدیوی گوینده از دستگاه شما بارگذاری شد.';
+  if(!studio){showSpeakerBox(true);stage.scrollIntoView({behavior:'smooth',block:'center'});}
+  const message=studio?'ویدیوی استودیو از دستگاه شما بارگذاری شد.':'گوینده در وسط پلیر قرار گرفت؛ می‌توانید آن را با موس جابه‌جا کنید.';
   $('previewMessage').textContent=message;status(message);
  } catch(error) {
   if(previousSource){video.src=previousSource;video.load();try{video.currentTime=previousTime;}catch{}}
@@ -2177,6 +2189,17 @@ function cacheStudioFrame(){
  if(!S.studioStill)S.studioStill=document.createElement('canvas');
  const c=S.studioStill;c.width=bgVideo.videoWidth;c.height=bgVideo.videoHeight;c.getContext('2d').drawImage(bgVideo,0,0);
 }
+$('focusSpeaker').onclick=async()=>{
+ if(!S.main){status('ابتدا ویدیوی گوینده را انتخاب کنید.',true);return;}
+ stopPreview();compositionView();S.studioOnly=false;$('compose').value='overlay';
+ $('personScale').value='70';$('personScaleText').textContent='70٪';
+ $('personX').value='50';$('personY').value='50';S.boxVisible=true;
+ const d=Number.isFinite(main.duration)?main.duration:0;
+ S.pos=plan().i+Math.min(.15,Math.max(0,d-.01));
+ if(main.readyState<2)try{await decodeFirstFrame(main)}catch{}
+ render();showSpeakerBox(true);stage.scrollIntoView({behavior:'smooth',block:'center'});
+ status('گوینده در مرکز صحنه نمایش داده شد. برای جابه‌جایی، کادر سبز را با موس بکشید.');
+};
 $('showComposite').onclick=()=>{if(S.exporting)return;stopPreview();compositionView();if($('compose').value==='full')$('compose').value='overlay';S.pos=plan().i;void position(S.pos);$('previewMessage').textContent=S.studio?'استودیو در زیر و گوینده در بالا؛ برای برداشتن زمینهٔ گوینده، حذف هوشمند را بزنید.':'ابتدا فایل استودیو را از کادر شمارهٔ ۱ انتخاب کنید.'};
 $('studioOnly').onclick=()=>{if(S.exporting)return;if(!S.studio){status('ابتدا فایل استودیو را انتخاب کنید.',true);return}stopPreview();compositionView();S.studioOnly=true;S.pos=plan().i;render();$('previewMessage').textContent='فقط لایهٔ استودیو؛ برای برگشت، «نمایش استودیو + گوینده» را بزنید.'};
 $('naturalFace').onclick=()=>{

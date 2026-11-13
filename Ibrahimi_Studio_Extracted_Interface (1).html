@@ -2956,7 +2956,25 @@ function ready(){
  let url=null,px=29,py=13,scale=42,drag=null;
  const status=panel.querySelector('#nsStatus');
  function place(){const w=canvas.width||960,h=canvas.height||540;img.style.left=(w*px/100)+'px';img.style.top=(h*py/100)+'px';img.style.width=(w*scale/100)+'px';img.style.maxHeight=(h*.83)+'px';}
- panel.querySelector('#nsPhoto').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(file);img.onload=()=>{img.style.display='block';place();status.textContent='عکس در پیش‌نمایش قرار گرفت. برای حذف واقعی پس‌زمینه، عکس شفاف PNG انتخاب کنید.'};img.onerror=()=>{status.textContent='این عکس در مرورگر باز نشد.'};img.src=url;});
+ const removeBtn=document.createElement('button');removeBtn.type='button';removeBtn.id='nsRemoveBg';removeBtn.textContent='✨ حذف واقعی پس‌زمینه عکس';panel.querySelector('.ns-actions').prepend(removeBtn);
+let selectedFile=null,processing=false;
+removeBtn.addEventListener('click',async()=>{
+ if(processing)return;
+ if(!selectedFile){status.textContent='ابتدا عکس گوینده را انتخاب کنید.';return}
+ processing=true;removeBtn.disabled=true;removeBtn.textContent='در حال حذف پس‌زمینه…';
+ try{
+  status.textContent='در حال بارگیری موتور حذف پس‌زمینه؛ بار اول به اینترنت نیاز دارد.';
+  const lib=await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm');
+  const remove=lib.removeBackground||lib.default;
+  if(typeof remove!=='function')throw Error('موتور حذف پس‌زمینه در دسترس نیست.');
+  const result=await remove(selectedFile,{progress:(key,current,total)=>{if(total)status.textContent='پردازش عکس: '+Math.round(current/total*100)+'٪';}});
+  if(url)URL.revokeObjectURL(url);
+  url=URL.createObjectURL(result);img.src=url;img.style.display='block';
+  status.textContent='پس‌زمینه عکس حذف شد. تصویر را پشت میز تنظیم کنید. نتیجه فعلاً فقط پیش‌نمایش است.';
+ }catch(err){status.textContent='حذف پس‌زمینه انجام نشد: '+(err?.message||err)+'؛ اینترنت و دسترسی به CDN را بررسی کنید.'}
+ finally{processing=false;removeBtn.disabled=false;removeBtn.textContent='✨ حذف واقعی پس‌زمینه عکس'}
+});
+panel.querySelector('#nsPhoto').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;selectedFile=file;if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(file);img.onload=()=>{img.style.display='block';place();status.textContent='عکس در پیش‌نمایش قرار گرفت. برای حذف واقعی پس‌زمینه، عکس شفاف PNG انتخاب کنید.'};img.onerror=()=>{status.textContent='این عکس در مرورگر باز نشد.'};img.src=url;});
  panel.querySelector('#nsSize').addEventListener('input',e=>{scale=Number(e.target.value);place()});
  panel.querySelector('#nsLight').addEventListener('input',e=>{img.style.filter='brightness('+(Number(e.target.value)/100)+') contrast(1.03)'});
  panel.querySelector('#nsCenter').addEventListener('click',()=>{px=29;py=13;place()});

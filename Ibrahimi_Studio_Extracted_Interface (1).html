@@ -106,6 +106,7 @@ footer{font-size:12px;text-align:center;color:#718791;padding:20px}
 <style>
 /* Native file picker: visible and accessible, including when JavaScript fails. */
 #studioCard input#studioLocalFile,#mainCard input#mainLocalFile{display:block!important;visibility:visible!important;opacity:1!important;width:100%;font:inherit;font-size:13px;color:#183b42;background:#e8faf5;border:1px solid #60ada1;border-radius:9px;padding:7px;cursor:pointer;box-sizing:border-box}
+#mainCard{position:relative;cursor:pointer;outline:2px solid #17836b;outline-offset:-3px}#mainCard:focus-within{box-shadow:0 0 0 3px #87e0c5}#mainLocalFile{position:relative;z-index:2;min-height:46px}
 #studioCard input::file-selector-button,#mainCard input::file-selector-button{background:#147d69;color:white;border:0;border-radius:7px;padding:8px 12px;margin-inline-end:8px;cursor:pointer}
 </style>
 </head>
@@ -114,7 +115,7 @@ footer{font-size:12px;text-align:center;color:#718791;padding:20px}
 <header><div><h1>استودیوی ابراهیمی | نسخهٔ ۷</h1><p>۱. استودیو را وارد کنید   ←   ۲. گوینده را اضافه کنید   ←   ۳. جای صندلی را تنظیم کنید</p></div><button id="quitDesktop" type="button">بستن برنامه</button></header>
 <div class="imports">
 <div class="filecard" id="studioCard"><strong>۱. ویدیوی استودیو</strong><small id="studioName">لایهٔ زیرین — عکس یا ویدیو</small><input id="studioLocalFile" type="file" accept="video/*,image/*,.mp4,.mov,.webm,.m4v,.mkv,.jpg,.jpeg,.png,.webp" aria-label="انتخاب فایل استودیو"></div>
-<div class="filecard" id="mainCard"><strong>۲. ویدیوی گوینده</strong><small id="mainName">انتخاب از گالری یا لپ‌تاپ</small><input id="mainLocalFile" type="file" accept="video/*,.mp4,.mov,.webm,.m4v,.mkv" aria-label="انتخاب ویدیوی گوینده"></div>
+<label class="filecard" id="mainCard" for="mainLocalFile"><strong>۲. ویدیوی گوینده</strong><small id="mainName">برای انتخاب ویدیوی گوینده اینجا بزنید</small><input id="mainLocalFile" type="file" accept="video/*,.mp4,.mov,.webm,.m4v,.mkv,.avi" aria-label="انتخاب ویدیوی گوینده"></label>
 <label class="filecard" id="introCard"><strong>۳. ویدیوی آغاز</strong><small id="introName">ویدیو یا عکس از گالری</small><input id="introFile" type="file" accept="image/*,video/*"></label>
 <label class="filecard" id="outroCard"><strong>۴. ویدیوی پایان</strong><small id="outroName">ویدیو یا عکس از گالری</small><input id="outroFile" type="file" accept="image/*,video/*"></label>
 <label class="filecard" id="logoCard"><strong>۵. لوگو</strong><small id="logoName">PNG یا تصویر لوگو</small><input id="logoFile" type="file" accept="image/*"></label>
@@ -1570,8 +1571,13 @@ for(const role of ['studio','main']) {
  // The browser directly opens its own system file picker.
  input.addEventListener('change',()=>{
   const file=input.files&&input.files[0];
+  if(file){
+   $(role+'Name').textContent='انتخاب شد: '+file.name;
+   $('previewMessage').textContent='فایل انتخاب شد: '+file.name+' — در حال بارگذاری…';
+   status('فایل انتخاب شد: '+file.name);
+   void loadBrowserAsset(role,file);
+  }
   input.value='';
-  if(file)void loadBrowserAsset(role,file);
  });
 }
 const heartbeat = setInterval(() => void desktopRequest('heartbeat', 'POST').catch(() => {}), 20000);

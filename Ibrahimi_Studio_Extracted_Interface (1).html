@@ -2888,6 +2888,49 @@ $('pickSeat').onclick=()=>{if(S.exporting)return;if(!S.studio){status('ابتد�
 canvas.addEventListener('click',e=>{if(!pickingSeat)return;e.stopImmediatePropagation();const p=pointerPos(e);seat={x:p.canvasX/canvas.width,y:p.canvasY/canvas.height};pickingSeat=false;stage.style.cursor='';$('pickSeat').textContent='⌖ انتخاب جای صندلی در تصویر';if(S.main){applySeat();render();showSpeakerBox(true)}status('جای صندلی ثبت شد؛ اندازه و جای دقیق گوینده را با موس یا نوارها تنظیم کنید.')},true);
 function syncTimeline(){const p=plan(),total=p.total||1;for(const kind of ['speaker','studio']){const el=$(kind+'Clip'),has=kind==='speaker'?S.main:S.studio;el.style.display=has?'block':'none';el.style.left=(p.i/total*100)+'%';el.style.width=(p.clip/total*100)+'%';el.textContent=has?(kind==='speaker'?$('mainName').textContent:$('studioName').textContent):'';}document.querySelectorAll('.playhead').forEach(el=>el.style.left=(S.pos/total*100)+'%')}
 for(const id of ['speakerLane','studioLane'])$(id).onclick=e=>{if(S.exporting)return;stopPreview();const r=$(id).getBoundingClientRect();void position(clamp((e.clientX-r.left)/r.width,0,1)*plan().total)};
+
+// Repair: wire the two native file inputs to the existing preview engine.
+for (const [inputId, kind] of [['studioLocalFile','studio'],['mainLocalFile','main']]) {
+ $(inputId).addEventListener('change', async function () {
+  const file=this.files && this.files[0];
+  if(!file || S.exporting || importBusy) return;
+  stopPreview(); compositionView(); importLock(true);
+  try {
+   const isImage=kind==='studio' && (file.type.startsWith('image/') || /\.(png|jpe?g|webp)$/i.test(file.name));
+   if(kind==='studio'){
+    bgVideo.pause();
+    if(isImage){
+     const picture=await loadImage(file);
+     S.studio={type:'image',media:picture}; S.studioStill=picture;
+    }else{
+     await loadVideo(bgVideo,file);
+     S.studio={type:'video',media:bgVideo};
+     S.studioStill=null;
+     try{bgVideo.currentTime=0.01}catch(e){}
+    }
+   }else{
+    await loadVideo(main,file);
+    S.main={type:'video',media:main};
+    try{main.currentTime=0.01}catch(e){}
+   }
+   refreshCard(kind,file);
+   S.pos=0;
+   updateInfo();render();syncTimeline();
+   $('empty').style.display='none';
+   $('previewMessage').textContent='فایل بارگذاری شد: '+file.name;
+   status('ویدیو/تصویر با موفقیت وارد پیش‌نمایش شد.');
+  }catch(error){
+   $('previewMessage').textContent='خطای نمایش: '+error.message;
+   status('فایل انتخاب شد اما باز نشد: '+error.message,true);
+  }finally{
+   importLock(false);
+   this.value='';
+  }
+ });
+}
+bgVideo.addEventListener('loadeddata',()=>{if(S.studio?.type==='video'&&!S.exporting)render()});
+bgVideo.addEventListener('seeked',()=>{if(S.studio?.type==='video'&&!S.exporting&&!S.playing)render()});
+
 setCanvas(false);ctx.fillStyle='#0c2530';ctx.fillRect(0,0,canvas.width,canvas.height);$('faceBrightnessText').textContent=$('faceBrightness').value+'٪';$('faceContrastText').textContent=$('faceContrast').value+'٪';$('sceneBrightnessText').textContent=$('sceneBrightness').value+'٪';$('logoScaleText').textContent=$('logoScale').value+'٪';$('personScaleText').textContent=$('personScale').value+'٪';$('matteTrimText').textContent=$('matteTrim').value;updateInfo();
 syncTimeline();window.IbrahimiTest={plan,phaseAt,seekSource,render,position,getState:()=>S, getKey:()=>frontKey, keyedSource, detectWhiteMatte, getWhiteCleanup:()=>whiteCleanup, cleanupMediaLayer};
 })();

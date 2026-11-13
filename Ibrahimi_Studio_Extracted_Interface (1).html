@@ -2935,4 +2935,38 @@ setCanvas(false);ctx.fillStyle='#0c2530';ctx.fillRect(0,0,canvas.width,canvas.he
 syncTimeline();window.IbrahimiTest={plan,phaseAt,seekSource,render,position,getState:()=>S, getKey:()=>frontKey, keyedSource, detectWhiteMatte, getWhiteCleanup:()=>whiteCleanup, cleanupMediaLayer};
 })();
 </script>
+
+<style>
+#naturalSpeakerPanel{margin:12px 0;padding:14px;border:2px solid #1a9b84;border-radius:13px;background:#e9fff7;color:#17483f;direction:rtl}
+#naturalSpeakerPanel .ns-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+#naturalSpeakerPanel label{display:inline-flex;align-items:center;gap:7px;margin:6px}
+#naturalSpeakerPanel input[type=range]{width:130px}
+#naturalSpeakerOverlay{position:absolute;z-index:4;object-fit:contain;cursor:move;touch-action:none;pointer-events:auto;display:none;filter:brightness(1.08) contrast(1.03)}
+</style>
+<script>
+(function(){
+function ready(){
+ const stage=document.getElementById('stageInner'), canvas=document.getElementById('screen');
+ if(!stage||!canvas)return;
+ const panel=document.createElement('section');panel.id='naturalSpeakerPanel';
+ panel.innerHTML='<strong>🪑 جای‌گذاری عکس گوینده پشت میز — آزمایشی</strong><p>عکس PNG بدون پس‌زمینه انتخاب کنید. تصویر را با انگشت یا موس جابه‌جا کنید. این ابزار فعلاً فقط پیش‌نمایش است و در خروجی ویدیو اعمال نمی‌شود.</p><input id="nsPhoto" type="file" accept="image/*"><div class="ns-actions"><label>اندازه <input id="nsSize" type="range" min="10" max="95" value="42"></label><label>روشنایی <input id="nsLight" type="range" min="70" max="150" value="108"></label><button id="nsCenter" type="button">وسط صندلی</button><button id="nsHide" type="button">حذف عکس</button></div><p id="nsStatus" role="status"></p>';
+ const anchor=document.getElementById('speakerVerifyBox')||document.querySelector('.transport')||stage.parentElement;
+ anchor.parentNode.insertBefore(panel,anchor);
+ const img=document.createElement('img');img.id='naturalSpeakerOverlay';img.alt='عکس گوینده';stage.appendChild(img);
+ let url=null,px=29,py=13,scale=42,drag=null;
+ const status=panel.querySelector('#nsStatus');
+ function place(){const w=canvas.width||960,h=canvas.height||540;img.style.left=(w*px/100)+'px';img.style.top=(h*py/100)+'px';img.style.width=(w*scale/100)+'px';img.style.maxHeight=(h*.83)+'px';}
+ panel.querySelector('#nsPhoto').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(file);img.onload=()=>{img.style.display='block';place();status.textContent='عکس در پیش‌نمایش قرار گرفت. برای حذف واقعی پس‌زمینه، عکس شفاف PNG انتخاب کنید.'};img.onerror=()=>{status.textContent='این عکس در مرورگر باز نشد.'};img.src=url;});
+ panel.querySelector('#nsSize').addEventListener('input',e=>{scale=Number(e.target.value);place()});
+ panel.querySelector('#nsLight').addEventListener('input',e=>{img.style.filter='brightness('+(Number(e.target.value)/100)+') contrast(1.03)'});
+ panel.querySelector('#nsCenter').addEventListener('click',()=>{px=29;py=13;place()});
+ panel.querySelector('#nsHide').addEventListener('click',()=>{img.style.display='none';img.removeAttribute('src');if(url)URL.revokeObjectURL(url);url=null;status.textContent='عکس از پیش‌نمایش حذف شد.'});
+ img.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,px,py};img.setPointerCapture(e.pointerId);e.preventDefault()});
+ img.addEventListener('pointermove',e=>{if(!drag)return;const r=stage.getBoundingClientRect();px=Math.max(0,Math.min(95,drag.px+(e.clientX-drag.x)/r.width*100));py=Math.max(0,Math.min(95,drag.py+(e.clientY-drag.y)/r.height*100));place()});
+ img.addEventListener('pointerup',()=>drag=null);img.addEventListener('pointercancel',()=>drag=null);
+ new ResizeObserver(place).observe(canvas);place();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready();
+})();
+</script>
 </body></html>

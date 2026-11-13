@@ -1,0 +1,30 @@
+name: Publish Ibrahimi Studio preview
+on:
+  push:
+    branches: [feature/natural-speaker-studio]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: ibrahimi-studio-preview
+  cancel-in-progress: true
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare isolated preview
+        run: |
+          mkdir -p _site/studio-preview
+          cp 'Ibrahimi_Studio_Extracted_Interface (1).html' _site/studio-preview/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
